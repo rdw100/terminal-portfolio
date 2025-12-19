@@ -1,4 +1,5 @@
 import { render as renderAbout } from './pages/about.js';
+import { render as renderProjects } from './pages/projects.js';
 
 const output = document.getElementById('output');
 const input = document.getElementById('command');
@@ -50,6 +51,9 @@ input.addEventListener('keydown', async (e) => {
       break;
     case 'resume':
       await renderResume();
+      break;
+    case 'projects': 
+      await renderProjects(); 
       break;
     case 'clear':
       clearTerminal();
