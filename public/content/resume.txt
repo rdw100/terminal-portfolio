@@ -1,0 +1,56 @@
+DUSTY WRIGHT | Tallahassee, Florida, US | (850) •••-•••• | dusty@dustywright.me
+GitHub:  https://github.com/rdw100/ | LinkedIn: https://linkedin.com/in/rdw100/
+
+EXPERIENCE
+Senior Software Developer | Custom Data Proc | Remote     (Jan 2022 - Apr 2022)
++ Developed MPSC Patient Portal allowing users to apply for WIC benefits online
++ Co-designed Portal architecture via C#/SQL using MVVM, UoW, and Repo patterns
+
+Graduate Student | University of West Florida | Remote    (Jan 2017 - Dec 2019)
++ Built AnthroCloud .NET Azure PaaS (C#/SQL) to calculate WHO growth indicators
++ Planned SPMP/SRS/SDD backlog in Boards; documented STP & RTM for traceability
+
+Senior .NET Developer | Brandt Info Svc | Tallahassee, FL (Mar 2017 - Sep 2017)
++ Maintained Go Outdoors FL (RLIS) & fulfillment using .NET & SQL on Scrum team
++ Built UML-driven C# Abstract Factory streamlining 18 repos & T-SQL param jobs
+
+Senior Developer & Architect | Custom Data Proc | Remote  (Dec 2014 - Jul 2016)
++ Led SPIRIT TAG Research code/architecture review (40% clones, 1000+ end runs)
++ Authored ENH/TMP/PAQ artifacts for SUG PMO-approved changes to WIC SAM system
+
+Senior App Developer | Custom Data Proc | Hybrid-Remote   (Apr 2009 - Apr 2014)
++ Delivered SPIRIT and iWIN/WICnet .NET system transfers/releases w/ Scrum team
++ Led team modernizing KYWIC Portal to EBT with SOA/WCF on Oracle w/ Scrum team
+
+Global Bus App Spec | Alltech | Nicholasville, KY         (Nov 2007 - Dec 2008)
++ Led 100GB SharePoint 2007 ASPEN upgrade, planned 4 MOSS/MSSQL paths in VMWare
++ Improved memory 30%, ended CPU spikes; solved disk, telecom, & latency faults
+
+Programmer Analyst | Interactive Bus Sys | Lexington, KY  (Sep 2007 - Oct 2007)
++ Upgraded Rhema DNN module to ASP.NET 2.0 & MSSQL 2005 for translation support
+
+Programmer Systems Analyst | UK RDMC | Lexington, KY      (Dec 2006 - Aug 2007)
++ Led CardioCARE/DiabetesCARE pharmacy systems resolving 300 defects via triage
++ Maintained SSIS-based prescription analysis platform using UK Healthcare data
+
+Software Engineer | Kentucky Housing Corp | Lexington, KY (Jun 2006 - Dec 2006)
++ Integrated 130KLOC ASP.NET MSSQL system for tax credit application management
+
+Systems Analyst Programmer | Tempur-Pedic | Lexington, KY (Feb 2004 - Apr 2006)
++ Built ASP.NET Portal with Crystal CE SDK & SSAS cube for fast sales analytics
++ Migrated sales to Crystal Enterprise with SSIS, SSAS, Linked Server to Oracle
+
+Web Programmer | KY Medical Svcs Found | Lexington, KY    (Jan 2002 - Feb 2004)
++ Built server to host Intranet and SharePoint sites on IIS in a secure network
++ Secured IIS with IWA, ADSI, SSL, and Lockdown Tool for reduced attack vectors
+
+Programmer Systems Analyst | UK RDMC | Lexington, KY      (Jul 2000 - Jan 2002)
++ Processed 250 HCO files monthly per NRIPMS data dictionary with VB/SQL Server
++ Wrote T-SQL procs, DTS packages & jobs reporting NRIPMS measures, comparisons
+
+EDUCATION
+M.S., Computer Science Soft. Eng. (CSSE), University West Florida UWF, Dec 2019
+B.S., Computer Information Sys (CIS), Western Kentucky University WKU, May 2000
+
+SKILLS:  C#, SQL, .NET, .NET Core, ASP.NET, Azure, SQL Server, SSMS, PowerShell
+CERTIFICATIONS: PSPO I • PSM I • Az Fdn • Az Data Fdn • Az AI Fdn • Az Powr Fdn

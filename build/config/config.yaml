@@ -1,0 +1,10 @@
+site:
+title: Dusty Portfolio Terminal
+legacy_url: https://gray-glacier-0dd347e0f.azurestaticapps.net
+
+
+github: 
+username: rdw100
+projects:
+- anthrocloud
+- northwind-web-api
