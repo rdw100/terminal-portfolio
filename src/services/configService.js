@@ -5,7 +5,7 @@ export async function getConfig() {
     return configCache;
   }
 
-  const response = await fetch('build/config/config.yaml');
+  const response = await fetch('../../build/config/config.yaml');
   const yamlText = await response.text();
 
   configCache = jsyaml.load(yamlText);

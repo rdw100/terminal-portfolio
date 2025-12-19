@@ -1,14 +1,12 @@
+import { getConfig } from '../services/configService.js';
+
 export async function render() {
   const output = document.getElementById('output');
+  const ascii = await fetch('../../public/content/ascii.txt').then(r => r.text());
 
-  // Load ASCII art (dynamic content)
-  const ascii = await fetch('content/ascii.txt')
-    .then(r => r.text());
-
-  // Legacy URL and email are rendered directly for now
-  // (config wiring can come later when you ask for it)
-  const legacyUrl = 'https://legacy.example.com';
-  const email = 'contact@example.com';
+  const config = await getConfig();
+  const legacyUrl = config.site.legacy_url || 'https://example.com';
+  const email = config.site.contact_email || 'contact@example.com';
 
   output.insertAdjacentHTML(
     'beforeend',
