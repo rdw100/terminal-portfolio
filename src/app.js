@@ -1,5 +1,5 @@
-import { render as renderAbout } from '../src/pages/about.js';
-import { render as renderProjects } from '../src/pages/projects.js';
+import { render as renderAbout } from '/src/pages/about.js';
+import { render as renderProjects } from '/src/pages/projects.js';
 
 const output = document.getElementById('output');
 const input = document.getElementById('command');
@@ -25,7 +25,7 @@ export async function renderResume() {
   const output = document.getElementById('output');
 
   try {
-    const html = await fetch('../src/pages/resume.html')
+    const html = await fetch('/src/pages/resume.html')
       .then(res => res.text());
 
     output.insertAdjacentHTML('beforeend', html);
