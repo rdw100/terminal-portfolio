@@ -1,5 +1,5 @@
-import { render as renderAbout } from './pages/about.js';
-import { render as renderProjects } from './pages/projects.js';
+import { render as renderAbout } from '../src/pages/about.js';
+import { render as renderProjects } from '../src/pages/projects.js';
 
 const output = document.getElementById('output');
 const input = document.getElementById('command');
