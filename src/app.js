@@ -20,6 +20,22 @@ function clearTerminal() {
   output.innerHTML = '';
 }
 
+export async function renderResume() {
+  const output = document.getElementById('output');
+
+  try {
+    const html = await fetch('../src/pages/resume.html')
+      .then(res => res.text());
+
+    output.insertAdjacentHTML('beforeend', html);
+  } catch (err) {
+    output.insertAdjacentHTML(
+      'beforeend',
+      `<div>Error loading resume: ${err.message}</div>`
+    );
+  }
+}
+
 input.addEventListener('keydown', async (e) => {
   if (e.key !== 'Enter') return;
 
@@ -32,7 +48,9 @@ input.addEventListener('keydown', async (e) => {
     case 'about':
       await renderAbout();
       break;
-
+    case 'resume':
+      await renderResume();
+      break;
     case 'clear':
       clearTerminal();
       break;
