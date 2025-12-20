@@ -27,6 +27,30 @@ function clearTerminal() {
   output.innerHTML = '';
 }
 
+function showLoading(duration = 1000) {
+  const output = document.getElementById('output');
+  const spinner = document.createElement('div');
+  spinner.textContent = '|';
+  output.appendChild(spinner);
+
+  const frames = ['|', '/', '-', '\\'];
+  let i = 0;
+
+  const interval = setInterval(() => {
+    spinner.textContent = frames[i % frames.length];
+    i++;
+  }, 100);
+
+  return new Promise(resolve => {
+    setTimeout(() => {
+      clearInterval(interval);
+      spinner.remove();
+      resolve();
+    }, duration);
+  });
+}
+
+
 export async function renderResume() {
   const output = document.getElementById('output');
 
@@ -51,12 +75,15 @@ input.addEventListener('keydown', async (e) => {
 
   switch (cmd) {
     case 'about':
+      await showLoading(800);
       await renderAbout();
       break;
     case 'resume':
+      await showLoading(800);
       await renderResume();
       break;
     case 'projects':
+      await showLoading(800);
       await renderProjects();
       break;
     case 'clear':
