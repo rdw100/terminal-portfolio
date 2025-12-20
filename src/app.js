@@ -1,6 +1,6 @@
-import { render as renderAbout } from 'src/pages/about.js';
-import { render as renderProjects } from '/src/pages/projects.js';
-import { render as renderWelcome } from '/src/pages/welcome.js';
+import { render as renderAbout } from '../src/pages/about.js';
+import { render as renderProjects } from '../src/pages/projects.js';
+import { render as renderWelcome } from '../src/pages/welcome.js';
 
 const output = document.getElementById('output');
 const input = document.getElementById('command');
@@ -15,16 +15,19 @@ terminal.addEventListener('click', () => {
   input.focus();
 });
 
+function clearTerminal() {
+  output.innerHTML = '';
+}
+
 function printCommand(cmd) {
   output.insertAdjacentHTML(
     'beforeend',
-    `<div class="terminal-command"><span class="prompt-user">guest@dustywright.me:</span><!--
-     --><span class="prompt-symbol">~$&gt;</span>${cmd}</div>`
+    `<div class="terminal-command">
+      <span class="prompt-user">guest@dustywright.me:</span>
+      <span class="prompt-symbol">~$&gt;</span>
+      <span class="prompt-text"> ${cmd}</span>
+    </div>`
   );
-}
-
-function clearTerminal() {
-  output.innerHTML = '';
 }
 
 function showLoading(duration = 1000) {
@@ -55,7 +58,7 @@ export async function renderResume() {
   const output = document.getElementById('output');
 
   try {
-    const html = await fetch('/src/pages/resume.html').then(res => res.text());
+    const html = await fetch('../src/pages/resume.html').then(res => res.text());
     output.insertAdjacentHTML('beforeend', html);
   } catch (err) {
     output.insertAdjacentHTML(

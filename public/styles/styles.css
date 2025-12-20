@@ -70,7 +70,16 @@ p {
 }
 
 .prompt-symbol {
+  margin-left: 0.25em;
   color: #00ff00;
+}
+
+.prompt-text {
+  margin-left: 0.25em;
+}
+
+.terminal-command {
+  white-space: pre-wrap;
 }
 
 #command {
@@ -80,8 +89,4 @@ p {
   color: inherit;
   font-family: inherit;
   width: 100%;
-}
-
-.terminal-command {
-  margin-bottom: 0.5em; /* spacing after command */
 }
