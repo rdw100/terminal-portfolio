@@ -1,6 +1,6 @@
 import { render as renderAbout } from '/src/pages/about.js';
 import { render as renderProjects } from '/src/pages/projects.js';
-import { render as renderWelcome } from './pages/welcome.js';
+import { render as renderWelcome } from '/src/pages/welcome.js';
 
 const output = document.getElementById('output');
 const input = document.getElementById('command');
