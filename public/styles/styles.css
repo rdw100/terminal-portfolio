@@ -4,13 +4,11 @@ height: 100%;
 margin: 0;
 }
 
-
 body {
 background: #000;
 color: #00ff00;
 font-family: monospace;
 }
-
 
 #terminal {
 box-sizing: border-box;
@@ -21,11 +19,9 @@ padding: 10px;
 overflow-y: auto;
 }
 
-
 #prompt {
 display: flex;
 }
-
 
 #command {
 background: transparent;
@@ -36,13 +32,52 @@ font-family: inherit;
 width: 100%;
 }
 
-
 a {
 color: #4fdfff;
 text-decoration: underline;
 }
 
+pre,
+pre code {
+  white-space: pre;
+  overflow-x: auto;
+}
 
-pre {
-white-space: pre-wrap;
+pre code.language-ansi {
+  color: #00ff00;
+  display: block;
+}
+
+.ansi-shadow {
+  color: #00ff00;
+  margin-bottom: 1em;
+  line-height: 1.1;
+  white-space: pre;
+}
+
+p {
+  margin: 0 0 1em 0;
+}
+
+#prompt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.prompt-user {
+  color: #00ff00;
+}
+
+.prompt-symbol {
+  color: #00ff00;
+}
+
+#command {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  font-family: inherit;
+  width: 100%;
 }

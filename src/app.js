@@ -1,11 +1,13 @@
 import { render as renderAbout } from '/src/pages/about.js';
 import { render as renderProjects } from '/src/pages/projects.js';
+import { render as renderWelcome } from './pages/welcome.js';
 
 const output = document.getElementById('output');
 const input = document.getElementById('command');
 const terminal = document.getElementById('terminal');
 
-/* --- INITIAL FOCUS --- */
+/* --- INITIAL FOCUS & WELCOME --- */
+await renderWelcome();
 input.focus();
 
 /* --- KEEP FOCUS ON CLICK --- */
@@ -14,7 +16,11 @@ terminal.addEventListener('click', () => {
 });
 
 function printCommand(cmd) {
-  output.insertAdjacentHTML('beforeend', `<div>&gt; ${cmd}</div>`);
+  output.insertAdjacentHTML(
+    'beforeend',
+    `<div><span class="prompt-user">guest@dustywright.me</span>
+     <span class="prompt-symbol">~$&gt;</span> ${cmd}</div>`
+  );
 }
 
 function clearTerminal() {
@@ -52,8 +58,8 @@ input.addEventListener('keydown', async (e) => {
     case 'resume':
       await renderResume();
       break;
-    case 'projects': 
-      await renderProjects(); 
+    case 'projects':
+      await renderProjects();
       break;
     case 'clear':
       clearTerminal();
