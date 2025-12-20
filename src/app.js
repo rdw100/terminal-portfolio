@@ -22,11 +22,7 @@ function clearTerminal() {
 function printCommand(cmd) {
   output.insertAdjacentHTML(
     'beforeend',
-    `<div class="terminal-command">
-      <span class="prompt-user">guest@dustywright.me:</span>
-      <span class="prompt-symbol">~$&gt;</span>
-      <span class="prompt-text"> ${cmd}</span>
-    </div>`
+    `<div class="terminal-command"><span class="prompt-user">guest@dustywright.me:</span><span class="prompt-symbol">~$&gt;</span> ${cmd}</div>`
   );
 }
 
