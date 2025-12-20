@@ -2,7 +2,7 @@ import { getConfig } from '../services/configService.js';
 
 export async function render() {
     const output = document.getElementById('output');
-    const ascii = await fetch('../../public/content/ascii.txt').then(r => r.text());
+    const ascii = await fetch('../content/ascii.txt').then(r => r.text());
 
     const config = await getConfig();
     const legacyUrl = config.site.legacy_url || 'https://example.com';

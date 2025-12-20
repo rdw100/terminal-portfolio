@@ -2,7 +2,7 @@ export async function render() {
   const output = document.getElementById('output');
 
   try {
-    const md = await fetch('../../public/content/welcome.md')
+    const md = await fetch('../content/welcome.md')
       .then(res => res.text());
 
     const html = marked.parse(md);
