@@ -6,29 +6,27 @@ const outputPath = path.resolve('src/pages/resume.html');
 
 const input = fs.readFileSync(inputPath, 'utf8');
 
-let html = '';
-let paragraph = [];
+// Helper: detect URLs, mailto, and plain email addresses
+function linkify(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const mailRegex = /(mailto:[^\s]+)/g;
+    const emailRegex = /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,})\b/g;
 
-input.split('\n').forEach(line => {
-    if (!line.trim()) {
-        if (paragraph.length) {
-            html += `<p>${paragraph.join('<br>')}</p>`;
-            paragraph = [];
-        }
-    } else {
-        if (line.startsWith('http') || line.startsWith('mailto:')) {
-            paragraph.push(`<a href="${line}">${line}</a>`);
-        } else {
-            // preserve spacing and ASCII width
-            paragraph.push(line.replace(/ /g, ' '));
-        }
-    }
-});
-
-// flush remaining paragraph
-if (paragraph.length) {
-    html += `<p>${paragraph.join('<br>')}</p>`;
+    return text
+        .replace(urlRegex, '<a href="$1" target="_blank">$1</a>')
+        .replace(mailRegex, '<a href="$1">$1</a>')
+        .replace(emailRegex, '<a href="mailto:$1">$1</a>');
 }
 
-fs.writeFileSync(outputPath, html);
-console.log(`Resume built at ${outputPath}`);
+// Group items by paragraphs (keep ASCII width if needed)
+const html = input
+    .split(/\n{2,}/) // double line = new paragraph
+    .map(paragraph => {
+        const lines = paragraph.split('\n');
+        const content = lines.map(line => linkify(line)).join('<br>');
+        return `<p>${content}</p>`;
+    })
+    .join('\n');
+
+fs.writeFileSync(outputPath, html, 'utf8');
+console.log('resume.html generated successfully.');
