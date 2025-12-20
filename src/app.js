@@ -18,7 +18,7 @@ terminal.addEventListener('click', () => {
 function printCommand(cmd) {
   output.insertAdjacentHTML(
     'beforeend',
-    `<div><span class="prompt-user">guest@dustywright.me</span>
+    `<div class="terminal-command"><span class="prompt-user">guest@dustywright.me</span>
      <span class="prompt-symbol">~$&gt;</span> ${cmd}</div>`
   );
 }

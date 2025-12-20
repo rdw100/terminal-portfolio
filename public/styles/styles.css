@@ -81,3 +81,7 @@ p {
   font-family: inherit;
   width: 100%;
 }
+
+.terminal-command {
+  margin-bottom: 0.5em; /* spacing after command */
+}
