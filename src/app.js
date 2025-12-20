@@ -1,4 +1,4 @@
-import { render as renderAbout } from '/src/pages/about.js';
+import { render as renderAbout } from 'src/pages/about.js';
 import { render as renderProjects } from '/src/pages/projects.js';
 import { render as renderWelcome } from '/src/pages/welcome.js';
 
