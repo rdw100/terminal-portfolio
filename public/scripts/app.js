@@ -1,6 +1,6 @@
-import { render as renderAbout } from '../src/pages/about.js';
-import { render as renderProjects } from '../src/pages/projects.js';
-import { render as renderWelcome } from '../src/pages/welcome.js';
+import { render as renderAbout } from '../pages/about.js';
+import { render as renderProjects } from '../pages/projects.js';
+import { render as renderWelcome } from '../pages/welcome.js';
 
 const output = document.getElementById('output');
 const input = document.getElementById('command');
@@ -54,7 +54,7 @@ export async function renderResume() {
   const output = document.getElementById('output');
 
   try {
-    const html = await fetch('../src/pages/resume.html').then(res => res.text());
+    const html = await fetch('pages/resume.html').then(res => res.text());
     output.insertAdjacentHTML('beforeend', html);
   } catch (err) {
     output.insertAdjacentHTML(
