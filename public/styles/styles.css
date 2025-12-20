@@ -62,7 +62,7 @@ p {
 #prompt {
   display: flex;
   align-items: center;
-  gap: 6px;
+  /* gap: 6px; */
 }
 
 .prompt-user {
