@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 const inputPath = path.resolve('public/content/resume.txt');
-const outputPath = path.resolve('src/pages/resume.html');
+const outputPath = path.resolve('public/pages/resume.html');
 
 const input = fs.readFileSync(inputPath, 'utf8');
 
