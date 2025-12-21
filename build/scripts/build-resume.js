@@ -1,11 +1,11 @@
-import fs from 'fs';
-import path from 'path';
+const fs = require('fs');
+const path = require('path');
 
 const inputPath = path.resolve('public/content/resume.txt');
-const outputPath = path.resolve('public/pages/resume.html');
+const outputPath = path.resolve('public/content/resume.html');
 
-if (!fs.existsSync('public/content/resume.txt')) {
-  throw new Error('resume.txt not found');
+if (!fs.existsSync(inputPath)) {
+  throw new Error('resume.txt not found at public/content/resume.txt');
 }
 
 const input = fs.readFileSync(inputPath, 'utf8');
@@ -32,5 +32,5 @@ const html = input
     })
     .join('\n');
 
-fs.writeFileSync(outputPath, html, 'utf8');
+fs.writeFileSync(outputPath, html);
 console.log('resume.html generated successfully.');
