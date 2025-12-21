@@ -4,6 +4,10 @@ import path from 'path';
 const inputPath = path.resolve('public/content/resume.txt');
 const outputPath = path.resolve('public/pages/resume.html');
 
+if (!fs.existsSync('public/content/resume.txt')) {
+  throw new Error('resume.txt not found');
+}
+
 const input = fs.readFileSync(inputPath, 'utf8');
 
 // Helper: detect URLs, mailto, and plain email addresses
