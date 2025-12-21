@@ -90,6 +90,9 @@ input.addEventListener('keydown', async (e) => {
       clearTerminal();  
       await renderWelcome();
       break;
+    case 'welcome':
+      await renderWelcome();
+      break;
     case 'help':
       await renderHelp();
       break;
