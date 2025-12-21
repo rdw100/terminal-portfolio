@@ -49,7 +49,6 @@ function showLoading(duration = 1000) {
   });
 }
 
-
 export async function renderResume() {
   const output = document.getElementById('output');
 
@@ -74,19 +73,21 @@ input.addEventListener('keydown', async (e) => {
 
   switch (cmd) {
     case 'about':
-      await showLoading(800);
+      showLoading(1200);
       await renderAbout();
       break;
     case 'resume':
-      await showLoading(800);
+      showLoading(1200);
       await renderResume();
       break;
     case 'projects':
-      await showLoading(800);
+      showLoading(1200);
       await renderProjects();
       break;
     case 'clear':
-      clearTerminal();
+      clearTerminal();  
+      showLoading(1200);
+      await renderWelcome();
       break;
 
     case 'help':
