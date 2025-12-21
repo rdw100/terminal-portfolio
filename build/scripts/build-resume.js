@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const inputPath = path.resolve('public/content/resume.txt');
-const outputPath = path.resolve('public/content/resume.html');
+const outputPath = path.resolve('public/pages/resume.html');
 
 if (!fs.existsSync(inputPath)) {
   throw new Error('resume.txt not found at public/content/resume.txt');
