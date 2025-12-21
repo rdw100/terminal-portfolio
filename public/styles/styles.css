@@ -79,6 +79,7 @@ p {
 
 .terminal-command {
   white-space: pre-wrap;
+  margin-bottom: 0.75em;
 }
 
 #command {
