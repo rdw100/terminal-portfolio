@@ -2,6 +2,7 @@ import { render as renderAbout } from '../pages/about.js';
 import { render as renderProjects } from '../pages/projects.js';
 import { render as renderWelcome } from '../pages/welcome.js';
 import { render as renderHelp } from '../pages/help.js';
+import { render as renderGui } from '../pages/gui.js';
 
 const output = document.getElementById('output');
 const input = document.getElementById('command');
@@ -77,6 +78,9 @@ input.addEventListener('keydown', async (e) => {
   switch (cmd) {
     case 'about':
       await renderAbout();
+      break;
+    case 'gui':
+      await renderGui();
       break;
     case 'resume':
       showLoading(1200);
