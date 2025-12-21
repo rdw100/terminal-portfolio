@@ -1,40 +1,32 @@
-html, body {
-width: 100%;
-height: 100%;
-margin: 0;
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
 }
 
 body {
-background: #000;
-color: #00ff00;
-font-family: monospace;
+  background: #000;
+  color: #00ff00;
+  font-family: monospace;
 }
 
 #terminal {
-box-sizing: border-box;
-width: calc(100% - 10px);
-height: calc(100% - 10px);
-margin: 5px;
-padding: 10px;
-overflow-y: auto;
+  box-sizing: border-box;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  margin: 5px;
+  padding: 10px;
+  overflow-y: auto;
 }
 
 #prompt {
-display: flex;
-}
-
-#command {
-background: transparent;
-border: none;
-outline: none;
-color: inherit;
-font-family: inherit;
-width: 100%;
+  display: flex;
 }
 
 a {
-color: #4fdfff;
-text-decoration: underline;
+  color: #4fdfff;
+  text-decoration: underline;
 }
 
 pre,
@@ -62,7 +54,6 @@ p {
 #prompt {
   display: flex;
   align-items: center;
-  /* gap: 6px; */
 }
 
 .prompt-user {
