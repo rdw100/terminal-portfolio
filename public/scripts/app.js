@@ -1,6 +1,7 @@
 import { render as renderAbout } from '../pages/about.js';
 import { render as renderProjects } from '../pages/projects.js';
 import { render as renderWelcome } from '../pages/welcome.js';
+import { render as renderHelp } from '../pages/help.js';
 
 const output = document.getElementById('output');
 const input = document.getElementById('command');
@@ -75,7 +76,6 @@ input.addEventListener('keydown', async (e) => {
 
   switch (cmd) {
     case 'about':
-      showLoading(1200);
       await renderAbout();
       break;
     case 'resume':
@@ -90,14 +90,9 @@ input.addEventListener('keydown', async (e) => {
       clearTerminal();  
       await renderWelcome();
       break;
-
     case 'help':
-      output.insertAdjacentHTML(
-        'beforeend',
-        `<div>Commands: about, resume, projects, clear, help</div>`
-      );
+      await renderHelp();
       break;
-
     default:
       output.insertAdjacentHTML(
         'beforeend',
