@@ -7,6 +7,7 @@ const input = document.getElementById('command');
 const terminal = document.getElementById('terminal');
 
 /* --- INITIAL FOCUS & WELCOME --- */
+printCommand('welcome');
 await renderWelcome();
 input.focus();
 
@@ -17,6 +18,7 @@ terminal.addEventListener('click', () => {
 
 function clearTerminal() {
   output.innerHTML = '';
+  printCommand('welcome');
 }
 
 function printCommand(cmd) {
@@ -86,7 +88,6 @@ input.addEventListener('keydown', async (e) => {
       break;
     case 'clear':
       clearTerminal();  
-      showLoading(1200);
       await renderWelcome();
       break;
 
