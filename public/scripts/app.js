@@ -3,6 +3,7 @@ import { render as renderProjects } from '../pages/projects.js';
 import { render as renderWelcome } from '../pages/welcome.js';
 import { render as renderHelp } from '../pages/help.js';
 import { render as renderGui } from '../pages/gui.js';
+import { render as renderSocials } from '../pages/socials.js';
 
 const output = document.getElementById('output');
 const input = document.getElementById('command');
@@ -70,12 +71,15 @@ export async function renderResume() {
 input.addEventListener('keydown', async (e) => {
   if (e.key !== 'Enter') return;
 
-  const cmd = input.value.trim();
+  let cmd = input.value.trim();
   input.value = '';
 
   printCommand(cmd);
 
-  switch (cmd) {
+  const [baseCmd, ...args] = cmd.split(/\s+/);
+  const arg = args.join(' ');
+
+  switch (baseCmd) {
     case 'about':
       await renderAbout();
       break;
@@ -89,6 +93,9 @@ input.addEventListener('keydown', async (e) => {
     case 'projects':
       showLoading(1200);
       await renderProjects();
+      break;
+    case 'socials':
+      await renderSocials(arg);
       break;
     case 'clear':
       clearTerminal();  

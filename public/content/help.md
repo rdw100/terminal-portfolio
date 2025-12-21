@@ -4,5 +4,6 @@
 - **clear** — Clears the terminal
 - **projects** — Displays GitHub projects
 - **resume** — Displays an ASCII resume
+- **socials** — check out my social accounts
 - **gui** — Opens the gui website in a new tab
 - **welcome** — Displays hero section
