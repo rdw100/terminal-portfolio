@@ -158,7 +158,7 @@ failed to resolve source metadata for mcr.microsoft.com/appsvc/staticappsclient
 This error occurs before application code is built and is not related to
 JavaScript, Markdown, or configuration changes.
 
-#### ⚠️ Known Issues / Quirks (Azure + SWA)
+### ⚠️ Known Issues / Quirks (Azure + SWA)
 
 - Azure SWA Docker image pulls may intermittently fail (403)
 - Build cache behavior is opaque and non-configurable
@@ -167,14 +167,10 @@ JavaScript, Markdown, or configuration changes.
 
 None of these impact runtime once deployed successfully.
 
----
-
 ### 🔑 `deployment_token was not provided`
 
 - Ensure the Azure Static Web Apps API token is present in repository secrets
 - Confirm the workflow references the correct secret name
-
----
 
 ### 🚫 404 Errors for JavaScript Files in Production
 
