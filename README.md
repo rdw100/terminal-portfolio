@@ -36,25 +36,6 @@ The site is command-driven, fully static, and hosted as an **Azure Static Web Ap
 
 ---
 
-## 🗂️ Project Structure
-/
-├─ public/
-│  ├─ index.html
-│  ├─ content/        # Markdown, ASCII, resume output
-│  ├─ pages/          # Dynamic render logic
-│  ├─ scripts/        # Client-side libraries
-│  │  └─ app.js       # Terminal controller
-│  ├─ config/
-│  │  └─ config.yaml  # Site configuration     
-│  ├─ services/       # Config + integrations
-│  └─ styles/         # CSS
-├─ build/
-│  └─ scripts/
-│     └─ build-resume.js
-└─ README.md
-
----
-
 ## ⚙️ Configuration
 
 All environment-specific and external values are stored in **YAML**:
@@ -90,11 +71,9 @@ socials:
 node build/scripts/build-resume.js
 ```
 
-### CI Execution
+### CI Execution (Azure Static Web Apps)
 
 The resume build runs automatically in GitHub Actions before deployment.
-
-### CI Execution (Azure Static Web Apps)
 
 The GitHub Actions workflow is configured to run the resume build script
 before deployment. This requires Node.js to be explicitly installed in the
@@ -157,6 +136,7 @@ Example:
     document.getElementById('output')
         .insertAdjacentHTML('beforeend', '<p>Hello world</p>');
     }
+    
     // app.js
     case 'example':
     await renderExample();
