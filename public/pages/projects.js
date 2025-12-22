@@ -1,37 +1,62 @@
 import { getConfig } from '../services/configService.js';
 
-export async function render() {
+export async function render(args = []) {
   const output = document.getElementById('output');
+  const config = await getConfig();
 
-  try {
-    const config = await getConfig();
-    const username = config.github.username;
-    const projects = config.github.projects || [];
+  const username = config.github?.username;
+  const projects = config.github?.projects || [];
 
-    if (!projects.length) {
-      output.insertAdjacentHTML('beforeend', '<div>No projects defined in config.</div>');
+  if (!username || projects.length === 0) {
+    output.insertAdjacentHTML(
+      'beforeend',
+      `<div>No projects configured.</div>`
+    );
+    return;
+  }
+
+  // Instructions (always rendered)
+  output.insertAdjacentHTML(
+    'beforeend',
+    `
+    <p>
+      Usage: <code>projects goto &lt;project+no&gt;</code><br>
+      Example: <code>projects goto 2</code>
+    </p>
+    `
+  );
+
+  // Numbered list
+  const listHtml = projects
+    .map((name, i) => {
+      const url = `https://github.com/${username}/${name}`;
+      return `<li><a href="${url}" target="_blank" rel="noopener">${name}</a></li>`;
+    })
+    .join('');
+
+  output.insertAdjacentHTML(
+    'beforeend',
+    `<ol>${listHtml}</ol>`
+  );
+
+  // Handle: projects goto N
+  if (args[0] === 'goto') {
+    const index = parseInt(args[1], 10) - 1;
+
+    if (Number.isNaN(index) || !projects[index]) {
+      output.insertAdjacentHTML(
+        'beforeend',
+        `<div>Invalid project number.</div>`
+      );
       return;
     }
 
-    for (const repo of projects) {
-      const res = await fetch(`https://api.github.com/repos/${username}/${repo}`);
-      if (!res.ok) {
-        output.insertAdjacentHTML('beforeend', `<div>Failed to load ${repo}</div>`);
-        continue;
-      }
-      const data = await res.json();
+    const projectUrl = `https://github.com/${username}/${projects[index]}`;
+    window.open(projectUrl, '_blank', 'noopener');
 
-      const topics = (data.topics || []).join(', ');
-      const repoUrl = `https://github.com/${username}/${repo}`;
-
-      output.insertAdjacentHTML('beforeend',
-        `<p>
-           <strong><a href="${repoUrl}" target="_blank" rel="noopener">${data.name}</a></strong><br>
-           ${data.description || ''}<br>
-           Topics: ${topics}
-         </p>`);
-    }
-  } catch (err) {
-    output.insertAdjacentHTML('beforeend', `<div>Error loading projects: ${err.message}</div>`);
+    output.insertAdjacentHTML(
+      'beforeend',
+      `<div>Opening ${projects[index]}…</div>`
+    );
   }
 }

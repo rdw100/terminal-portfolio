@@ -90,10 +90,12 @@ input.addEventListener('keydown', async (e) => {
       showLoading(1200);
       await renderResume();
       break;
-    case 'projects':
+    case 'projects': {
       showLoading(1200);
-      await renderProjects();
+      const parts = cmd.split(/\s+/);
+      await renderProjects(parts.slice(1));
       break;
+    }
     case 'socials':
       await renderSocials(arg);
       break;

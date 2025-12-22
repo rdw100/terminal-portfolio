@@ -7,8 +7,12 @@ github:
   username: rdw100
   projects:
     - anthrocloud
+    - benchmark
+    - clean
     - northwind-web-api
-
+    - orm-dapper
+    - StockApp
+    
 socials:
   linkedin: https://www.linkedin.com/in/rdw100
   github: https://github.com/rdw100
