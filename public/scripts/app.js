@@ -31,6 +31,13 @@ function printCommand(cmd) {
   );
 }
 
+function scrollToBottom(smooth = false) {
+  terminal.scrollTo({
+    top: terminal.scrollHeight,
+    behavior: smooth ? 'smooth' : 'auto'
+  });
+}
+
 function showLoading(duration = 1000) {
   const output = document.getElementById('output');
   const spinner = document.createElement('div');
@@ -117,5 +124,6 @@ input.addEventListener('keydown', async (e) => {
   }
 
   // Ensure cursor always returns
+  scrollToBottom(true);
   input.focus();
 });
