@@ -136,7 +136,7 @@ Example:
     document.getElementById('output')
         .insertAdjacentHTML('beforeend', '<p>Hello world</p>');
     }
-    
+
     // app.js
     case 'example':
     await renderExample();
@@ -147,7 +147,7 @@ Example:
 
 ## 🧪 Troubleshooting (Azure Static Web Apps)
 
-### Docker 403 Errors During Build
+### 🐳🚫 Docker 403 Errors During Build
 
 failed to resolve source metadata for mcr.microsoft.com/appsvc/staticappsclient
 403 Forbidden
@@ -169,14 +169,14 @@ None of these impact runtime once deployed successfully.
 
 ---
 
-### `deployment_token was not provided`
+### 🔑 `deployment_token was not provided`
 
 - Ensure the Azure Static Web Apps API token is present in repository secrets
 - Confirm the workflow references the correct secret name
 
 ---
 
-### 404 Errors for JavaScript Files in Production
+### 🚫 404 Errors for JavaScript Files in Production
 
 - Verify `app_location` matches the directory containing `index.html`
 - Ensure all runtime JS files are deployed under the same root
