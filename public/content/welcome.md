@@ -14,8 +14,8 @@
  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   
 ```
 
-# Welcome to my terminal portfolio. (Version 2.1.1)
+## Welcome to my terminal portfolio. (Version 2.1.1)
 ---
-#### This project's source code can be found in this project's [GitHub repository](https://github.com/rdw100/terminal-portfolio)
+### This project's source code can be found in this project's [GitHub repository](https://github.com/rdw100/terminal-portfolio)
 ---
-#### For a list of available commands, type `help`.
+### For a list of available commands, type `help`.

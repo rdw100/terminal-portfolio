@@ -1,18 +1,69 @@
-import { render as renderAbout } from '../pages/about.js';
-import { render as renderProjects } from '../pages/projects.js';
-import { render as renderWelcome } from '../pages/welcome.js';
-import { render as renderHelp } from '../pages/help.js';
-import { render as renderGui } from '../pages/gui.js';
-import { render as renderSocials } from '../pages/socials.js';
+/* import { render as renderAbout } from '../pages/about.js';*/
+
+/* import { render as renderWelcome } from '../pages/welcome.js'; */
+/* import { render as renderHelp } from '../pages/help.js'; */
+/* import { render as renderGui } from '../pages/gui.js'; */
+/* import { render as renderProjects } from '../pages/projects.js';
+import { render as renderSocials } from '../pages/socials.js'; */
+
+/* --- DYNAMIC PAGE LOADERS --- */
+async function renderAbout() {
+  const { render } = await import('../pages/about.js');
+  await render();
+}
+async function renderHelp() {
+  const { render } = await import('../pages/help.js');
+  await render();
+}
+async function renderProjects(args = []) {
+  const { render } = await import('../pages/projects.js');
+  await render(args);
+}
+async function renderWelcome() {
+  const { render } = await import('../pages/welcome.js');
+  await render();
+}
+async function renderSocials(args = []) {
+  const { render } = await import('../pages/socials.js');
+  await render(args);
+}
+async function renderGui() {
+  const { render } = await import('../pages/gui.js');
+  await render();
+}
 
 const output = document.getElementById('output');
 const input = document.getElementById('command');
 const terminal = document.getElementById('terminal');
 
+/* --- SCROLL (FINAL, LOCKED) --- */
+function scrollToBottom() {
+  if (!terminal) return;
+  terminal.scrollTop = terminal.scrollHeight;
+}
+
 /* --- INITIAL FOCUS & WELCOME --- */
-printCommand('welcome');
-await renderWelcome();
 input.focus();
+
+/* Render welcome AFTER first paint */
+/* requestAnimationFrame(async () => {
+  printCommand('welcome');
+  await renderWelcome();
+  requestAnimationFrame(scrollToBottom);
+  input.focus();
+}); */
+
+/* Render welcome AFTER first paint, non-blocking */
+requestAnimationFrame(() => {
+  printCommand('welcome');
+
+  // Start loading welcome content asynchronously, no blocking
+  renderWelcome().then(() => {
+    requestAnimationFrame(scrollToBottom);
+  });
+
+  input.focus();
+});
 
 /* --- KEEP FOCUS ON CLICK --- */
 terminal.addEventListener('click', () => {
@@ -22,24 +73,17 @@ terminal.addEventListener('click', () => {
 function clearTerminal() {
   output.innerHTML = '';
   printCommand('welcome');
+  requestAnimationFrame(scrollToBottom);
 }
 
 function printCommand(cmd) {
   output.insertAdjacentHTML(
     'beforeend',
     `<div class="terminal-command"><span class="prompt-user">guest@dustywright.me:</span><span class="prompt-symbol">~$&gt;</span> ${cmd}</div>`
-  );
-}
-
-function scrollToBottom(smooth = false) {
-  terminal.scrollTo({
-    top: terminal.scrollHeight,
-    behavior: smooth ? 'smooth' : 'auto'
-  });
+  );  
 }
 
 function showLoading(duration = 1000) {
-  const output = document.getElementById('output');
   const spinner = document.createElement('div');
   spinner.textContent = '|';
   output.appendChild(spinner);
@@ -67,12 +111,15 @@ export async function renderResume() {
   try {
     const html = await fetch('./pages/resume.html').then(res => res.text());
     output.insertAdjacentHTML('beforeend', html);
+
   } catch (err) {
     output.insertAdjacentHTML(
       'beforeend',
       `<div>Error loading resume: ${err.message}</div>`
     );
   }
+
+  requestAnimationFrame(scrollToBottom);
 }
 
 input.addEventListener('keydown', async (e) => {
@@ -107,7 +154,7 @@ input.addEventListener('keydown', async (e) => {
       await renderSocials(arg);
       break;
     case 'clear':
-      clearTerminal();  
+      clearTerminal();
       await renderWelcome();
       break;
     case 'welcome':
@@ -120,10 +167,12 @@ input.addEventListener('keydown', async (e) => {
       output.insertAdjacentHTML(
         'beforeend',
         `<div>Command not found</div>`
-      );
+      );      
   }
 
-  // Ensure cursor always returns
-  scrollToBottom(true);
+  requestAnimationFrame(() => {
+    scrollToBottom(true);
+  });
+
   input.focus();
 });

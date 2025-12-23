@@ -1,6 +1,9 @@
+import { ensureMarked } from '../services/markdownService.js';
+/* import { scrollToBottom } from '../scripts/utils/scroll.js'; */
+
 export async function render(arg = null) {
   const output = document.getElementById('output');
-
+  await ensureMarked();
   // Fetch Markdown
   const markdown = await fetch('content/socials.md').then(r => r.text());
 
@@ -33,4 +36,7 @@ export async function render(arg = null) {
       );
     }
   }
+
+  /* scrollToBottom(true); */
+  /* requestAnimationFrame(() => scrollToBottom(true)); */
 }

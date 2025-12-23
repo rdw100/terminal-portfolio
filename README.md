@@ -1,4 +1,4 @@
-# terminal-portfolio
+# 🖥️ terminal-portfolio
 
 A terminal-style personal portfolio built with **vanilla JavaScript**, designed to feel like a real shell session rather than a traditional website.
 

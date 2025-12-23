@@ -4,24 +4,32 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Terminal Portfolio</title>
-    <link rel="stylesheet" href="styles/styles.css" />
+    <meta
+        name="description"
+        content="Terminal-style portfolio for Dusty Wright featuring an ASCII resume, GitHub projects, and interactive command-based navigation."
+    />
+    <meta name="author" content="Dusty Wright" />
+    <meta property="og:title" content="Dusty Wright | Terminal Portfolio" />
+    <meta property="og:description" content="Interactive terminal-based portfolio with ASCII resume and GitHub projects." />
+    <meta property="og:type" content="website" />
+    <title>Dusty Wright | Terminal Portfolio</title>
+    <link rel="stylesheet" href="styles/styles.css" media="print" onload="this.media='all'"/>
+    <link rel="icon" href="favicon.ico" />
 </head>
 
 <body>
-    <div id="terminal">
-        <div id="output"></div>
-        <div id="prompt">
-            <span class="prompt-user">guest@dustywright.me:</span>
-            <span class="prompt-symbol">~$&gt;</span>
-            <label for="command" class="sr-only">Terminal command input</label>
-            <input id="command" type="text" autocomplete="off" />
+    <main>
+        <div id="terminal">
+            <div id="output"></div>
+            <div id="prompt">
+                <span class="prompt-user">guest@dustywright.me:</span>
+                <span class="prompt-symbol">~$&gt;</span>
+                <label for="command" class="sr-only">Terminal command input</label>
+                <input id="command" type="text" autocomplete="off" />
+            </div>
         </div>
-    </div>
-
-    <script src="scripts/vendor/js-yaml.min.js"></script>
-    <script src="scripts/vendor/marked.umd.js"></script>
-    <script type="module" src="scripts/app.js"></script>
+    </main>
+    <script type="module" src="scripts/app.js" defer></script>
 </body>
 
 </html>

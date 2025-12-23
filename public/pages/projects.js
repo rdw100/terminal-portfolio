@@ -61,6 +61,6 @@ export async function render(args = []) {
   }
 
   // Scroll to bottom of terminal, after async rendering
-  document.getElementById('terminal').scrollTop =
-    document.getElementById('terminal').scrollHeight;
+/*   document.getElementById('terminal').scrollTop =
+    document.getElementById('terminal').scrollHeight; */
 }
