@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 20
 
-      # 3️⃣ Run Lighthouse CI
+      # 3. Run Lighthouse CI in production
       - name: Run Lighthouse CI
         run: |
           npx lhci autorun \
@@ -33,13 +33,18 @@ jobs:
 
       # 4️⃣ List the Lighthouse folder to ensure it's there
       - name: List Lighthouse folder
-        run: ls -al public/lighthouse
+        run: ls -al lighthouse
 
-      # 4️⃣ Generate scores.json for Shields badges
+      # 4. Generate scores.json for badges
       - name: Generate scores.json
         run: |
           if [ -f public/lighthouse/lhr-0.json ]; then
-            jq '{performance: .categories.performance.score*100, accessibility: .categories.accessibility.score*100, bestPractices: .categories["best-practices"].score*100, seo: .categories.seo.score*100}' public/lighthouse/lhr-0.json > public/lighthouse/scores.json
+            jq '{
+              performance: .categories.performance.score*100,
+              accessibility: .categories.accessibility.score*100,
+              bestPractices: .categories["best-practices"].score*100,
+              seo: .categories.seo.score*100
+            }' public/lighthouse/lhr-0.json > public/lighthouse/scores.json
           else
             echo "No Lighthouse report found!"
             exit 1
