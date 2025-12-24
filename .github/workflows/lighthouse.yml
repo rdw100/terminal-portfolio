@@ -54,7 +54,7 @@ jobs:
       - name: Run Lighthouse CI
         run: |
           lhci autorun \
-            --collect.url=https://YOUR-PRODUCTION-URL.azurestaticapps.net \
+            --collect.url=https://purple-sand-0ac49090f.3.azurestaticapps.net/ \
             --upload.target=filesystem \
             --upload.outputDir=public/lighthouse
 
