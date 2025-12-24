@@ -1,4 +1,4 @@
-name: Lighthouse (Production)
+name: Lighthouse CI (Production)
 
 on:
   push:
@@ -10,16 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      # Step 1: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
+      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Run Lighthouse CI
-        run: npx lhci autorun
+      # Step 3: Run Lighthouse CI
+      - name: Run LHCI
+        run: npx lhci autorun --verbose
 
-
-
+      # Step 4: Generate simplified JSON for badges
+      - name: Generate scores.json
+        run: |
+          mkdir -p .lighthouseci
+          if [ -f .lighthouseci/lhr-0.json ]; then
+            jq '{
+              performance: .categories.performance.score*100,
+              accessibility: .categories.accessibility.score*100,
+              bestPractices: .categories["best-practices"].score*100,
+              seo: .categories.seo.score*100
+            }' .lighthouseci/lhr-0.json > .lighthouseci/scores.json
+          else
+            echo "No Lighthouse report found!"
+            exit 1
+          fi
