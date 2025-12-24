@@ -37,8 +37,30 @@ jobs:
           ls -al .lighthouseci
 
       # 5️⃣ Copy the latest Lighthouse JSON to a folder for badges
-      - name: Copy Lighthouse JSON for badges
+      - name: Generate scores.json
         run: |
-          mkdir -p lighthouse
-          LATEST_JSON=$(ls -t .lighthouseci/*.report.json | head -n1)
-          cp "$LATEST_JSON" lighthouse/scores.json
+          REPORT=$(ls .lighthouseci/*.report.json | head -n 1)
+
+          jq '{
+            performance: (.categories.performance.score * 100 | round),
+            accessibility: (.categories.accessibility.score * 100 | round),
+            bestPractices: (.categories["best-practices"].score * 100 | round),
+            seo: (.categories.seo.score * 100 | round)
+          }' "$REPORT" > public/lighthouse/scores.json
+
+          echo "Generated public/lighthouse/scores.json:"
+          cat public/lighthouse/scores.json
+
+      # 6️⃣ Upload the Lighthouse reports as artifacts
+      - name: Upload Lighthouse reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci/
+
+      # 7️⃣ Upload the scores.json file as an artifact
+      - name: Upload scores.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-scores
+          path: public/lighthouse/scores.json
