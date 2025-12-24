@@ -27,7 +27,16 @@ jobs:
       - name: List LHCI results
         run: ls -R .lighthouseci
       
-      # 4️⃣ Copy the latest Lighthouse JSON to a folder for badges
+      # 4️⃣ Verify the Lighthouse output
+      - name: Verify Lighthouse output
+        run: |
+          echo "PWD:"
+          pwd
+          echo ""
+          echo "Contents of .lighthouseci:"
+          ls -al .lighthouseci
+
+      # 5️⃣ Copy the latest Lighthouse JSON to a folder for badges
       - name: Copy Lighthouse JSON for badges
         run: |
           mkdir -p lighthouse
