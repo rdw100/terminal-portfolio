@@ -19,8 +19,7 @@ jobs:
           node-version: 20
 
       - name: Run Lighthouse CI
-        run: npx lhci autorun --upload.target=filesystem --upload.outputDir=lighthouse
+        run: npx lhci autorun --upload.target=filesystem --upload.outputDir=public/lighthouse
 
       - name: Save Lighthouse JSON for badges
-        run: cp lighthouse/lhr-0.json lighthouse/scores.json
-
+        run: cp public/lighthouse/lhr-0.json public/lighthouse/scores.json
