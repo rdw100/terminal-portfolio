@@ -27,6 +27,7 @@ jobs:
             --collect.url=https://purple-sand-0ac49090f.3.azurestaticapps.net \
             --collect.numberOfRuns=1 \
             --collect.settings.emulatedFormFactor=desktop \
+            --collect.settings.output=./public/lighthouse/lhr.json \
             --upload.target=filesystem \
             --upload.outputDir=public/lighthouse \
             --verbose
