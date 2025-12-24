@@ -32,25 +32,35 @@ jobs:
             --upload.outputDir=public/lighthouse \
             --verbose
 
-      # 4️⃣ List the Lighthouse folder to ensure it's there
-      - name: List Lighthouse folder
-        run: ls -al public/lighthouse
+      # 3️⃣ Ensure lighthouse output folder exists
+      - name: Ensure lighthouse folder exists
+        run: |
+          mkdir -p public/lighthouse \
+          ls -al public/lighthouse
 
-      # 4. Generate scores.json for badges
+      # 4️⃣ Run Lighthouse CI on production URL
+      - name: Run Lighthouse CI
+        run: |
+          npx lhci autorun \
+            --collect.url=https://purple-sand-0ac49090f.3.azurestaticapps.net \
+            --collect.numberOfRuns=1 \
+            --collect.settings.emulatedFormFactor=desktop \
+            --collect.settings.output=json \
+            --collect.settings.outputDir=public/lighthouse \
+            --upload.target=filesystem \
+            --upload.outputDir=public/lighthouse \
+            --verbose
+
+      # 5️⃣ Generate consolidated scores.json for badges
       - name: Generate scores.json
         run: |
           if [ -f public/lighthouse/lhr-0.json ]; then
-            jq '{
-              performance: .categories.performance.score*100,
-              accessibility: .categories.accessibility.score*100,
-              bestPractices: .categories["best-practices"].score*100,
-              seo: .categories.seo.score*100
-            }' public/lighthouse/lhr-0.json > public/lighthouse/scores.json
+            jq '{performance: .categories.performance.score*100, accessibility: .categories.accessibility.score*100, bestPractices: .categories["best-practices"].score*100, seo: .categories.seo.score*100}' public/lighthouse/lhr-0.json > public/lighthouse/scores.json
           else
             echo "No Lighthouse report found!"
             exit 1
           fi
-
+          
       # ✅ Optional: Commit scores.json back to main for badges to always reflect latest results
       # - name: Commit Lighthouse scores
       #   run: |
