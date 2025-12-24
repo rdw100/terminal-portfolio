@@ -29,6 +29,11 @@ jobs:
             --collect.settings.emulatedFormFactor=desktop \
             --upload.target=filesystem \
             --upload.outputDir=public/lighthouse
+            --verbose
+            
+      # 4️⃣ List the Lighthouse folder to ensure it's there
+      - name: List Lighthouse folder
+        run: ls -al public/lighthouse
 
       # 4️⃣ Generate scores.json for Shields badges
       - name: Generate scores.json
