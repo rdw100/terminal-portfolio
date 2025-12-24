@@ -10,34 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout repo
-      - name: Checkout
+      # 1️⃣ Check out your code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      # 2️⃣ Run Lighthouse CI using the Action
+      - name: Audit site performance with Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
         with:
-                    node-version: 18
-      - run: npm install && npm install -g @lhci/cli@0.15.x
-      - run: npm run build
+          urls: |
+            https://purple-sand-0ac49090f.3.azurestaticapps.net
+          uploadArtifacts: true
+          temporaryPublicStorage: true
 
-      # Step 3: Run Lighthouse CI
-      - name: Run LHCI
-        run: npx lhci autorun --verbose
-
-      # Step 4: Generate simplified JSON for badges
-      - name: Generate scores.json
-        run: |
-          mkdir -p .lighthouseci
-          if [ -f .lighthouseci/lhr-0.json ]; then
-            jq '{
-              performance: .categories.performance.score*100,
-              accessibility: .categories.accessibility.score*100,
-              bestPractices: .categories["best-practices"].score*100,
-              seo: .categories.seo.score*100
-            }' .lighthouseci/lhr-0.json > .lighthouseci/scores.json
-          else
-            echo "No Lighthouse report found!"
-            exit 1
-          fi
+      # 3️⃣ Show the generated artifacts in the logs
+      - name: List LHCI results
+        run: ls -R .lighthouseci
