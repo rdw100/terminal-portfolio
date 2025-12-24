@@ -10,16 +10,54 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      # Run Lighthouse CI and save JSON locally
       - name: Run Lighthouse CI
-        run: npx lhci autorun --upload.target=filesystem --upload.outputDir=public/lighthouse
+        run: |
+          mkdir -p public/lighthouse
+          npx lhci autorun --upload.target=filesystem --upload.outputDir=public/lighthouse
 
-      - name: Save Lighthouse JSON for badges
+      # Copy the first report to scores.json (only if it exists)
+      - name: Copy Lighthouse JSON for badges
+        run: |
+          if [ -f public/lighthouse/lhr-0.json ]; then
+            cp public/lighthouse/lhr-0.json public/lighthouse/scores.json
+          else
+            echo "No Lighthouse report found!"
+            exit 1
+          fi      # 1️⃣ Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 3️⃣ Install Lighthouse CI
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.11.x
+
+      # 4️⃣ Ensure output folder exists
+      - name: Create lighthouse folder
+        run: mkdir -p public/lighthouse
+
+      # 5️⃣ Run Lighthouse CI (Production URL)
+      - name: Run Lighthouse CI
+        run: |
+          lhci autorun \
+            --collect.url=https://YOUR-PRODUCTION-URL.azurestaticapps.net \
+            --upload.target=filesystem \
+            --upload.outputDir=public/lighthouse
+
+      # 6️⃣ Copy first report to scores.json for shields.io
+      - name: Prepare scores.json
         run: cp public/lighthouse/lhr-0.json public/lighthouse/scores.json
