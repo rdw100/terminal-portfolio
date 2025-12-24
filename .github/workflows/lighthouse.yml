@@ -23,5 +23,3 @@ jobs:
 
 
 
-      - name: List LHCI folder contents
-        run: ls -al .lighthouseci
