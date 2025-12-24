@@ -33,7 +33,7 @@ jobs:
 
       # 4️⃣ List the Lighthouse folder to ensure it's there
       - name: List Lighthouse folder
-        run: ls -al lighthouse
+        run: ls -al public/lighthouse
 
       # 4. Generate scores.json for badges
       - name: Generate scores.json
