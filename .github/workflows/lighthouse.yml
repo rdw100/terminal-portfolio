@@ -22,7 +22,5 @@ jobs:
         run: npx lhci autorun --upload.target=filesystem --upload.outputDir=lighthouse
 
       - name: Save Lighthouse JSON for badges
-        run: |
-          mkdir -p lighthouse
-          cp lighthouse/lhr-*.json lighthouse/scores.json
+        run: cp lighthouse/lhr-0.json lighthouse/scores.json
 
