@@ -20,20 +20,8 @@ jobs:
 
       - name: Run Lighthouse CI
         run: npx lhci autorun
-        
-      - name: Generate scores.json
-        run: |
-          if [ -f .lighthouseci/lhr-0.json ]; then
-            jq '{
-              performance: .categories.performance.score*100,
-              accessibility: .categories.accessibility.score*100,
-              bestPractices: .categories["best-practices"].score*100,
-              seo: .categories.seo.score*100
-            }' .lighthouseci/lhr-0.json > .lighthouseci/scores.json
-          else
-            echo "No Lighthouse report found!"
-            exit 1
-          fi
+
+
 
       - name: List LHCI folder contents
         run: ls -al .lighthouseci
