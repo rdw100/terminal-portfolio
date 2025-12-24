@@ -1,7 +1,7 @@
 {
   "ci": {
     "collect": {
-      "url": ["https://purple-sand-0ac49090f.3.azurestaticapps.net/"],
+      "url": ["https://purple-sand-0ac49090f.3.azurestaticapps.net"],
       "numberOfRuns": 3
     },
     "assert": {
