@@ -10,60 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout your repo
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # 3. Run Lighthouse CI in production
       - name: Run Lighthouse CI
-        run: |
-          npx lhci autorun \
-            --collect.url=https://purple-sand-0ac49090f.3.azurestaticapps.net \
-            --collect.numberOfRuns=1 \
-            --collect.settings.emulatedFormFactor=desktop \
-            --collect.settings.output=./public/lighthouse/lhr.json \
-            --upload.target=filesystem \
-            --upload.outputDir=public/lighthouse \
-            --verbose
+        run: npx lhci autorun --collect.url=https://purple-sand-0ac49090f.3.azurestaticapps.net --collect.numberOfRuns=1 --collect.settings.emulatedFormFactor=desktop --upload.target=filesystem --verbose
 
-      # 3️⃣ Ensure lighthouse output folder exists
-      - name: Ensure lighthouse folder exists
-        run: |
-          mkdir -p public/lighthouse 
-          ls -al public/lighthouse
-
-      # 4️⃣ Run Lighthouse CI on production URL
-      - name: Run Lighthouse CI
-        run: |
-          npx lhci autorun \
-            --collect.url=https://purple-sand-0ac49090f.3.azurestaticapps.net \
-            --collect.numberOfRuns=1 \
-            --collect.settings.emulatedFormFactor=desktop \
-            --upload.target=filesystem \
-            --upload.outputDir=public/lighthouse \
-            --verbose
-
-      # 5️⃣ Generate consolidated scores.json for badges
       - name: Generate scores.json
         run: |
-          if [ -f public/lighthouse/lhr-0.json ]; then
-            jq '{performance: .categories.performance.score*100, accessibility: .categories.accessibility.score*100, bestPractices: .categories["best-practices"].score*100, seo: .categories.seo.score*100}' public/lighthouse/lhr-0.json > public/lighthouse/scores.json
+          if [ -f .lighthouseci/lhr-0.json ]; then
+            jq '{
+              performance: .categories.performance.score*100,
+              accessibility: .categories.accessibility.score*100,
+              bestPractices: .categories["best-practices"].score*100,
+              seo: .categories.seo.score*100
+            }' .lighthouseci/lhr-0.json > .lighthouseci/scores.json
           else
             echo "No Lighthouse report found!"
             exit 1
           fi
 
-      # ✅ Optional: Commit scores.json back to main for badges to always reflect latest results
-      # - name: Commit Lighthouse scores
-      #   run: |
-      #     git config user.name "github-actions"
-      #     git config user.email "github-actions@github.com"
-      #     git add public/lighthouse/scores.json
-      #     git commit -m "Update Lighthouse scores"
-      #     git push    
+      - name: List LHCI folder contents
+        run: ls -al .lighthouseci
