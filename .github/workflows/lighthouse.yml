@@ -28,9 +28,9 @@ jobs:
             --collect.numberOfRuns=1 \
             --collect.settings.emulatedFormFactor=desktop \
             --upload.target=filesystem \
-            --upload.outputDir=public/lighthouse
+            --upload.outputDir=public/lighthouse \
             --verbose
-            
+
       # 4️⃣ List the Lighthouse folder to ensure it's there
       - name: List Lighthouse folder
         run: ls -al public/lighthouse
