@@ -35,7 +35,7 @@ jobs:
       # 3️⃣ Ensure lighthouse output folder exists
       - name: Ensure lighthouse folder exists
         run: |
-          mkdir -p public/lighthouse \
+          mkdir -p public/lighthouse 
           ls -al public/lighthouse
 
       # 4️⃣ Run Lighthouse CI on production URL
@@ -60,7 +60,7 @@ jobs:
             echo "No Lighthouse report found!"
             exit 1
           fi
-          
+
       # ✅ Optional: Commit scores.json back to main for badges to always reflect latest results
       # - name: Commit Lighthouse scores
       #   run: |
