@@ -1,5 +1,4 @@
 import { ensureMarked } from '../services/markdownService.js';
-/* import { scrollToBottom } from '../scripts/utils/scroll.js'; */
 
 export async function render(arg = null) {
   const output = document.getElementById('output');
@@ -36,7 +35,4 @@ export async function render(arg = null) {
       );
     }
   }
-
-  /* scrollToBottom(true); */
-  /* requestAnimationFrame(() => scrollToBottom(true)); */
 }

@@ -1,5 +1,4 @@
 import { ensureMarked } from '../services/markdownService.js';
-/* import { scrollToBottom } from '../scripts/utils/scroll.js'; */
 
 export async function render() {
   const output = document.getElementById('output');
@@ -19,6 +18,4 @@ export async function render() {
       `<div>Error loading welcome: ${err.message}</div>`
     );
   }
-
-  /* scrollToBottom(true); */
 }

@@ -1,11 +1,3 @@
-/* import { render as renderAbout } from '../pages/about.js';*/
-
-/* import { render as renderWelcome } from '../pages/welcome.js'; */
-/* import { render as renderHelp } from '../pages/help.js'; */
-/* import { render as renderGui } from '../pages/gui.js'; */
-/* import { render as renderProjects } from '../pages/projects.js';
-import { render as renderSocials } from '../pages/socials.js'; */
-
 /* --- DYNAMIC PAGE LOADERS --- */
 async function renderAbout() {
   const { render } = await import('../pages/about.js');
@@ -44,14 +36,6 @@ function scrollToBottom() {
 
 /* --- INITIAL FOCUS & WELCOME --- */
 input.focus();
-
-/* Render welcome AFTER first paint */
-/* requestAnimationFrame(async () => {
-  printCommand('welcome');
-  await renderWelcome();
-  requestAnimationFrame(scrollToBottom);
-  input.focus();
-}); */
 
 /* Render welcome AFTER first paint, non-blocking */
 requestAnimationFrame(() => {

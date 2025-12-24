@@ -59,8 +59,4 @@ export async function render(args = []) {
       `<div>Opening ${projects[index]}…</div>`
     );
   }
-
-  // Scroll to bottom of terminal, after async rendering
-/*   document.getElementById('terminal').scrollTop =
-    document.getElementById('terminal').scrollHeight; */
 }

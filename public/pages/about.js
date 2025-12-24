@@ -1,5 +1,4 @@
 import { getConfig } from '../services/configService.js';
-/* import { scrollToBottom } from '../scripts/utils/scroll.js'; */
 
 export async function render() {
   const output = document.getElementById('output');
@@ -20,8 +19,4 @@ export async function render() {
 </p>
 `
   );
-
-/*   requestAnimationFrame(() => {
-    scrollToBottom();
-  }); */
 }

@@ -11,15 +11,6 @@ body {
   font-family: monospace;
 }
 
-/* #terminal {
-  box-sizing: border-box;
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
-  margin: 5px;
-  padding: 10px;
-  overflow-y: auto;
-} */
-
 #terminal {
   box-sizing: border-box;
   width: 100%;
@@ -72,11 +63,6 @@ p {
 .prompt-text {
   margin-left: 0.25em;
 }
-
-/* #terminal {
-  overflow-y: auto;
-  height: calc(100% - 10px); 
-} */
 
 .terminal-command {
   white-space: pre-wrap;
