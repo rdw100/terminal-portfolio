@@ -19,8 +19,8 @@ jobs:
           node-version: 20
 
       - name: Run Lighthouse CI
-        run: npx lhci autorun --collect.url=https://purple-sand-0ac49090f.3.azurestaticapps.net --collect.numberOfRuns=1 --collect.settings.emulatedFormFactor=desktop --upload.target=filesystem --verbose
-
+        run: npx lhci autorun
+        
       - name: Generate scores.json
         run: |
           if [ -f .lighthouseci/lhr-0.json ]; then
