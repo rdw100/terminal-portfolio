@@ -1,46 +1,34 @@
-name: Lighthouse CI (Production)
+name: Lighthouse (Production)
 
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Check out your code
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      # 2️⃣ Run Lighthouse CI using the Action
-      - name: Audit site performance with Lighthouse
-        uses: treosh/lighthouse-ci-action@v12
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
         with:
           urls: |
             https://purple-sand-0ac49090f.3.azurestaticapps.net
           uploadArtifacts: true
           temporaryPublicStorage: true
 
-      # 3️⃣ Show the generated artifacts in the logs
-      - name: List LHCI results
-        run: ls -R .lighthouseci
-      
-      # 4️⃣ Verify the Lighthouse output
-      - name: Verify Lighthouse output
-        run: |
-          echo "PWD:"
-          pwd
-          echo ""
-          echo "Contents of .lighthouseci:"
-          ls -al .lighthouseci
-
-      # 5️⃣ Copy the latest Lighthouse JSON to a folder for badges
       - name: Generate scores.json
         run: |
           REPORT=$(ls .lighthouseci/*.report.json | head -n 1)
-
           jq '{
             performance: (.categories.performance.score * 100 | round),
             accessibility: (.categories.accessibility.score * 100 | round),
@@ -48,9 +36,6 @@ jobs:
             seo: (.categories.seo.score * 100 | round)
           }' "$REPORT" > public/lighthouse/scores.json
 
-          echo "Generated public/lighthouse/scores.json:"
-
-      # 6️⃣ Commit the scores.json file if it has changed
       - name: Commit scores.json if changed
         run: |
           git config user.name "github-actions"
