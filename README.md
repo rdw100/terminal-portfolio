@@ -61,15 +61,10 @@ socials:
 ---
 ## Lighthouse Scores
 
-<!-- ![Performance](https://img.shields.io/badge/dynamic/json?label=Performance&query=$.performance&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/lighthouse/scores.json)
-![Accessibility](https://img.shields.io/badge/dynamic/json?label=Accessibility&query=$.accessibility&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/lighthouse/scores.json)
-![Best Practices](https://img.shields.io/badge/dynamic/json?label=Best%20Practices&query=$.bestPractices&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/lighthouse/scores.json)
-![SEO](https://img.shields.io/badge/dynamic/json?label=SEO&query=$.seo&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/lighthouse/scores.json) -->
-
-![Performance](https://img.shields.io/badge/dynamic/json?label=Performance&query=$.performance&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/.lighthouseci/scores.json)
-![Accessibility](https://img.shields.io/badge/dynamic/json?label=Accessibility&query=$.accessibility&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/.lighthouseci/scores.json)
-![Best Practices](https://img.shields.io/badge/dynamic/json?label=Best%20Practices&query=$.bestPractices&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/.lighthouseci/scores.json)
-![SEO](https://img.shields.io/badge/dynamic/json?label=SEO&query=$.seo&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/.lighthouseci/scores.json)
+![Performance](https://img.shields.io/badge/dynamic/json?label=Performance&query=$.categories.performance.score&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/lighthouse/scores.json)
+![Accessibility](https://img.shields.io/badge/dynamic/json?label=Accessibility&query=$.categories.accessibility.score&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/lighthouse/scores.json)
+![Best Practices](https://img.shields.io/badge/dynamic/json?label=Best%20Practices&query=$.categories["best-practices"].score&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/lighthouse/scores.json)
+![SEO](https://img.shields.io/badge/dynamic/json?label=SEO&query=$.categories.seo.score&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/lighthouse/scores.json)
 
 ---
 

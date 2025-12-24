@@ -26,3 +26,10 @@ jobs:
       # 3️⃣ Show the generated artifacts in the logs
       - name: List LHCI results
         run: ls -R .lighthouseci
+      
+      # 4️⃣ Copy the latest Lighthouse JSON to a folder for badges
+      - name: Copy Lighthouse JSON for badges
+        run: |
+          mkdir -p lighthouse
+          LATEST_JSON=$(ls -t .lighthouseci/*.report.json | head -n1)
+          cp "$LATEST_JSON" lighthouse/scores.json
