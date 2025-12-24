@@ -1,4 +1,4 @@
-# 🖥️ terminal-portfolio
+# 📄 terminal-portfolio
 
 A terminal-style personal portfolio built with **vanilla JavaScript**, designed to feel like a real shell session rather than a traditional website.
 
@@ -56,6 +56,15 @@ socials:
   github: https://github.com/rdw100
   gui: https://legacy.example.com
 ```
+---
+## Lighthouse Scores
+
+<!-- ![Performance](https://img.shields.io/badge/dynamic/json?label=Performance&query=$.performance&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/lighthouse/scores.json)
+![Accessibility](https://img.shields.io/badge/dynamic/json?label=Accessibility&query=$.accessibility&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/lighthouse/scores.json)
+![Best Practices](https://img.shields.io/badge/dynamic/json?label=Best%20Practices&query=$.bestPractices&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/lighthouse/scores.json)
+![SEO](https://img.shields.io/badge/dynamic/json?label=SEO&query=$.seo&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/lighthouse/scores.json) -->
+
+![Lighthouse](https://github.com/rdw100/terminal-portfolio/actions/workflows/lighthouse.yml/badge.svg)
 
 ---
 
