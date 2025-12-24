@@ -1,3 +1,4 @@
+![Lighthouse](https://github.com/rdw100/terminal-portfolio/actions/workflows/lighthouse.yml/badge.svg)
 # 📄 terminal-portfolio
 
 A terminal-style personal portfolio built with **vanilla JavaScript**, designed to feel like a real shell session rather than a traditional website.
@@ -64,7 +65,10 @@ socials:
 ![Best Practices](https://img.shields.io/badge/dynamic/json?label=Best%20Practices&query=$.bestPractices&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/lighthouse/scores.json)
 ![SEO](https://img.shields.io/badge/dynamic/json?label=SEO&query=$.seo&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/lighthouse/scores.json) -->
 
-![Lighthouse](https://github.com/rdw100/terminal-portfolio/actions/workflows/lighthouse.yml/badge.svg)
+![Performance](https://img.shields.io/badge/dynamic/json?label=Performance&query=$.categories.performance.score&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/lighthouse/scores.json)
+![Accessibility](https://img.shields.io/badge/dynamic/json?label=Accessibility&query=$.categories.accessibility.score&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/lighthouse/scores.json)
+![Best Practices](https://img.shields.io/badge/dynamic/json?label=Best%20Practices&query=$.categories["best-practices"].score&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/lighthouse/scores.json)
+![SEO](https://img.shields.io/badge/dynamic/json?label=SEO&query=$.categories.seo.score&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/lighthouse/scores.json)
 
 ---
 
