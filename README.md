@@ -33,6 +33,7 @@ The site is command-driven, fully static, and hosted as an **Azure Static Web Ap
 | `socials` | Lists social links |
 | `socials goto <n>` | Opens selected social link |
 | `gui` | Opens legacy GUI site |
+| `lighthouse` | View latest Lighthouse scores (production) |
 | `help` | Displays command help |
 | `clear` | Clears the terminal |
 

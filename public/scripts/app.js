@@ -23,7 +23,12 @@ async function renderGui() {
   const { render } = await import('../pages/gui.js');
   await render();
 }
+async function renderLighthouse() {
+  const { render } = await import('../pages/lighthouse.js');
+  await render();
+}
 
+/* --- TERMINAL SETUP --- */
 const output = document.getElementById('output');
 const input = document.getElementById('command');
 const terminal = document.getElementById('terminal');
@@ -54,12 +59,14 @@ terminal.addEventListener('click', () => {
   input.focus();
 });
 
+/* --- TERMINAL RESET/CLEAR --- */
 function clearTerminal() {
   output.innerHTML = '';
   printCommand('welcome');
   requestAnimationFrame(scrollToBottom);
 }
 
+/* --- PRINT COMMAND PROMPT --- */ 
 function printCommand(cmd) {
   output.insertAdjacentHTML(
     'beforeend',
@@ -67,6 +74,7 @@ function printCommand(cmd) {
   );  
 }
 
+/* --- LOADING SPINNER --- */
 function showLoading(duration = 1000) {
   const spinner = document.createElement('div');
   spinner.textContent = '|';
@@ -89,6 +97,7 @@ function showLoading(duration = 1000) {
   });
 }
 
+/* --- RENDER RESUME PAGE --- */
 export async function renderResume() {
   const output = document.getElementById('output');
 
@@ -106,6 +115,7 @@ export async function renderResume() {
   requestAnimationFrame(scrollToBottom);
 }
 
+/* --- COMMAND HANDLER --- */
 input.addEventListener('keydown', async (e) => {
   if (e.key !== 'Enter') return;
 
@@ -144,6 +154,9 @@ input.addEventListener('keydown', async (e) => {
     case 'welcome':
       await renderWelcome();
       break;
+    case 'lighthouse':
+      await renderLighthouse();
+      break;
     case 'help':
       await renderHelp();
       break;
@@ -154,9 +167,11 @@ input.addEventListener('keydown', async (e) => {
       );      
   }
 
+  /* --- SCROLL TO BOTTOM AFTER COMMAND --- */
   requestAnimationFrame(() => {
     scrollToBottom(true);
   });
 
+  /* --- REFOCUS INPUT AFTER COMMAND --- */
   input.focus();
 });

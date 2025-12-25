@@ -6,4 +6,5 @@
 - **resume** — Displays an ASCII resume
 - **socials** — check out my social accounts
 - **gui** — Opens the gui website in a new tab
+- **lighthouse** — View latest Lighthouse scores (production)
 - **welcome** — Displays hero section
