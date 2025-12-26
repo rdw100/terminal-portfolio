@@ -11,3 +11,4 @@
 
 Tab autocompletes the command
 Up Arrow or Down Arrow to view previous commands
+ESC clears the terminal

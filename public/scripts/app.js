@@ -165,17 +165,25 @@ input.addEventListener('keydown', async (e) => {
     e.preventDefault();
     return;
   }
-  if (e.key === 'Tab') {
-    e.preventDefault();
-    const value = input.value;
-    const parts = value.split(/\s+/);
-    const cmd = parts[0];
-    const match = availableCommands.find(c => c.startsWith(cmd));
-    if (match) {
-      input.value = match + (parts.length > 1 ? ' ' + parts.slice(1).join(' ') : '');
-    }
-    return;
-  }
+   if (e.key === 'Tab') {
+     e.preventDefault();
+     const value = input.value;
+     const parts = value.split(/\s+/);
+     const cmd = parts[0];
+     const match = availableCommands.find(c => c.startsWith(cmd));
+     if (match) {
+       input.value = match + (parts.length > 1 ? ' ' + parts.slice(1).join(' ') : '');
+     }
+     return;
+   }
+   if (e.key === 'Escape') {
+     e.preventDefault();
+     clearTerminal();
+     await renderWelcome();
+     input.value = '';
+     historyIndex = -1;
+     return;
+   }
   if (e.key !== 'Enter') return;
 
   let cmd = input.value.trim();
