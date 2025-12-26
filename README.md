@@ -8,6 +8,35 @@ The site is command-driven, fully static, and hosted as an **Azure Static Web Ap
 
 ---
 
+## 🛠️ Built With
+
+This terminal-style portfolio was built using a modern, lightweight web stack with an emphasis on performance, accessibility, and developer ergonomics:
+
+- 🧰 Visual Studio Code — primary development environment
+- 🌐 Vanilla JavaScript (ES Modules) — command routing, dynamic imports, and rendering
+- 🖥️ HTML5 + CSS3 — semantic markup and terminal-style UI
+- 📄 Markdown — content-driven pages (About, Help, Projects, Socials)
+- ⚡ Azure Static Web Apps (SWA) — globally distributed hosting
+- 🔁 GitHub Actions — CI/CD and automated Lighthouse audits
+- 📊 Lighthouse CI — performance, accessibility, and quality scoring
+- 🧾 YAML Configuration — centralized config for commands and links
+- 🧠 Dynamic Module Loading — deferred page loading for optimal LCP
+- ♿ Accessibility-first design — semantic HTML, focus management, and keyboard navigation
+
+---
+
+## 🧠 Design Philosophy
+
+- Terminal-first UX
+- Minimal dependencies
+- Explicit configuration
+- Content > frameworks
+- Readable over clever
+
+This project intentionally avoids frontend frameworks to keep behavior transparent and maintainable.
+
+---
+
 ## ✨ Features
 
 - Terminal-style UI with command prompt
@@ -45,8 +74,8 @@ All environment-specific and external values are stored in **YAML**:
 
 ```yaml
 site:
-  legacy_url: https://legacy.example.com
-  contact_email: you@example.com
+  legacy_url: https://gray-glacier-0dd347e0f.azurestaticapps.net/
+  contact_email: dusty@dustywright.me
 
 github:
   username: rdw100
@@ -55,12 +84,12 @@ github:
     - northwind-api
 
 socials:
-  linkedin: https://linkedin.com/in/yourprofile
+  linkedin: https://linkedin.com/in/rdw100
   github: https://github.com/rdw100
-  gui: https://legacy.example.com
+  gui: https://gray-glacier-0dd347e0f.azurestaticapps.net/
 ```
 ---
-## Lighthouse Scores
+## 🔦 Lighthouse Scores
 
 ![Performance](https://img.shields.io/badge/dynamic/json?label=Performance&query=$.performance&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/public/lighthouse/scores.json)
 ![Accessibility](https://img.shields.io/badge/dynamic/json?label=Accessibility&query=$.accessibility&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/public/lighthouse/scores.json)
@@ -114,18 +143,6 @@ Hosted using **Azure Static Web Apps** and GitHub Actions.
 - No framework build step
 - Static content only
 - Deterministic deploys
-
----
-
-## 🧠 Design Philosophy
-
-- Terminal-first UX
-- Minimal dependencies
-- Explicit configuration
-- Content > frameworks
-- Readable over clever
-
-This project intentionally avoids frontend frameworks to keep behavior transparent and maintainable.
 
 ---
 
@@ -190,14 +207,13 @@ None of these impact runtime once deployed successfully.
 
 ---
 
-## ❓ Why ASCII Resume?
+## ❓ Why this stack?
 
-- Preserves alignment and formatting across environments
-- Renders consistently in terminal-style UI
-- Version-controlled, diff-friendly format
-- Avoids PDF or framework-specific layouts
-
-The resume is intentionally **content-first**, not presentation-driven.
+- Zero framework overhead — fast load times and minimal JavaScript
+- Content-first architecture — Markdown over hardcoded UI
+- CI-verified quality — Lighthouse scores tracked automatically
+- Terminal-native UX — keyboard-driven, distraction-free interaction
+- Production-focused — runs exactly as deployed, no mock data
 
 ---
 
@@ -213,3 +229,12 @@ This project favors a terminal interface because it:
 The terminal metaphor also keeps the architecture simple and explicit.
 
 ---
+
+## ❓ Why ASCII Resume?
+
+- Preserves alignment and formatting across environments
+- Renders consistently in terminal-style UI
+- Version-controlled, diff-friendly format
+- Avoids PDF or framework-specific layouts
+
+The resume is intentionally **content-first**, not presentation-driven.
