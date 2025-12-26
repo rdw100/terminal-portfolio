@@ -8,3 +8,5 @@
 - **gui** — Opens the gui website in a new tab
 - **lighthouse** — View latest Lighthouse scores (production)
 - **welcome** — Displays hero section
+
+Tab autocompletes the command

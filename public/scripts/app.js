@@ -32,6 +32,17 @@ async function renderLighthouse() {
 const output = document.getElementById('output');
 const input = document.getElementById('command');
 const terminal = document.getElementById('terminal');
+const availableCommands = [
+  'about',
+  'clear',
+  'gui',
+  'help',
+  'lighthouse',
+  'projects',
+  'resume',
+  'socials',
+  'welcome'
+];
 
 /* --- SCROLL (FINAL, LOCKED) --- */
 function scrollToBottom() {
@@ -115,8 +126,32 @@ export async function renderResume() {
   requestAnimationFrame(scrollToBottom);
 }
 
-/* --- COMMAND HANDLER --- */
+/* --- COMMAND HANDLERS --- */
+const commandHandlers = {
+  about: async () => await renderAbout(),
+  gui: async () => await renderGui(),
+  resume: async () => { showLoading(1200); await renderResume(); },
+  projects: async (args) => { showLoading(1200); await renderProjects(args); },
+  socials: async (args) => await renderSocials(args.join(' ')),
+  clear: async () => { clearTerminal(); await renderWelcome(); },
+  welcome: async () => await renderWelcome(),
+  lighthouse: async () => await renderLighthouse(),
+  help: async () => await renderHelp(),
+};
+
+/* --- INPUT EVENT LISTENER KEYDOWN --- */
 input.addEventListener('keydown', async (e) => {
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const value = input.value;
+    const parts = value.split(/\s+/);
+    const cmd = parts[0];
+    const match = availableCommands.find(c => c.startsWith(cmd));
+    if (match) {
+      input.value = match + (parts.length > 1 ? ' ' + parts.slice(1).join(' ') : '');
+    }
+    return;
+  }
   if (e.key !== 'Enter') return;
 
   let cmd = input.value.trim();
@@ -127,44 +162,14 @@ input.addEventListener('keydown', async (e) => {
   const [baseCmd, ...args] = cmd.split(/\s+/);
   const arg = args.join(' ');
 
-  switch (baseCmd) {
-    case 'about':
-      await renderAbout();
-      break;
-    case 'gui':
-      await renderGui();
-      break;
-    case 'resume':
-      showLoading(1200);
-      await renderResume();
-      break;
-    case 'projects': {
-      showLoading(1200);
-      const parts = cmd.split(/\s+/);
-      await renderProjects(parts.slice(1));
-      break;
-    }
-    case 'socials':
-      await renderSocials(arg);
-      break;
-    case 'clear':
-      clearTerminal();
-      await renderWelcome();
-      break;
-    case 'welcome':
-      await renderWelcome();
-      break;
-    case 'lighthouse':
-      await renderLighthouse();
-      break;
-    case 'help':
-      await renderHelp();
-      break;
-    default:
-      output.insertAdjacentHTML(
-        'beforeend',
-        `<div>Command not found</div>`
-      );      
+  const handler = commandHandlers[baseCmd];
+  if (handler) {
+    await handler(args);
+  } else {
+    output.insertAdjacentHTML(
+      'beforeend',
+      `<div>Command not found</div>`
+    );      
   }
 
   /* --- SCROLL TO BOTTOM AFTER COMMAND --- */
