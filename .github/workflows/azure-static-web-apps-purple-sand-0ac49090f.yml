@@ -30,6 +30,11 @@ jobs:
       - name: Build resume.html
         run: node build/scripts/build-resume.js
 
+      # 🔹 REQUIRED: Write AppInsights ENV key
+      - name: Replace App Insights key  
+        run: |
+          sed -i 's|__APPINSIGHTS_KEY__|'"${{ secrets.APPINSIGHTS_KEY }}"'|g' ./path/to/app.js
+
       # 🔹 Deploy
       - name: Build And Deploy
         id: builddeploy

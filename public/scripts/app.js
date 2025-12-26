@@ -29,6 +29,7 @@ async function renderLighthouse() {
 }
 
 /* --- TERMINAL SETUP --- */
+const APPINSIGHTS_KEY = '__APPINSIGHTS_KEY__'; // Placeholder for Application Insights key
 const output = document.getElementById('output');
 const input = document.getElementById('command');
 const terminal = document.getElementById('terminal');
