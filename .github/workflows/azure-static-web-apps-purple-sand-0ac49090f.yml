@@ -33,7 +33,7 @@ jobs:
       # 🔹 REQUIRED: Write AppInsights ENV key
       - name: Replace App Insights key  
         run: |
-          sed -i 's|__APPINSIGHTS_KEY__|'"${{ secrets.APPINSIGHTS_KEY }}"'|g' ./path/to/app.js
+          sed -i 's|__APPINSIGHTS_KEY__|'"${{ secrets.APPINSIGHTS_KEY }}"'|g' ./public/scripts/app.js
 
       # 🔹 Deploy
       - name: Build And Deploy
