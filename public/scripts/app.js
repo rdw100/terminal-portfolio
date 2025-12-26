@@ -140,7 +140,31 @@ const commandHandlers = {
 };
 
 /* --- INPUT EVENT LISTENER KEYDOWN --- */
+// --- COMMAND HISTORY ---
+const commandHistory = [];
+let historyIndex = -1;
+
 input.addEventListener('keydown', async (e) => {
+  // Command history navigation
+  if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    if (commandHistory.length === 0) return;
+    if (e.key === 'ArrowUp') {
+      if (historyIndex === -1) historyIndex = commandHistory.length - 1;
+      else if (historyIndex > 0) historyIndex--;
+    } else if (e.key === 'ArrowDown') {
+      if (historyIndex !== -1 && historyIndex < commandHistory.length - 1) historyIndex++;
+      else historyIndex = -1;
+    }
+    if (historyIndex !== -1) {
+      input.value = commandHistory[historyIndex];
+    } else {
+      input.value = '';
+    }
+    // Move cursor to end
+    setTimeout(() => input.setSelectionRange(input.value.length, input.value.length), 0);
+    e.preventDefault();
+    return;
+  }
   if (e.key === 'Tab') {
     e.preventDefault();
     const value = input.value;
@@ -155,7 +179,12 @@ input.addEventListener('keydown', async (e) => {
   if (e.key !== 'Enter') return;
 
   let cmd = input.value.trim();
+  if (cmd) {
+    commandHistory.push(cmd);
+    if (commandHistory.length > 100) commandHistory.shift();
+  }
   input.value = '';
+  historyIndex = -1;
 
   printCommand(cmd);
 
