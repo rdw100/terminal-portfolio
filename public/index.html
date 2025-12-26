@@ -17,38 +17,6 @@
     <link rel="icon" href="favicon.ico" />
 </head>
 
-<script type="text/javascript">
-if (APPINSIGHTS_KEY && APPINSIGHTS_KEY !== '__APPINSIGHTS_KEY__') {
-  var appInsights = window.appInsights || function(config) {
-    function r(config) { t[config] = function() { var i = arguments; t.queue.push(() => i) } }
-    var t = { config: config, queue: [] };
-    r('trackPageView'); r('trackEvent'); 
-    return t;
-  }({ instrumentationKey: APPINSIGHTS_KEY });
-  
-  window.appInsights = appInsights;
-  appInsights.trackPageView();
-
-  // Optional: track terminal commands
-  const originalAddEventListener = input.addEventListener.bind(input);
-  input.addEventListener = (type, listener, options) => {
-    if (type === 'keydown') {
-      originalAddEventListener(type, async (e) => {
-        if (e.key === 'Enter') {
-          const cmd = input.value.trim();
-          if (cmd) {
-            appInsights.trackEvent({ name: 'CommandExecuted', properties: { command: cmd } });
-          }
-        }
-        listener(e);
-      }, options);
-    } else {
-      originalAddEventListener(type, listener, options);
-    }
-  };
-}
-</script>
-
 <body>
     <main>
         <div id="terminal">
