@@ -33,7 +33,7 @@ jobs:
       # 🔹 REQUIRED: Write AppInsights ENV key
       - name: Replace App Insights connection string
         run: |
-          sed -i 's|__APPLICATIONINSIGHTS_CONNECTION_STRING__|'"${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}"'|g' ./public/js/analytics.js
+          sed -i 's|__APPLICATIONINSIGHTS_CONNECTION_STRING__|'"${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}"'|g' ./public/scripts/utils/analytics.js
 
       # 🔹 Deploy
       - name: Build And Deploy
