@@ -19,6 +19,7 @@ export async function render(args = []) {
   output.insertAdjacentHTML(
     'beforeend',
     `
+    <h2>Projects</h2>
     <p>
       Usage: <code>projects goto &lt;project+no&gt;</code><br>
       Example: <code>projects goto 2</code>
