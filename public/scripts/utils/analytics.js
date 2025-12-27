@@ -4,9 +4,9 @@
 // All dynamic pages and special commands are tracked
 (function() {
   // SWA injects the variable at runtime
-  const connStr = "__APPLICATIONINSIGHTS_CONNECTION_STRING__";
+  const connStr = "__TP_INSIGHTS_CONN__";
   if (!connStr || connStr.includes('%')) {
-    console.warn("APPLICATIONINSIGHTS_CONNECTION_STRING not set. Analytics disabled.");
+    console.warn("TP_INSIGHTS_CONN not set. Analytics disabled.");
     return;
   }
 

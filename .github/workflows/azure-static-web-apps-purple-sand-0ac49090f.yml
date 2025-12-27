@@ -33,7 +33,7 @@ jobs:
       # 🔹 REQUIRED: Inject Application Insights connection string
       - name: Inject App Insights connection string
         run: |
-          sed -i 's|__APPLICATIONINSIGHTS_CONNECTION_STRING__|'"${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}"'|g' ./public/scripts/utils/analytics.js
+          sed -i 's|__TP_INSIGHTS_CONN__|'"${{ secrets.TP_INSIGHTS_CONN }}"'|g' ./public/scripts/utils/analytics.js
 
        # 🔹 Deploy
       - name: Build And Deploy
