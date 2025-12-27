@@ -6,7 +6,7 @@ module.exports = async function (context, req) {
       status: 400,
       body: {
         error: "Missing coin symbol",
-        usage: "Type: coin btc"
+        usage: "Usage: coin btc"
       }
     };
     return;
@@ -27,7 +27,7 @@ module.exports = async function (context, req) {
       body: {
         error: `Unsupported coin '${symbol}'`,
         supported: Object.keys(map),
-        usage: "Type: coin btc"
+        usage: "Usage: coin btc"
       }
     };
     return;

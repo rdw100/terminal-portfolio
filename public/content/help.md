@@ -10,6 +10,6 @@
 - **coin** — View select coin prices
 - **welcome** — Displays hero section
 
-Tab autocompletes the command
-Up Arrow or Down Arrow to view previous commands
-ESC clears the terminal
+<p>Tab autocompletes the command<br>
+Up Arrow or Down Arrow to view previous commands<br>
+ESC clears the terminal</p>

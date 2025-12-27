@@ -6,7 +6,7 @@ export async function render(args = []) {
   if (args.length !== 1) {
     output.insertAdjacentHTML(
       'beforeend',
-      `<div>Usage: <b>coin btc</b></div>`
+      `<p>Usage: <b>coin btc</b></p>`
     );
     return;
   }

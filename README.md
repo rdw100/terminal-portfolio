@@ -47,6 +47,9 @@ This project intentionally avoids frontend frameworks to keep behavior transpare
 - GitHub project integration
 - External resume build pipeline
 - Fully static deployment (no backend required)
+- Autocomplete features (TAB)
+- Navigate previous and next command history
+- Third-party coin api service 
 
 ---
 
