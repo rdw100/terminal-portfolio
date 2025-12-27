@@ -5,7 +5,7 @@
 (function() {
   // SWA injects the variable at runtime
   const connStr = "__TP_INSIGHTS_CONN__";
-  if (!connStr || connStr.includes('%')) {
+  if (!connStr || connStr.includes("__")) {
     console.warn("TP_INSIGHTS_CONN not set. Analytics disabled.");
     return;
   }
