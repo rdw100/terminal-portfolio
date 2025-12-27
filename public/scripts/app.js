@@ -1,3 +1,5 @@
+//import yahoo from '../api/yahoo/index.js';
+
 /* --- DYNAMIC PAGE LOADERS --- */
 async function renderAbout() {
   const { render } = await import('../pages/about.js');
@@ -27,6 +29,10 @@ async function renderLighthouse() {
   const { render } = await import('../pages/lighthouse.js');
   await render();
 }
+async function renderCoin(args = []) {
+  const { render } = await import('../pages/coin.js');
+  await render(args);
+}
 
 /* --- TERMINAL SETUP --- */
 const APPINSIGHTS_KEY = '__APPINSIGHTS_KEY__'; // Placeholder for Application Insights key
@@ -42,7 +48,8 @@ const availableCommands = [
   'projects',
   'resume',
   'socials',
-  'welcome'
+  'welcome',
+  'coin'
 ];
 
 /* --- SCROLL (FINAL, LOCKED) --- */
@@ -138,6 +145,7 @@ const commandHandlers = {
   welcome: async () => await renderWelcome(),
   lighthouse: async () => await renderLighthouse(),
   help: async () => await renderHelp(),
+  coin: async (args) => await renderCoin(args),
 };
 
 /* --- INPUT EVENT LISTENER KEYDOWN --- */

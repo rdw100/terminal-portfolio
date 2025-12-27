@@ -16,8 +16,7 @@ module.exports = async function (context, req) {
     btc: 'bitcoin',
     eth: 'ethereum',
     sol: 'solana',
-    ada: 'cardano',
-    
+    ada: 'cardano'
   };
 
   const coinId = map[symbol];
