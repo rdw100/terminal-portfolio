@@ -35,6 +35,9 @@ jobs:
         run: |
           sed -i 's|__TP_INSIGHTS_CONN__|'"${{ secrets.TP_INSIGHTS_CONN }}"'|g' ./public/scripts/utils/analytics.js
 
+      - name: Debug analytics.js
+        run: cat ./public/scripts/utils/analytics.js
+
        # 🔹 Deploy
       - name: Build And Deploy
         id: builddeploy
