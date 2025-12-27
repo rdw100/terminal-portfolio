@@ -1,5 +1,3 @@
-//import yahoo from '../api/yahoo/index.js';
-
 /* --- DYNAMIC PAGE LOADERS --- */
 async function renderAbout() {
   const { render } = await import('../pages/about.js');
@@ -35,7 +33,6 @@ async function renderCoin(args = []) {
 }
 
 /* --- TERMINAL SETUP --- */
-const APPINSIGHTS_KEY = '__APPINSIGHTS_KEY__'; // Placeholder for Application Insights key
 const output = document.getElementById('output');
 const input = document.getElementById('command');
 const terminal = document.getElementById('terminal');
@@ -226,34 +223,3 @@ input.addEventListener('keydown', async (e) => {
   /* --- REFOCUS INPUT AFTER COMMAND --- */
   input.focus();
 });
-
-/* --- APPLICATION INSIGHTS SETUP --- */
-if (APPINSIGHTS_KEY && APPINSIGHTS_KEY !== '__APPINSIGHTS_KEY__') {
-  var appInsights = window.appInsights || function(config) {
-    function r(config) { t[config] = function() { var i = arguments; t.queue.push(() => i) } }
-    var t = { config: config, queue: [] };
-    r('trackPageView'); r('trackEvent'); 
-    return t;
-  }({ instrumentationKey: APPINSIGHTS_KEY });
-  
-  window.appInsights = appInsights;
-  appInsights.trackPageView();
-
-  // Optional: track terminal commands
-  const originalAddEventListener = input.addEventListener.bind(input);
-  input.addEventListener = (type, listener, options) => {
-    if (type === 'keydown') {
-      originalAddEventListener(type, async (e) => {
-        if (e.key === 'Enter') {
-          const cmd = input.value.trim();
-          if (cmd) {
-            appInsights.trackEvent({ name: 'CommandExecuted', properties: { command: cmd } });
-          }
-        }
-        listener(e);
-      }, options);
-    } else {
-      originalAddEventListener(type, listener, options);
-    }
-  };
-}
