@@ -29,13 +29,8 @@ jobs:
       # 🔹 REQUIRED: Generate resume.html
       - name: Build resume.html
         run: node build/scripts/build-resume.js
-
-      # 🔹 REQUIRED: Write AppInsights ENV key
-      - name: Replace App Insights connection string
-        run: |
-          sed -i 's|__APPLICATIONINSIGHTS_CONNECTION_STRING__|'"${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}"'|g' ./public/scripts/utils/analytics.js
-
-      # 🔹 Deploy
+        
+       # 🔹 Deploy
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -49,6 +44,8 @@ jobs:
           api_location: "./api" # Api source code path - optional
           output_location: "." # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+
+
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
