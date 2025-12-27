@@ -38,6 +38,14 @@ jobs:
       - name: Verify analytics.js after sed
         run: cat ./public/scripts/utils/analytics.js
 
+      - name: Debug secret presence
+        run: |
+          if [ -z "${{ secrets.TP_INSIGHTS_CONN }}" ]; then
+            echo "Secret TP_INSIGHTS_CONN is EMPTY or NOT FOUND";
+          else
+            echo "Secret TP_INSIGHTS_CONN is PRESENT";
+          fi
+
        # 🔹 Deploy
       - name: Build And Deploy
         id: builddeploy
