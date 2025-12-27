@@ -4,13 +4,12 @@
 // All dynamic pages and special commands are tracked
 (function () {
     const APPLICATIONINSIGHTS_CONNECTION_STRING = '__APPLICATIONINSIGHTS_CONNECTION_STRING__';
-
     const connStr = APPLICATIONINSIGHTS_CONNECTION_STRING;
-    if (!connStr) {
-        console.warn("APPLICATIONINSIGHTS_CONNECTION_STRING not set. Analytics disabled.");
-        return;
+    if (!connStr || connStr.includes('__')) {
+    console.warn("APPLICATIONINSIGHTS_CONNECTION_STRING not set. Analytics disabled.");
+    return;
     }
-
+    
     // --- Generate session + user IDs ---
     const sessionId = crypto.randomUUID();
     const userId = localStorage.getItem("ai_userId") || crypto.randomUUID();
