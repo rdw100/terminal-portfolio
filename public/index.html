@@ -28,10 +28,26 @@
             </div>
         </div>
     </main>
-<!--     <script src="https://js.monitor.azure.com/scripts/b/ai.3.min.js"></script>
+    <!--     <script src="https://js.monitor.azure.com/scripts/b/ai.3.min.js"></script>
     <script src="scripts/utils/analytics.js" defer></script>
     <script type="module" src="scripts/app.js" defer></script> -->
     <script type="module" src="scripts/app.js" defer></script>
+    <script src="https://js.monitor.azure.com/scripts/b/ai.3.min.js" crossorigin="anonymous"></script>
+    <script>
+        // 1. Basic Application Insights instance
+        var appInsights = new Microsoft.ApplicationInsights.ApplicationInsights({
+            config: {
+                connectionString: "TP_INSIGHTS_CONN"
+                // minimal config for now, no extras
+            }
+        });
+
+        // 2. Initialize SDK
+        appInsights.loadAppInsights();
+
+        // 3. Track a simple page view
+        appInsights.trackPageView();
+    </script>
 </body>
 
 </html>
