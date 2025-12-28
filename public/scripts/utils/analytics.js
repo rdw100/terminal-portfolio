@@ -29,7 +29,7 @@
     config: {
       connectionString: connStr,
       enableAutoRouteTracking: false,   // you manually track page views
-      //autoTrackPageVisitTime: false
+      autoTrackPageVisitTime: false
     }
   });
 
