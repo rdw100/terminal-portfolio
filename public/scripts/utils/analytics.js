@@ -36,6 +36,8 @@
   appInsights.loadAppInsights();
   window.appInsights = appInsights;
 
+console.log("analytics.js executing; sessionId:", sessionId, "userId:", userId);
+
   // Track initial page view
   appInsights.trackPageView && appInsights.trackPageView({ properties: { sessionId, userId } });
 
