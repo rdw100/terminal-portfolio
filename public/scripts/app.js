@@ -225,3 +225,7 @@ input.addEventListener('keydown', async (e) => {
 });
 
 window.appInsights.trackEvent({ name: "AppInitialized" });
+
+setTimeout(() => {
+  throw new Error("TestExceptionDusty");
+}, 1000);
