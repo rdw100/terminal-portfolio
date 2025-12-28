@@ -223,3 +223,5 @@ input.addEventListener('keydown', async (e) => {
   /* --- REFOCUS INPUT AFTER COMMAND --- */
   input.focus();
 });
+
+window.appInsights.trackEvent({ name: "AppInitialized" });

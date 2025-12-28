@@ -10,4 +10,8 @@ export async function render() {
   });
 
   output.insertAdjacentHTML('beforeend', html);
+  window.appInsights.trackEvent({
+    name: "CommandExecuted",
+    properties: { command: "help" }
+  });
 }
