@@ -48,7 +48,20 @@
         // 3. Track a simple page view
         appInsights.trackPageView();
         appInsights.trackPageView({ name: "TerminalLoaded" });
-        
+
+    </script>
+    <script>
+    window.addEventListener("error", function (e) {
+        appInsights.trackException({
+        exception: e.error || e.message
+        });
+    });
+
+    window.addEventListener("unhandledrejection", function (e) {
+        appInsights.trackException({
+        exception: e.reason || "Unhandled promise rejection"
+        });
+    });
     </script>
 </body>
 
