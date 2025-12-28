@@ -1,34 +1,42 @@
 /* --- DYNAMIC PAGE LOADERS --- */
 async function renderAbout() {
   const { render } = await import('../pages/about.js');
+  trackRender("renderAbout");
   await render();
 }
 async function renderHelp() {
   const { render } = await import('../pages/help.js');
+  trackRender("renderHelp");
   await render();
 }
 async function renderProjects(args = []) {
   const { render } = await import('../pages/projects.js');
+  trackRender("renderProjects", args);
   await render(args);
 }
 async function renderWelcome() {
   const { render } = await import('../pages/welcome.js');
+  trackRender("renderWelcome");
   await render();
 }
 async function renderSocials(args = []) {
   const { render } = await import('../pages/socials.js');
+  trackRender("renderSocials", args);
   await render(args);
 }
 async function renderGui() {
   const { render } = await import('../pages/gui.js');
+  trackRender("renderGui");
   await render();
 }
 async function renderLighthouse() {
   const { render } = await import('../pages/lighthouse.js');
+  trackRender("renderLighthouse");
   await render();
 }
 async function renderCoin(args = []) {
   const { render } = await import('../pages/coin.js');
+  trackRender("renderCoin", args);
   await render(args);
 }
 
@@ -226,6 +234,13 @@ input.addEventListener('keydown', async (e) => {
 
 window.appInsights.trackEvent({ name: "AppInitialized" });
 
-setTimeout(() => {
+function trackRender(name, args = null) {
+  window.appInsights.trackPageView({
+    name,
+    properties: args ? { args } : undefined
+  });
+}
+
+/* setTimeout(() => {
   throw new Error("TestExceptionDusty");
-}, 1000);
+}, 1000); */
