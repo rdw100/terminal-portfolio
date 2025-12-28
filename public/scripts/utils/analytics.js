@@ -17,102 +17,115 @@
 
   console.log("analytics.js executing; sessionId:", sessionId, "userId:", userId);
 
-  // --- Real App Insights initialization (DELAYED UNTIL SDK IS READY) ---
-  window.addEventListener("load", () => {
-    console.log("Initializing App Insights after window load");
+  // --- POLLED App Insights initialization (bulletproof) ---
+  function initWhenReady() {
+    if (
+      window.Microsoft &&
+      Microsoft.ApplicationInsights &&
+      typeof Microsoft.ApplicationInsights.ApplicationInsights === "function"
+    ) {
+      console.log("AI SDK ready, initializing…");
 
-    const appInsights = new Microsoft.ApplicationInsights.ApplicationInsights({
-      config: {
-        connectionString: connStr,
-        enableAutoRouteTracking: false,   // you manually track page views
-        autoTrackPageVisitTime: false
-      }
-    });
-
-    appInsights.loadAppInsights();
-    window.appInsights = appInsights;
-
-    // Track initial page view
-    appInsights.trackPageView &&
-      appInsights.trackPageView({ properties: { sessionId, userId } });
-
-    // Track global uncaught exceptions
-    window.addEventListener("error", e => {
-      appInsights.trackException &&
-        appInsights.trackException({
-          exception: e.error || e.message,
-          properties: { sessionId, userId }
-        });
-    });
-
-    // --- Track terminal commands ---
-    const terminalInput = document.getElementById("command");
-    if (terminalInput) {
-      const origAddEventListener = terminalInput.addEventListener.bind(terminalInput);
-      terminalInput.addEventListener = (type, listener, options) => {
-        if (type === "keydown") {
-          origAddEventListener(
-            type,
-            function (e) {
-              if (e.key === "Enter") {
-                const rawCmd = terminalInput.value.trim();
-                if (rawCmd) {
-                  const [baseCmd, ...args] = rawCmd.split(/\s+/);
-                  const eventProps = {
-                    command: rawCmd,
-                    baseCmd,
-                    sessionId,
-                    userId,
-                    timestamp: new Date().toISOString()
-                  };
-                  if (["coin", "projects", "socials"].includes(baseCmd)) {
-                    eventProps.args = args.join(" ");
-                  }
-                  appInsights.trackEvent({
-                    name: "CommandExecuted",
-                    properties: eventProps
-                  });
-                }
-              }
-              listener(e);
-            },
-            options
-          );
-        } else {
-          origAddEventListener(type, listener, options);
+      const appInsights = new Microsoft.ApplicationInsights.ApplicationInsights({
+        config: {
+          connectionString: connStr,
+          enableAutoRouteTracking: false,
+          autoTrackPageVisitTime: false
         }
-      };
-    }
+      });
 
-    // --- Wrap dynamic render functions ---
-    const pagesToWrap = [
-      "renderWelcome",
-      "renderAbout",
-      "renderHelp",
-      "renderProjects",
-      "renderSocials",
-      "renderGui",
-      "renderLighthouse",
-      "renderResume",
-      "renderCoin"
-    ];
+      appInsights.loadAppInsights();
+      window.appInsights = appInsights;
 
-    pagesToWrap.forEach(fnName => {
-      const original = window[fnName];
-      if (typeof original === "function") {
-        window[fnName] = async function (...args) {
-          appInsights.trackPageView &&
-            appInsights.trackPageView({
-              name: fnName,
-              properties: {
-                args: JSON.stringify(args),
-                sessionId,
-                userId
-              }
-            });
-          return original.apply(this, args);
+      // Track initial page view
+      appInsights.trackPageView &&
+        appInsights.trackPageView({ properties: { sessionId, userId } });
+
+      // Track global uncaught exceptions
+      window.addEventListener("error", e => {
+        appInsights.trackException &&
+          appInsights.trackException({
+            exception: e.error || e.message,
+            properties: { sessionId, userId }
+          });
+      });
+
+      // --- Track terminal commands ---
+      const terminalInput = document.getElementById("command");
+      if (terminalInput) {
+        const origAddEventListener = terminalInput.addEventListener.bind(terminalInput);
+        terminalInput.addEventListener = (type, listener, options) => {
+          if (type === "keydown") {
+            origAddEventListener(
+              type,
+              function (e) {
+                if (e.key === "Enter") {
+                  const rawCmd = terminalInput.value.trim();
+                  if (rawCmd) {
+                    const [baseCmd, ...args] = rawCmd.split(/\s+/);
+                    const eventProps = {
+                      command: rawCmd,
+                      baseCmd,
+                      sessionId,
+                      userId,
+                      timestamp: new Date().toISOString()
+                    };
+                    if (["coin", "projects", "socials"].includes(baseCmd)) {
+                      eventProps.args = args.join(" ");
+                    }
+                    appInsights.trackEvent({
+                      name: "CommandExecuted",
+                      properties: eventProps
+                    });
+                  }
+                }
+                listener(e);
+              },
+              options
+            );
+          } else {
+            origAddEventListener(type, listener, options);
+          }
         };
       }
-    });
-  });
+
+      // --- Wrap dynamic render functions ---
+      const pagesToWrap = [
+        "renderWelcome",
+        "renderAbout",
+        "renderHelp",
+        "renderProjects",
+        "renderSocials",
+        "renderGui",
+        "renderLighthouse",
+        "renderResume",
+        "renderCoin"
+      ];
+
+      pagesToWrap.forEach(fnName => {
+        const original = window[fnName];
+        if (typeof original === "function") {
+          window[fnName] = async function (...args) {
+            appInsights.trackPageView &&
+              appInsights.trackPageView({
+                name: fnName,
+                properties: {
+                  args: JSON.stringify(args),
+                  sessionId,
+                  userId
+                }
+              });
+            return original.apply(this, args);
+          };
+        }
+      });
+
+      return; // stop polling
+    }
+
+    console.log("AI SDK not ready, retrying…");
+    setTimeout(initWhenReady, 50);
+  }
+
+  initWhenReady();
 })();
