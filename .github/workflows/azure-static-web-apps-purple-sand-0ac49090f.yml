@@ -35,17 +35,6 @@ jobs:
         run: |
           sed -i 's|__TP_INSIGHTS_CONN__|'"${{ secrets.TP_INSIGHTS_CONN }}"'|g' ./public/scripts/utils/analytics.js
 
-      - name: Verify analytics.js after sed
-        run: cat ./public/scripts/utils/analytics.js
-
-      - name: Debug secret presence
-        run: |
-          if [ -z "${{ secrets.TP_INSIGHTS_CONN }}" ]; then
-            echo "Secret TP_INSIGHTS_CONN is EMPTY or NOT FOUND";
-          else
-            echo "Secret TP_INSIGHTS_CONN is PRESENT";
-          fi
-
        # 🔹 Deploy
       - name: Build And Deploy
         id: builddeploy
@@ -60,7 +49,6 @@ jobs:
           api_location: "./api" # Api source code path - optional
           output_location: "./public" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
-
 
 
   close_pull_request_job:
