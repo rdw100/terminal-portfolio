@@ -257,6 +257,14 @@ window.appInsights.trackEvent({
   properties: { sessionId, userId }
 });
 
+window.appInsights.trackEvent({
+  name: "SessionStarted",
+  properties: {
+    sessionId,
+    userId
+  }
+});
+
 function trackRender(name, args = null) {
   window.appInsights.trackPageView({
     name,
@@ -280,6 +288,16 @@ function trackCommand(command, baseCmd, args = []) {
     }
   });
 }
+
+window.addEventListener("beforeunload", () => {
+  window.appInsights.trackEvent({
+    name: "SessionEnded",
+    properties: {
+      sessionId,
+      userId
+    }
+  });
+});
 /* --- APPLICATION INSIGHTS TRACKING ENDING --- */
 
 /* setTimeout(() => {
