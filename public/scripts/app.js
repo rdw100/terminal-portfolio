@@ -7,42 +7,42 @@
 } */
 async function renderAbout() {
   const { render } = await import('../pages/about.js');
-  trackRender("renderAbout");
+  trackRender("renderAbout"); // Track page render
   await render();
 }
 async function renderHelp() {
   const { render } = await import('../pages/help.js');
-  trackRender("renderHelp");
+  trackRender("renderHelp"); // Track page render
   await render();
 }
 async function renderProjects(args = []) {
   const { render } = await import('../pages/projects.js');
-  trackRender("renderProjects", args);
+  trackRender("renderProjects", args); // Track page render
   await render(args);
 }
 async function renderWelcome() {
   const { render } = await import('../pages/welcome.js');
-  trackRender("renderWelcome");
+  trackRender("renderWelcome"); // Track page render
   await render();
 }
 async function renderSocials(args = []) {
   const { render } = await import('../pages/socials.js');
-  trackRender("renderSocials", args);
+  trackRender("renderSocials", args); // Track page render
   await render(args);
 }
 async function renderGui() {
   const { render } = await import('../pages/gui.js');
-  trackRender("renderGui");
+  trackRender("renderGui"); // Track page render
   await render();
 }
 async function renderLighthouse() {
   const { render } = await import('../pages/lighthouse.js');
-  trackRender("renderLighthouse");
+  trackRender("renderLighthouse"); // Track page render
   await render();
 }
 async function renderCoin(args = []) {
   const { render } = await import('../pages/coin.js');
-  trackRender("renderCoin", args);
+  trackRender("renderCoin", args); // Track page render
   await render(args);
 }
 
@@ -62,6 +62,17 @@ const availableCommands = [
   'welcome',
   'coin'
 ];
+
+/* --- APPLICATION INSIGHTS SETUP BEGINNING --- */
+// Persistent user ID
+let userId = localStorage.getItem("ai_userId");
+if (!userId) {
+  userId = crypto.randomUUID();
+  localStorage.setItem("ai_userId", userId);
+}
+// New session each page load
+const sessionId = crypto.randomUUID();
+/* --- APPLICATION INSIGHTS SETUP ENDING --- */
 
 /* --- SCROLL (FINAL, LOCKED) --- */
 function scrollToBottom() {
@@ -96,12 +107,12 @@ function clearTerminal() {
   requestAnimationFrame(scrollToBottom);
 }
 
-/* --- PRINT COMMAND PROMPT --- */ 
+/* --- PRINT COMMAND PROMPT --- */
 function printCommand(cmd) {
   output.insertAdjacentHTML(
     'beforeend',
     `<div class="terminal-command"><span class="prompt-user">guest@dustywright.me:</span><span class="prompt-symbol">~$&gt;</span> ${cmd}</div>`
-  );  
+  );
 }
 
 /* --- LOADING SPINNER --- */
@@ -185,25 +196,25 @@ input.addEventListener('keydown', async (e) => {
     e.preventDefault();
     return;
   }
-   if (e.key === 'Tab') {
-     e.preventDefault();
-     const value = input.value;
-     const parts = value.split(/\s+/);
-     const cmd = parts[0];
-     const match = availableCommands.find(c => c.startsWith(cmd));
-     if (match) {
-       input.value = match + (parts.length > 1 ? ' ' + parts.slice(1).join(' ') : '');
-     }
-     return;
-   }
-   if (e.key === 'Escape') {
-     e.preventDefault();
-     clearTerminal();
-     await renderWelcome();
-     input.value = '';
-     historyIndex = -1;
-     return;
-   }
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const value = input.value;
+    const parts = value.split(/\s+/);
+    const cmd = parts[0];
+    const match = availableCommands.find(c => c.startsWith(cmd));
+    if (match) {
+      input.value = match + (parts.length > 1 ? ' ' + parts.slice(1).join(' ') : '');
+    }
+    return;
+  }
+  if (e.key === 'Escape') {
+    e.preventDefault();
+    clearTerminal();
+    await renderWelcome();
+    input.value = '';
+    historyIndex = -1;
+    return;
+  }
   if (e.key !== 'Enter') return;
 
   let cmd = input.value.trim();
@@ -220,15 +231,15 @@ input.addEventListener('keydown', async (e) => {
   const [baseCmd, ...args] = cmd.split(/\s+/);
   const arg = args.join(' ');
   const handler = commandHandlers[baseCmd];
-  
-  if (handler) {    
-    trackCommand(raw, baseCmd, args);
+
+  if (handler) {
+    trackCommand(raw, baseCmd, args); // Track command execution
     await handler(args);
   } else {
     output.insertAdjacentHTML(
       'beforeend',
       `<div>Command not found</div>`
-    );      
+    );
   }
 
   /* --- SCROLL TO BOTTOM AFTER COMMAND --- */
@@ -240,12 +251,20 @@ input.addEventListener('keydown', async (e) => {
   input.focus();
 });
 
-window.appInsights.trackEvent({ name: "AppInitialized" });
+/* --- APPLICATION INSIGHTS TRACKING BEGINNING --- */
+window.appInsights.trackEvent({
+  name: "AppInitialized",
+  properties: { sessionId, userId }
+});
 
 function trackRender(name, args = null) {
   window.appInsights.trackPageView({
     name,
-    properties: args ? { args } : undefined
+    properties: {
+      sessionId,
+      userId,
+      args: args ? JSON.stringify(args) : ""
+    }
   });
 }
 
@@ -253,12 +272,15 @@ function trackCommand(command, baseCmd, args = []) {
   window.appInsights.trackEvent({
     name: "CommandExecuted",
     properties: {
+      sessionId,
+      userId,
       command,
       baseCmd,
-      args: args.length ? args.join(" ") : ""
+      args: args.join(" ")
     }
   });
 }
+/* --- APPLICATION INSIGHTS TRACKING ENDING --- */
 
 /* setTimeout(() => {
   throw new Error("TestExceptionDusty");
