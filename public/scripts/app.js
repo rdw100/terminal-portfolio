@@ -1,4 +1,10 @@
 /* --- DYNAMIC PAGE LOADERS --- */
+// Note: Could use a generic loader, but explicit is clearer for tracking
+/* async function loadAndRender(page, name, args = null) {
+  const { render } = await import(`../pages/${page}.js`);
+  trackRender(name, args);
+  await render(args);
+} */
 async function renderAbout() {
   const { render } = await import('../pages/about.js');
   trackRender("renderAbout");
@@ -210,11 +216,13 @@ input.addEventListener('keydown', async (e) => {
 
   printCommand(cmd);
 
+  const raw = input.value.trim();
   const [baseCmd, ...args] = cmd.split(/\s+/);
   const arg = args.join(' ');
-
   const handler = commandHandlers[baseCmd];
-  if (handler) {
+  
+  if (handler) {    
+    trackCommand(raw, baseCmd, args);
     await handler(args);
   } else {
     output.insertAdjacentHTML(
@@ -238,6 +246,17 @@ function trackRender(name, args = null) {
   window.appInsights.trackPageView({
     name,
     properties: args ? { args } : undefined
+  });
+}
+
+function trackCommand(command, baseCmd, args = []) {
+  window.appInsights.trackEvent({
+    name: "CommandExecuted",
+    properties: {
+      command,
+      baseCmd,
+      args: args.length ? args.join(" ") : ""
+    }
   });
 }
 
