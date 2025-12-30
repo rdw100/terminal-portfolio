@@ -89,3 +89,16 @@ p {
   white-space: nowrap;
   border: 0;
 }
+
+/* hide the caret by default */
+#command {
+  caret-color: transparent;
+}
+
+/* base cursor style (no glow) */
+.cursor {
+  width: 10px;
+  height: 1.2em;
+  background: var(--cursor);
+  display: inline-block;
+}

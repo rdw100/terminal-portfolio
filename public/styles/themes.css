@@ -20,6 +20,11 @@
   --scanline-opacity: 0.04;
 }
 
+/* Retro — soft CRT bloom */
+.theme-retro .cursor {
+  box-shadow: 0 0 4px var(--cursor);
+}
+
 /* --------------------------------------------------
    Azure Console
 -------------------------------------------------- */
@@ -34,6 +39,11 @@
 .theme-azure .prompt-symbol,
 .theme-azure .prompt-user {
   color: var(--accent);
+}
+
+/* Azure — subtle blue halo */
+.theme-azure .cursor {
+  box-shadow: 0 0 5px var(--accent);
 }
 
 /* --------------------------------------------------
@@ -56,8 +66,9 @@
   color: var(--accent);
 }
 
-.theme-vapor .cursor {
-  box-shadow: 0 0 6px var(--cursor);
+/* Vapor — neon caret */
+.theme-vapor #command {
+  caret-color: var(--accent);
 }
 
 /* --------------------------------------------------
@@ -69,6 +80,11 @@
   --accent: #aaaaaa;
   --cursor: #ffffff;
   --scanline-opacity: 0;
+}
+
+/* Minimal — no glow */
+.theme-minimal .cursor {
+  box-shadow: none;
 }
 
 /* --------------------------------------------------
@@ -85,6 +101,49 @@
 .theme-amber .prompt-symbol,
 .theme-amber .prompt-user {
   color: var(--accent);
+}
+
+/* Amber — warm terminal glow */
+.theme-amber .cursor {
+  box-shadow: 0 0 6px var(--cursor);
+}
+
+/* --------------------------------------------------
+   Dusty Terminal
+-------------------------------------------------- */
+.theme-dusty {
+  --bg: #0d0f12;        /* deep charcoal */
+  --fg: #d7e1f8;        /* soft ice-blue */
+  --accent: #276CF5;    /* your new electric blue */
+  --cursor: #B027F5;    /* your new violet cursor */
+  --muted: #6c7480;     /* neutral gray */
+
+  --prompt-user: var(--accent);
+  --prompt-symbol: var(--fg);
+  --link-color: var(--accent);
+}
+
+.theme-dusty .prompt-symbol {
+  color: var(--accent);
+  text-shadow: 0 0 4px var(--accent);
+}
+
+.theme-dusty #command {
+  caret-color: var(--accent);
+}
+
+.theme-dusty a:hover {
+  color: var(--cursor);
+}
+
+.theme-dusty #terminal {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.02) 0px,
+    rgba(255, 255, 255, 0.02) 1px,
+    transparent 1px,
+    transparent 3px
+  );
 }
 
 /* --------------------------------------------------

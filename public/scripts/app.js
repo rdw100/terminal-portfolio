@@ -48,6 +48,11 @@ async function renderCoin(args = []) {
   const { render } = await import('../pages/coin.js');
   await render(args);
 }
+async function renderTheme(args) {
+  Analytics.trackPage("renderTheme", args); // Track page render
+  const { render } = await import('../pages/theme.js');
+  await render(args);
+}
 
 /* --- TERMINAL SETUP --- */
 const output = document.getElementById('output');
@@ -68,7 +73,7 @@ const availableCommands = [
 ];
 
 /* --- THEME ENGINE --- */
-const validThemes = ["retro", "azure", "vapor", "minimal", "amber"];
+const validThemes = ["retro", "azure", "vapor", "minimal", "amber", "dusty"];
 
 function setTheme(name) {
   if (!validThemes.includes(name)) {
@@ -199,7 +204,7 @@ const commandHandlers = {
   lighthouse: async () => await renderLighthouse(),
   help: async () => await renderHelp(),
   coin: async (args) => await renderCoin(args),
-  theme: async (args) => setTheme(args[0]),
+  theme: async (args) => await renderTheme(args),
 };
 
 /* --- INPUT EVENT LISTENER KEYDOWN --- */
