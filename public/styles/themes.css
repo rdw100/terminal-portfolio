@@ -1,0 +1,128 @@
+/* --------------------------------------------------
+   Base Tokens (default theme = retro)
+-------------------------------------------------- */
+:root {
+  --bg: #000000;
+  --fg: #00ff66;
+  --accent: #33ff99;
+  --cursor: #00ff66;
+  --scanline-opacity: 0.04;
+}
+
+/* --------------------------------------------------
+   Retro (CRT)
+-------------------------------------------------- */
+.theme-retro {
+  --bg: #000000;
+  --fg: #00ff66;
+  --accent: #33ff99;
+  --cursor: #00ff66;
+  --scanline-opacity: 0.04;
+}
+
+/* --------------------------------------------------
+   Azure Console
+-------------------------------------------------- */
+.theme-azure {
+  --bg: #1e1e1e;
+  --fg: #d4d4d4;
+  --accent: #0078d4;
+  --cursor: #0078d4;
+  --scanline-opacity: 0;
+}
+
+.theme-azure .prompt-symbol,
+.theme-azure .prompt-user {
+  color: var(--accent);
+}
+
+/* --------------------------------------------------
+   Vapor / Synthwave
+-------------------------------------------------- */
+.theme-vapor {
+  --bg: #1a002b;
+  --fg: #ff77ff;
+  --accent: #00e5ff;
+  --cursor: #00e5ff;
+  --scanline-opacity: 0.02;
+}
+
+.theme-vapor pre code.language-ansi {
+  text-shadow: 0 0 8px var(--accent); 
+}
+
+.theme-vapor .prompt-symbol,
+.theme-vapor .prompt-user {
+  color: var(--accent);
+}
+
+.theme-vapor .cursor {
+  box-shadow: 0 0 6px var(--cursor);
+}
+
+/* --------------------------------------------------
+   Minimal Monochrome
+-------------------------------------------------- */
+.theme-minimal {
+  --bg: #111111;
+  --fg: #eaeaea;
+  --accent: #aaaaaa;
+  --cursor: #ffffff;
+  --scanline-opacity: 0;
+}
+
+/* --------------------------------------------------
+   Amber Terminal
+-------------------------------------------------- */
+.theme-amber {
+  --bg: #000000;
+  --fg: #ffb000;
+  --accent: #ffcc66;
+  --cursor: #ffb000;
+  --scanline-opacity: 0.03;
+}
+
+.theme-amber .prompt-symbol,
+.theme-amber .prompt-user {
+  color: var(--accent);
+}
+
+/* --------------------------------------------------
+   Global UI using tokens
+-------------------------------------------------- */
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Fira Code", monospace;
+}
+
+#terminal-input {
+  color: var(--fg);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.cursor {
+  background: var(--cursor);
+}
+
+a {
+  color: var(--accent);
+}
+
+.scanlines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,var(--scanline-opacity)) 0px,
+    rgba(255,255,255,0) 2px
+  );
+  z-index: 9999;
+}
+
+.cursor {
+  background: var(--cursor);
+}

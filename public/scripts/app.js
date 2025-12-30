@@ -63,8 +63,30 @@ const availableCommands = [
   'resume',
   'socials',
   'welcome',
-  'coin'
+  'coin',
+  'theme'
 ];
+
+/* --- THEME ENGINE --- */
+const validThemes = ["retro", "azure", "vapor", "minimal", "amber"];
+
+function setTheme(name) {
+  if (!validThemes.includes(name)) {
+    output.insertAdjacentHTML(
+      "beforeend",
+      `<div>Unknown theme: ${name}. Available: ${validThemes.join(", ")}</div>`
+    );
+    return;
+  }
+
+  document.body.className = `theme-${name}`;
+  localStorage.setItem("theme", name);
+
+  output.insertAdjacentHTML(
+    "beforeend",
+    `<div>Theme set to <strong>${name}</strong></div>`
+  );
+}
 
 /* --- APPLICATION INSIGHTS SETUP BEGINNING --- */
 // Persistent user ID
@@ -85,6 +107,12 @@ function scrollToBottom() {
 
 /* --- INITIAL FOCUS & WELCOME --- */
 input.focus();
+
+/* --- LOAD SAVED THEME --- */
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) {
+  document.body.className = `theme-${savedTheme}`;
+}
 
 /* Render welcome AFTER first paint, non-blocking */
 requestAnimationFrame(() => {
@@ -114,7 +142,7 @@ function clearTerminal() {
 function printCommand(cmd) {
   output.insertAdjacentHTML(
     'beforeend',
-    `<div class="terminal-command"><span class="prompt-user">guest@dustywright.me:</span><span class="prompt-symbol">~$&gt;</span> ${cmd}</div>`
+    `<div class="terminal-command"><span class="prompt-user">guest@dustywright.me:</span><span class="prompt-symbol">~$&gt;&nbsp;</span> ${cmd}</div>`
   );
 }
 
@@ -171,6 +199,7 @@ const commandHandlers = {
   lighthouse: async () => await renderLighthouse(),
   help: async () => await renderHelp(),
   coin: async (args) => await renderCoin(args),
+  theme: async (args) => setTheme(args[0]),
 };
 
 /* --- INPUT EVENT LISTENER KEYDOWN --- */

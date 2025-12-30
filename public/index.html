@@ -13,16 +13,17 @@
     <meta property="og:type" content="website" />
     <title>Dusty Wright | Terminal Portfolio</title>
     <link rel="stylesheet" href="styles/styles.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="styles/themes.css" media="print" onload="this.media='all'" />
     <link rel="icon" href="favicon.ico" />
 </head>
 
-<body>
+<body class="theme-vapor">
     <main>
         <div id="terminal">
             <div id="output"></div>
             <div id="prompt">
                 <span class="prompt-user">guest@dustywright.me:</span>
-                <span class="prompt-symbol">~$&gt;</span>
+                <span class="prompt-symbol">~$&gt;&nbsp;</span>
                 <label for="command" class="sr-only">Terminal command input</label>
                 <input id="command" type="text" autocomplete="off" />
             </div>

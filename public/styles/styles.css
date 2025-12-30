@@ -32,12 +32,12 @@ pre code {
 }
 
 pre code.language-ansi {
-  color: #00ff00;
   display: block;
+  color: var(--accent);
 }
 
 .ansi-shadow {
-  color: #00ff00;
+  /* color: #00ff00; */
   margin-bottom: 1em;
   line-height: 1.1;
   white-space: pre;
