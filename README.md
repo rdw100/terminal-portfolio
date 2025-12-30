@@ -8,6 +8,15 @@ The site is command-driven, fully static, and hosted as an **Azure Static Web Ap
 
 ---
 
+## 🔦 Lighthouse Scores
+
+![Performance](https://img.shields.io/badge/dynamic/json?label=Performance&query=$.performance&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/public/lighthouse/scores.json)
+![Accessibility](https://img.shields.io/badge/dynamic/json?label=Accessibility&query=$.accessibility&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/public/lighthouse/scores.json)
+![Best Practices](https://img.shields.io/badge/dynamic/json?label=Best%20Practices&query=$.bestPractices&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/public/lighthouse/scores.json)
+![SEO](https://img.shields.io/badge/dynamic/json?label=SEO&query=$.seo&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/public/lighthouse/scores.json)
+
+---
+
 ## 🛠️ Built With
 
 This terminal-style portfolio was built using a modern, lightweight web stack with an emphasis on performance, accessibility, and developer ergonomics:
@@ -91,13 +100,6 @@ socials:
   github: https://github.com/rdw100
   gui: https://gray-glacier-0dd347e0f.azurestaticapps.net/
 ```
----
-## 🔦 Lighthouse Scores
-
-![Performance](https://img.shields.io/badge/dynamic/json?label=Performance&query=$.performance&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/public/lighthouse/scores.json)
-![Accessibility](https://img.shields.io/badge/dynamic/json?label=Accessibility&query=$.accessibility&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/public/lighthouse/scores.json)
-![Best Practices](https://img.shields.io/badge/dynamic/json?label=Best%20Practices&query=$.bestPractices&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/public/lighthouse/scores.json)
-![SEO](https://img.shields.io/badge/dynamic/json?label=SEO&query=$.seo&url=https://raw.githubusercontent.com/rdw100/terminal-portfolio/main/public/lighthouse/scores.json)
 
 ---
 
