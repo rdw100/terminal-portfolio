@@ -1,3 +1,6 @@
+import { Analytics } from "../analytics/appinsights.js";
+
+Analytics.init("__TP_INSIGHTS_CONN__");
 /* --- DYNAMIC PAGE LOADERS --- */
 // Note: Could use a generic loader, but explicit is clearer for tracking
 /* async function loadAndRender(page, name, args = null) {
@@ -6,43 +9,43 @@
   await render(args);
 } */
 async function renderAbout() {
+  Analytics.trackPage("renderAbout");  
   const { render } = await import('../pages/about.js');
-  trackRender("renderAbout"); // Track page render
   await render();
 }
 async function renderHelp() {
-  const { render } = await import('../pages/help.js');
-  trackRender("renderHelp"); // Track page render
+  Analytics.trackPage("renderHelp");
+  const { render } = await import('../pages/help.js');  
   await render();
 }
 async function renderProjects(args = []) {
+  Analytics.trackPage("renderProjects", args);
   const { render } = await import('../pages/projects.js');
-  trackRender("renderProjects", args); // Track page render
   await render(args);
 }
 async function renderWelcome() {
+  Analytics.trackPage("renderWelcome");
   const { render } = await import('../pages/welcome.js');
-  trackRender("renderWelcome"); // Track page render
   await render();
 }
 async function renderSocials(args = []) {
+  Analytics.trackPage("renderSocials", args);
   const { render } = await import('../pages/socials.js');
-  trackRender("renderSocials", args); // Track page render
   await render(args);
 }
 async function renderGui() {
+  Analytics.trackPage("renderGui"); // Track page render
   const { render } = await import('../pages/gui.js');
-  trackRender("renderGui"); // Track page render
   await render();
 }
 async function renderLighthouse() {
+  Analytics.trackPage("renderLighthouse"); // Track page render
   const { render } = await import('../pages/lighthouse.js');
-  trackRender("renderLighthouse"); // Track page render
   await render();
 }
 async function renderCoin(args = []) {
+  Analytics.trackPage("renderCoin", args); // Track page render
   const { render } = await import('../pages/coin.js');
-  trackRender("renderCoin", args); // Track page render
   await render(args);
 }
 
@@ -233,7 +236,11 @@ input.addEventListener('keydown', async (e) => {
   const handler = commandHandlers[baseCmd];
 
   if (handler) {
-    trackCommand(raw, baseCmd, args); // Track command execution
+    Analytics.trackEvent("CommandExecuted", {
+      raw,
+      baseCmd,
+      args
+    });
     await handler(args);
   } else {
     output.insertAdjacentHTML(
@@ -252,12 +259,9 @@ input.addEventListener('keydown', async (e) => {
 });
 
 /* --- APPLICATION INSIGHTS TRACKING BEGINNING --- */
-window.appInsights.trackEvent({
-  name: "AppInitialized",
-  properties: { sessionId, userId }
-});
+Analytics.trackEvent("AppInitialized", { sessionId, userId });
 
-window.appInsights.trackEvent({
+Analytics.trackEvent({
   name: "SessionStarted",
   properties: {
     sessionId,
@@ -265,38 +269,8 @@ window.appInsights.trackEvent({
   }
 });
 
-function trackRender(name, args = null) {
-  window.appInsights.trackPageView({
-    name,
-    properties: {
-      sessionId,
-      userId,
-      args: args ? JSON.stringify(args) : ""
-    }
-  });
-}
-
-function trackCommand(command, baseCmd, args = []) {
-  window.appInsights.trackEvent({
-    name: "CommandExecuted",
-    properties: {
-      sessionId,
-      userId,
-      command,
-      baseCmd,
-      args: args.join(" ")
-    }
-  });
-}
-
 window.addEventListener("beforeunload", () => {
-  window.appInsights.trackEvent({
-    name: "SessionEnded",
-    properties: {
-      sessionId,
-      userId
-    }
-  });
+  Analytics.trackEvent("SessionEnded", { sessionId, userId });
 });
 /* --- APPLICATION INSIGHTS TRACKING ENDING --- */
 
