@@ -14,8 +14,7 @@ const input = fs.readFileSync(inputPath, 'utf8');
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const mailRegex = /(mailto:[^\s]+)/g;
-  const emailRegex = /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,})\b/g;
-
+  const emailRegex = /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,})\b/g; 
   return text
     .replace(urlRegex, '<a href="$1" target="_blank">$1</a>')
     .replace(mailRegex, '<a href="$1">$1</a>')
@@ -24,7 +23,7 @@ function linkify(text) {
 
 // Convert spaces → &nbsp; AFTER linkify, BEFORE joining with <br>
 function preserveSpaces(text) {
-  return text.replace(/ /g, '&nbsp;');
+  return text.replace(/ (?![^<]*>)/g, '&nbsp;');
 }
 
 // Group items by paragraphs (keep ASCII width)
