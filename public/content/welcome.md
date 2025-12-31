@@ -14,7 +14,7 @@
  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   
 ```
 
-## Welcome to my terminal portfolio. (Version 2.1.1)
+## Welcome to my terminal gui portfolio. (Version 2.1.1)
 ---
 ### This project's source code can be found in this project's [GitHub repository](https://github.com/rdw100/terminal-portfolio)
 ---

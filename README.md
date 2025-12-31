@@ -179,10 +179,10 @@ Example:
 
 ## 🧪 Troubleshooting (Azure Static Web Apps)
 
-### 🐳🚫 Docker 403 Errors During Build
+### 🐳 Docker 403 Errors During Build
 
-failed to resolve source metadata for mcr.microsoft.com/appsvc/staticappsclient
-403 Forbidden
+*failed to resolve source metadata for mcr.microsoft.com/appsvc/staticappsclient
+403 Forbidden*
 
 **Cause:** Intermittent Azure infrastructure issue  
 **Fix:** Re-run the GitHub Actions workflow
