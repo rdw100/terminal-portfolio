@@ -10,9 +10,4 @@ export async function render() {
       `<div>Error loading resume: ${err.message}</div>`
     );
   }
-
-  requestAnimationFrame(() => {
-    const terminal = document.getElementById('terminal');
-    terminal.scrollTop = terminal.scrollHeight;
-  });
 }

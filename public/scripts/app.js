@@ -7,6 +7,7 @@ async function loadAndRender(page, name, args = null) {
   const { render } = await import(`../pages/${page}.js`);
   Analytics.trackPage(name, args);
   await render(args);
+  scrollToBottom();
 }
 
 /* --- TERMINAL SETUP --- */
@@ -30,24 +31,6 @@ const availableCommands = [
 /* --- THEME ENGINE --- */
 const validThemes = ["retro", "azure", "vapor", "minimal", "amber", "dusty"];
 
-function setTheme(name) {
-  if (!validThemes.includes(name)) {
-    output.insertAdjacentHTML(
-      "beforeend",
-      `<div>Unknown theme: ${name}. Available: ${validThemes.join(", ")}</div>`
-    );
-    return;
-  }
-
-  document.body.className = `theme-${name}`;
-  localStorage.setItem("theme", name);
-
-  output.insertAdjacentHTML(
-    "beforeend",
-    `<div>Theme set to <strong>${name}</strong></div>`
-  );
-}
-
 /* --- APPLICATION INSIGHTS SETUP BEGINNING --- */
 // Persistent user ID
 let userId = localStorage.getItem("ai_userId");
@@ -62,7 +45,9 @@ const sessionId = crypto.randomUUID();
 /* --- SCROLL (FINAL, LOCKED) --- */
 function scrollToBottom() {
   if (!terminal) return;
-  terminal.scrollTop = terminal.scrollHeight;
+  requestAnimationFrame(() => {
+    terminal.scrollTop = terminal.scrollHeight;
+  });
 }
 
 /* --- INITIAL FOCUS & WELCOME --- */
@@ -77,12 +62,7 @@ if (savedTheme) {
 /* Render welcome AFTER first paint, non-blocking */
 requestAnimationFrame(() => {
   printCommand('welcome');
-
-  // Start loading welcome content asynchronously, no blocking
-  loadAndRender("welcome", "renderWelcome").then(() => {
-    requestAnimationFrame(scrollToBottom);
-  });
-
+  loadAndRender("welcome", "renderWelcome")
   input.focus();
 });
 
@@ -94,8 +74,7 @@ terminal.addEventListener('click', () => {
 /* --- TERMINAL RESET/CLEAR --- */
 function clearTerminal() {
   output.innerHTML = '';
-  printCommand('welcome');
-  requestAnimationFrame(scrollToBottom);
+  printCommand('clear');
 }
 
 /* --- PRINT COMMAND PROMPT --- */
@@ -107,7 +86,7 @@ function printCommand(cmd) {
 }
 
 /* --- LOADING SPINNER --- */
-function showLoading(duration = 1000) {
+async function showLoading(duration = 1000) {
   const spinner = document.createElement('div');
   spinner.textContent = '|';
   output.appendChild(spinner);
@@ -133,8 +112,8 @@ function showLoading(duration = 1000) {
 const commandHandlers = {
   about: async () => loadAndRender("about", "renderAbout"),
   gui: async () => loadAndRender("gui", "renderGui"),
-  resume: async () => { showLoading(1200); await loadAndRender("resume", "renderResume"); },
-  projects: async (args) => { showLoading(1200); await loadAndRender("projects", "renderProjects", args); },
+  resume: async () => { await showLoading(1200); await loadAndRender("resume", "renderResume"); },
+  projects: async (args) => { await showLoading(1200); await loadAndRender("projects", "renderProjects", args); },
   socials: async (args) => loadAndRender("socials", "renderSocials", args.join(" ")),
   clear: async () => { clearTerminal(); await loadAndRender("welcome", "renderWelcome"); },
   welcome: async () => loadAndRender("welcome", "renderWelcome"),
@@ -170,6 +149,7 @@ input.addEventListener('keydown', async (e) => {
     e.preventDefault();
     return;
   }
+
   if (e.key === 'Tab') {
     e.preventDefault();
     const value = input.value;
@@ -181,6 +161,7 @@ input.addEventListener('keydown', async (e) => {
     }
     return;
   }
+
   if (e.key === 'Escape') {
     e.preventDefault();
     clearTerminal();
@@ -189,9 +170,11 @@ input.addEventListener('keydown', async (e) => {
     historyIndex = -1;
     return;
   }
+
   if (e.key !== 'Enter') return;
 
   let cmd = input.value.trim();
+  const raw = cmd;
   if (cmd) {
     commandHistory.push(cmd);
     if (commandHistory.length > 100) commandHistory.shift();
@@ -201,9 +184,7 @@ input.addEventListener('keydown', async (e) => {
 
   printCommand(cmd);
 
-  const raw = input.value.trim();
   const [baseCmd, ...args] = cmd.split(/\s+/);
-  const arg = args.join(' ');
   const handler = commandHandlers[baseCmd];
 
   if (handler) {
@@ -219,11 +200,6 @@ input.addEventListener('keydown', async (e) => {
       `<div>Command not found</div>`
     );
   }
-
-  /* --- SCROLL TO BOTTOM AFTER COMMAND --- */
-  requestAnimationFrame(() => {
-    scrollToBottom(true);
-  });
 
   /* --- REFOCUS INPUT AFTER COMMAND --- */
   input.focus();
