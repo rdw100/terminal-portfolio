@@ -1,8 +1,9 @@
 import { ensureMarked } from '../services/markdownService.js';
 
-export async function render(arg = null) {
+export async function render(args = []) {
   const output = document.getElementById('output');
   await ensureMarked();
+
   // Fetch Markdown
   const markdown = await fetch('content/socials.md').then(r => r.text());
 
@@ -10,18 +11,16 @@ export async function render(arg = null) {
   const html = marked.parse(markdown, { mangle: false, headerIds: false });
   output.insertAdjacentHTML('beforeend', html);
 
-  // If "goto <number>" is provided, open the link
-  if (arg && arg.startsWith('goto')) {
-    const parts = arg.split(/\s+/);
-    const number = parts[1];
-
-    if (!number) return;
+  // Handle "goto <number>"
+  if (args.length >= 2 && args[0] === "goto") {
+    const number = args[1];
 
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
     const links = tempDiv.querySelectorAll('a');
 
     const index = parseInt(number, 10) - 1;
+
     if (links[index]) {
       window.open(links[index].href, '_blank', 'noopener');
       output.insertAdjacentHTML(

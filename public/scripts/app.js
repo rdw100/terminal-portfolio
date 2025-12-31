@@ -28,17 +28,12 @@ const availableCommands = [
   'theme'
 ];
 
-/* --- THEME ENGINE --- */
-const validThemes = ["retro", "azure", "vapor", "minimal", "amber", "dusty"];
-
 /* --- APPLICATION INSIGHTS SETUP BEGINNING --- */
-// Persistent user ID
 let userId = localStorage.getItem("ai_userId");
 if (!userId) {
   userId = crypto.randomUUID();
   localStorage.setItem("ai_userId", userId);
 }
-// New session each page load
 const sessionId = crypto.randomUUID();
 /* --- APPLICATION INSIGHTS SETUP ENDING --- */
 
@@ -62,7 +57,7 @@ if (savedTheme) {
 /* Render welcome AFTER first paint, non-blocking */
 requestAnimationFrame(() => {
   printCommand('welcome');
-  loadAndRender("welcome", "renderWelcome")
+  loadAndRender("welcome", "renderWelcome");
   input.focus();
 });
 
@@ -108,23 +103,48 @@ async function showLoading(duration = 1000) {
   });
 }
 
-/* --- COMMAND HANDLERS --- */
-const commandHandlers = {
-  about: async () => loadAndRender("about", "renderAbout"),
-  gui: async () => loadAndRender("gui", "renderGui"),
-  resume: async () => { await showLoading(1200); await loadAndRender("resume", "renderResume"); },
-  projects: async (args) => { await showLoading(1200); await loadAndRender("projects", "renderProjects", args); },
-  socials: async (args) => loadAndRender("socials", "renderSocials", args.join(" ")),
-  clear: async () => { clearTerminal(); await loadAndRender("welcome", "renderWelcome"); },
-  welcome: async () => loadAndRender("welcome", "renderWelcome"),
-  lighthouse: async () => loadAndRender("lighthouse", "renderLighthouse"),
-  help: async () => loadAndRender("help", "renderHelp"),
-  coin: async (args) => loadAndRender("coin", "renderCoin", args),
-  theme: async (args) => loadAndRender("theme", "renderTheme", args),
+/* --- DECLARATIVE COMMAND TABLE --- */
+const commands = {
+  about: { page: "about" },
+  gui: { page: "gui" },
+  resume: { page: "resume", loading: 1200 },
+  projects: { page: "projects", loading: 1200 },
+  socials: { page: "socials" },
+  welcome: { page: "welcome" },
+  lighthouse: { page: "lighthouse" },
+  help: { page: "help" },
+  coin: { page: "coin" },
+  theme: { page: "theme" },
+  clear: { clear: true, page: "welcome" }
 };
 
+/* --- UNIVERSAL COMMAND EXECUTOR --- */
+async function executeCommand(baseCmd, args) {
+  const config = commands[baseCmd];
+
+  if (!config) {
+    output.insertAdjacentHTML('beforeend', `<div>Command not found</div>`);
+    return;
+  }
+
+  if (config.clear) {
+    clearTerminal();
+  }
+
+  if (config.loading) {
+    await showLoading(config.loading);
+  }
+
+  const renderName = `render${capitalize(config.page)}`;
+  await loadAndRender(config.page, renderName, args);
+}
+
+/* --- CAPITALIZE COMMAND HELPER --- */
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 /* --- INPUT EVENT LISTENER KEYDOWN --- */
-// --- COMMAND HISTORY ---
 const commandHistory = [];
 let historyIndex = -1;
 
@@ -144,7 +164,6 @@ input.addEventListener('keydown', async (e) => {
     } else {
       input.value = '';
     }
-    // Move cursor to end
     setTimeout(() => input.setSelectionRange(input.value.length, input.value.length), 0);
     e.preventDefault();
     return;
@@ -185,23 +204,15 @@ input.addEventListener('keydown', async (e) => {
   printCommand(cmd);
 
   const [baseCmd, ...args] = cmd.split(/\s+/);
-  const handler = commandHandlers[baseCmd];
 
-  if (handler) {
-    Analytics.trackEvent("CommandExecuted", {
-      raw,
-      baseCmd,
-      args
-    });
-    await handler(args);
-  } else {
-    output.insertAdjacentHTML(
-      'beforeend',
-      `<div>Command not found</div>`
-    );
-  }
+  Analytics.trackEvent("CommandExecuted", {
+    raw,
+    baseCmd,
+    args
+  });
 
-  /* --- REFOCUS INPUT AFTER COMMAND --- */
+  await executeCommand(baseCmd, args);
+
   input.focus();
 });
 
@@ -220,7 +231,3 @@ window.addEventListener("beforeunload", () => {
   Analytics.trackEvent("SessionEnded", { sessionId, userId });
 });
 /* --- APPLICATION INSIGHTS TRACKING ENDING --- */
-
-/* setTimeout(() => {
-  throw new Error("TestExceptionDusty");
-}, 1000); */
