@@ -1,56 +1,11 @@
 import { Analytics } from "../analytics/appinsights.js";
 
 Analytics.init("__TP_INSIGHTS_CONN__");
-/* --- DYNAMIC PAGE LOADERS --- */
-// Note: Could use a generic loader, but explicit is clearer for tracking
-/* async function loadAndRender(page, name, args = null) {
+
+/* --- DYNAMIC PAGE LOADING USING GENERIC --- */
+async function loadAndRender(page, name, args = null) {
   const { render } = await import(`../pages/${page}.js`);
-  trackRender(name, args);
-  await render(args);
-} */
-async function renderAbout() {
-  Analytics.trackPage("renderAbout");  
-  const { render } = await import('../pages/about.js');
-  await render();
-}
-async function renderHelp() {
-  Analytics.trackPage("renderHelp");
-  const { render } = await import('../pages/help.js');  
-  await render();
-}
-async function renderProjects(args = []) {
-  Analytics.trackPage("renderProjects", args);
-  const { render } = await import('../pages/projects.js');
-  await render(args);
-}
-async function renderWelcome() {
-  Analytics.trackPage("renderWelcome");
-  const { render } = await import('../pages/welcome.js');
-  await render();
-}
-async function renderSocials(args = []) {
-  Analytics.trackPage("renderSocials", args);
-  const { render } = await import('../pages/socials.js');
-  await render(args);
-}
-async function renderGui() {
-  Analytics.trackPage("renderGui"); // Track page render
-  const { render } = await import('../pages/gui.js');
-  await render();
-}
-async function renderLighthouse() {
-  Analytics.trackPage("renderLighthouse"); // Track page render
-  const { render } = await import('../pages/lighthouse.js');
-  await render();
-}
-async function renderCoin(args = []) {
-  Analytics.trackPage("renderCoin", args); // Track page render
-  const { render } = await import('../pages/coin.js');
-  await render(args);
-}
-async function renderTheme(args) {
-  Analytics.trackPage("renderTheme", args); // Track page render
-  const { render } = await import('../pages/theme.js');
+  Analytics.trackPage(name, args);
   await render(args);
 }
 
@@ -124,7 +79,7 @@ requestAnimationFrame(() => {
   printCommand('welcome');
 
   // Start loading welcome content asynchronously, no blocking
-  renderWelcome().then(() => {
+  loadAndRender("welcome", "renderWelcome").then(() => {
     requestAnimationFrame(scrollToBottom);
   });
 
@@ -194,17 +149,17 @@ export async function renderResume() {
 
 /* --- COMMAND HANDLERS --- */
 const commandHandlers = {
-  about: async () => await renderAbout(),
-  gui: async () => await renderGui(),
-  resume: async () => { showLoading(1200); await renderResume(); },
-  projects: async (args) => { showLoading(1200); await renderProjects(args); },
-  socials: async (args) => await renderSocials(args.join(' ')),
-  clear: async () => { clearTerminal(); await renderWelcome(); },
-  welcome: async () => await renderWelcome(),
-  lighthouse: async () => await renderLighthouse(),
-  help: async () => await renderHelp(),
-  coin: async (args) => await renderCoin(args),
-  theme: async (args) => await renderTheme(args),
+  about: async () => loadAndRender("about", "renderAbout"),
+  gui: async () => loadAndRender("gui", "renderGui"),
+  resume: async () => { showLoading(1200); await loadAndRender("resume", "renderResume"); },
+  projects: async (args) => { showLoading(1200); await loadAndRender("projects", "renderProjects", args); },
+  socials: async (args) => loadAndRender("socials", "renderSocials", args.join(" ")),
+  clear: async () => { clearTerminal(); await loadAndRender("welcome", "renderWelcome"); },
+  welcome: async () => loadAndRender("welcome", "renderWelcome"),
+  lighthouse: async () => loadAndRender("lighthouse", "renderLighthouse"),
+  help: async () => loadAndRender("help", "renderHelp"),
+  coin: async (args) => loadAndRender("coin", "renderCoin", args),
+  theme: async (args) => loadAndRender("theme", "renderTheme", args),
 };
 
 /* --- INPUT EVENT LISTENER KEYDOWN --- */
@@ -247,7 +202,7 @@ input.addEventListener('keydown', async (e) => {
   if (e.key === 'Escape') {
     e.preventDefault();
     clearTerminal();
-    await renderWelcome();
+    await loadAndRender("welcome", "renderWelcome");
     input.value = '';
     historyIndex = -1;
     return;
