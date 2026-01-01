@@ -1,22 +1,36 @@
+import { ensureMarked } from '../services/markdownService.js';
 import { getConfig } from '../services/configService.js';
+import { applyTemplate } from '../services/templateService.js';
 
-export async function render() {
+export async function render(args = []) {
   const output = document.getElementById('output');
-  const ascii = await fetch('content/ascii.txt').then(r => r.text());
+
+  await ensureMarked();
 
   const config = await getConfig();
-  const legacyUrl = config.site.legacy_url || 'https://example.com';
-  const email = config.site.contact_email || 'contact@example.com';
 
-  output.insertAdjacentHTML(
-    'beforeend',
-    `
-<pre>${ascii}</pre>
-<p>
-  Software engineer focused on data, systems, and tooling.<br>
-  <a href="${legacyUrl}" target="_blank" rel="noopener">Legacy Site</a><br>
-  <a href="mailto:${email}">${email}</a>
-</p>
-`
-  );
+  // Load markdown
+  let markdown = await fetch('content/about.md').then(r => r.text());
+
+  // Inject face ASCII if referenced
+  if (markdown.includes('${ascii}')) {
+    const ascii = await fetch('content/ascii.txt').then(r => r.text());
+    const fenced = `\`\`\`\n${ascii}\n\`\`\``;
+    markdown = markdown.replace('${ascii}', fenced);
+  }
+
+  // Inject name ASCII if referenced
+  if (markdown.includes('${name_ascii}')) {
+    const nameAscii = await fetch('content/name.txt').then(r => r.text());
+    const fenced = `\`\`\`\n${nameAscii}\n\`\`\``;
+    markdown = markdown.replace('${name_ascii}', fenced);
+  }
+
+  // Apply YAML placeholders
+  markdown = applyTemplate(markdown, config);
+
+  // Convert to HTML
+  const html = marked.parse(markdown, { mangle: false, headerIds: false });
+
+  output.insertAdjacentHTML('beforeend', html);
 }

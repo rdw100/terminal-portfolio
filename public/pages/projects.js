@@ -1,63 +1,73 @@
+import { ensureMarked } from '../services/markdownService.js';
 import { getConfig } from '../services/configService.js';
+import { applyTemplate } from '../services/templateService.js';
 
 export async function render(args = []) {
   const output = document.getElementById('output');
+
+  await ensureMarked();
+
   const config = await getConfig();
 
-  const username = config.github?.username;
-  const projects = config.github?.projects || [];
+  // Load markdown template
+  let markdown = await fetch('content/projects.md').then(r => r.text());
 
-  if (!username || projects.length === 0) {
-    output.insertAdjacentHTML(
-      'beforeend',
-      `<div>No projects configured.</div>`
-    );
-    return;
+  // Inject face ASCII if referenced
+  if (markdown.includes('${ascii}')) {
+    const ascii = await fetch('content/ascii.txt').then(r => r.text());
+    markdown = markdown.replace('${ascii}', `\`\`\`\n${ascii}\n\`\`\``);
   }
 
-  // Instructions (always rendered)
-  output.insertAdjacentHTML(
-    'beforeend',
-    `
-    <h2>Projects</h2>
-    <p>
-      Usage: <code>projects goto &lt;project+no&gt;</code><br>
-      Example: <code>projects goto 2</code>
-    </p>
-    `
-  );
+  // Inject name ASCII if referenced
+  if (markdown.includes('${name_ascii}')) {
+    const nameAscii = await fetch('content/name.txt').then(r => r.text());
+    markdown = markdown.replace('${name_ascii}', `\`\`\`\n${nameAscii}\n\`\`\``);
+  }
 
-  // Numbered list
+  // Apply YAML placeholders
+  markdown = applyTemplate(markdown, config);
+
+  // Convert Markdown to HTML
+  const html = marked.parse(markdown, { mangle: false, headerIds: false });
+
+  // Insert the Markdown portion
+  output.insertAdjacentHTML('beforeend', html);
+
+  // -----------------------------------------
+  // DYNAMIC PROJECT LIST
+  // -----------------------------------------
+  const username = config.github.username;
+  const projects = config.github.projects;
+
   const listHtml = projects
     .map((name, i) => {
       const url = `https://github.com/${username}/${name}`;
-      return `<li><a href="${url}" target="_blank" rel="noopener">${name}</a></li>`;
+      return `<div>&nbsp;&nbsp;&nbsp;&nbsp;${i + 1}. <a href="${url}" target="_blank" rel="noopener">${name}</a></div>`;
     })
     .join('');
 
-  output.insertAdjacentHTML(
-    'beforeend',
-    `<ol>${listHtml}</ol>`
-  );
+  output.insertAdjacentHTML('beforeend', listHtml + '<br/>');
 
-  // Handle: projects goto N
-  if (args[0] === 'goto') {
-    const index = parseInt(args[1], 10) - 1;
+  // -----------------------------------------
+  // GOTO LOGIC
+  // -----------------------------------------
+  if (args.length >= 2 && args[0] === "goto") {
+    const number = parseInt(args[1], 10) - 1;
 
-    if (Number.isNaN(index) || !projects[index]) {
+    if (number >= 0 && number < projects.length) {
+      const projectName = projects[number];
+      const url = `https://github.com/${username}/${projectName}`;
+
+      window.open(url, '_blank', 'noopener');
       output.insertAdjacentHTML(
         'beforeend',
-        `<div>Invalid project number.</div>`
+        `<div>Opening ${projectName}…</div>` + '<br/>'
       );
-      return;
+    } else {
+      output.insertAdjacentHTML(
+        'beforeend',
+        `<div>Invalid selection: ${args[1]}</div>` + '<br/>'
+      );
     }
-
-    const projectUrl = `https://github.com/${username}/${projects[index]}`;
-    window.open(projectUrl, '_blank', 'noopener');
-
-    output.insertAdjacentHTML(
-      'beforeend',
-      `<div>Opening ${projects[index]}…</div>`
-    );
   }
 }
