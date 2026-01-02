@@ -6,7 +6,7 @@ export async function render(args = []) {
   if (args.length !== 1) {
     output.insertAdjacentHTML(
       'beforeend',
-      `<h2>Coin Price</h2><p>Usage: <b>coin <symbol></b><br>Example: coin btc</p>`
+      `<h2>Coin Price</h2><p>Usage: <b>coin <symbol></b><br>Example: coin btc</p>` + '<br/>'
     );
     return;
   }
@@ -18,12 +18,12 @@ export async function render(args = []) {
 
     output.insertAdjacentHTML(
       'beforeend',
-      `<div>${data.symbol.toUpperCase()} USD: $${data.price}</div>`
+      `<div>${data.symbol.toUpperCase()} USD: $${data.price}</div>` + '<br/>'
     );
   } catch (err) {
     output.insertAdjacentHTML(
       'beforeend',
-      `<div>${err.message}</div>`
+      `<div>${err.message}</div>` + '<br/>'
     );
   }
 }

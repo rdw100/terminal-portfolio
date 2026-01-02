@@ -11,12 +11,11 @@ export async function render() {
       'beforeend',
       `
 <div>
-  <strong>Lighthouse Scores (Production)</strong>
-  <pre>
-Performance     : ${scores.performance}
-Accessibility   : ${scores.accessibility}
-Best Practices  : ${scores.bestPractices}
-SEO             : ${scores.seo}
+  <h2>Lighthouse Scores (Production)</h2>
+  <pre>    Performance     : ${scores.performance}
+    Accessibility   : ${scores.accessibility}
+    Best Practices  : ${scores.bestPractices}
+    SEO             : ${scores.seo}
   </pre>
 </div>
       `
@@ -24,7 +23,7 @@ SEO             : ${scores.seo}
   } catch (err) {
     output.insertAdjacentHTML(
       'beforeend',
-      `<div>Unable to load Lighthouse scores.</div>`
+      `<div>Unable to load Lighthouse scores.</div>` + '<br/>'
     );
   }
 }

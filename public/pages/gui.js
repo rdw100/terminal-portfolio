@@ -8,7 +8,7 @@ export async function render() {
     const output = document.getElementById('output');
     output.insertAdjacentHTML(
       'beforeend',
-      `<div>Legacy URL not configured.</div>`
+      `<div>Legacy URL not configured.</div>` + '<br/>'
     );
     return;
   }

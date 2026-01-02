@@ -76,7 +76,7 @@ function clearTerminal() {
 function printCommand(cmd) {
   output.insertAdjacentHTML(
     'beforeend',
-    `<div class="terminal-command"><span class="prompt-user">guest@dustywright.me:</span><span class="prompt-symbol">~$&gt;&nbsp;</span> ${cmd}</div>`
+    `<div class="terminal-command"><span class="prompt-user">guest@dustywright.me:</span><span class="prompt-symbol">~$&gt;&nbsp;</span>${cmd}</div>`
   );
 }
 
@@ -123,7 +123,8 @@ async function executeCommand(baseCmd, args) {
   const config = commands[baseCmd];
 
   if (!config) {
-    output.insertAdjacentHTML('beforeend', `<div>Command not found</div>`);
+    output.insertAdjacentHTML('beforeend', `<div>Command not found</div>` + '<br/>');
+    scrollToBottom();
     return;
   }
 

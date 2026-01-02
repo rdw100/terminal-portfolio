@@ -4,13 +4,13 @@ const validThemes = ["retro", "azure", "vapor", "minimal", "amber", "dusty"];
 
 function applyTheme(name) {
   if (!validThemes.includes(name)) {
-    return `<div>Unknown theme: ${name}. Available: ${validThemes.join(", ")}</div>`;
+    return `<div>Unknown theme: ${name}. Available: ${validThemes.join(", ")}</div>` + '<br/>';
   }
 
   document.body.className = `theme-${name}`;
   localStorage.setItem("theme", name);
 
-  return `<div>The new theme is <strong>${name}</strong>.</div>`;
+  return `<div>The new theme is <strong>${name}</strong>.</div>` + '<br/>';
 }
 
 function getCurrentTheme() {
@@ -26,7 +26,7 @@ export async function render(args) {
     const current = getCurrentTheme();
     output.insertAdjacentHTML(
       "beforeend",
-      `<div>The current theme is <strong>${current}</strong>.</div>`
+      `<div>The current theme is <strong>${current}</strong>.</div>` + '<br/>'
     );
     return;
   }

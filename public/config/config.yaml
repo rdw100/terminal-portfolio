@@ -12,6 +12,7 @@ github:
     - northwind-web-api
     - orm-dapper
     - StockApp
+    - terminal-portfolio
     
 socials:
   linkedin: https://www.linkedin.com/in/rdw100
