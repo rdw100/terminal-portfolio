@@ -102,3 +102,7 @@ p {
   background: var(--cursor);
   display: inline-block;
 }
+
+.indent {
+  padding-left: 2rem;
+}

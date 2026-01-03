@@ -1,8 +1,17 @@
-import { getCoinPrice } from '../services/coinService.js';
+import { getCoinPrice, renderCoinList } from '../services/coinService.js';
 
 const output = document.getElementById('output');
 
 export async function render(args = []) {
+
+  // 1. Handle "coin list"
+  if (args[0] === "list") {
+    const html = renderCoinList();
+    output.insertAdjacentHTML('beforeend', html + '<br/>');
+    return;
+  }
+
+  // 2. Handle incorrect usage
   if (args.length !== 1) {
     output.insertAdjacentHTML(
       'beforeend',
@@ -11,6 +20,7 @@ export async function render(args = []) {
     return;
   }
 
+  // 3. Handle "coin <symbol>"
   const symbol = args[0].toLowerCase();
 
   try {
