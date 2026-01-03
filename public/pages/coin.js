@@ -31,9 +31,19 @@ export async function render(args = []) {
       `<div>${data.symbol.toUpperCase()} USD: $${data.price}</div>` + '<br/>'
     );
   } catch (err) {
-    output.insertAdjacentHTML(
-      'beforeend',
-      `<div>${err.message}</div>` + '<br/>'
-    );
+    if (data.error) {
+      let html = `<div>${data.error}</div>`;
+
+      if (data.message) {
+        html += `<div>${data.message}</div>`;
+      }
+
+      if (data.cooldownSeconds) {
+        html += `<div>Cooldown: ${data.cooldownSeconds} seconds</div>`;
+      }
+
+      output.insertAdjacentHTML('beforeend', html + '<br/>');
+      return;
+    }
   }
 }
