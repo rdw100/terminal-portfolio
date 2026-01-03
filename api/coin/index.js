@@ -6,17 +6,24 @@ module.exports = async function (context, req) {
       status: 400,
       body: {
         error: "Missing coin symbol",
-        usage: "Usage: coin btc"
+        usage: "Usage: coin <symbol> (e.g., coin btc)"
       }
     };
     return;
   }
 
+  /* Whitelist of supported coins */
   const map = {
     btc: 'bitcoin',
     eth: 'ethereum',
-    sol: 'solana',
-    ada: 'cardano'
+    usdt: 'tether',
+    bnb: 'binancecoin',
+    xrp: 'ripple',
+    usdc: 'usd-coin',
+    ada: 'cardano',
+    doge: 'dogecoin',
+    matic: 'polygon',
+    sol: 'solana'
   };
 
   const coinId = map[symbol];
@@ -27,7 +34,7 @@ module.exports = async function (context, req) {
       body: {
         error: `Unsupported coin '${symbol}'`,
         supported: Object.keys(map),
-        usage: "Usage: coin btc"
+        usage: "Usage: coin <symbol> (e.g., coin btc)"
       }
     };
     return;
