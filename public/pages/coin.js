@@ -7,7 +7,7 @@ export async function render(args = []) {
   // 1. Handle "coin list"
   if (args[0] === "list") {
     const html = renderCoinList();
-    output.insertAdjacentHTML('beforeend', html + '<br/>');
+    output.insertAdjacentHTML('beforeend', `<h2>Available Coins</h2>${html}<br/>`);
     return;
   }
 
