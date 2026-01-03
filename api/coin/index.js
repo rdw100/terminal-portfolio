@@ -155,6 +155,15 @@ module.exports = async function (context, req) {
     const response = await fetch(url);
     const data = await response.json();
 
+    /* Validate provider response */
+    if (!data || !data[coinId] || typeof data[coinId].usd === "undefined") {
+      context.res = {
+        status: 500,
+        body: { error: "Invalid response from provider" }
+      };
+      return;
+    }
+
     // Cache result
     setCache(cacheKey, data);
 
