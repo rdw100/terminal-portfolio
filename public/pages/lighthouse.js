@@ -15,10 +15,7 @@ export async function render() {
   <pre>    Performance     : ${scores.performance}
     Accessibility   : ${scores.accessibility}
     Best Practices  : ${scores.bestPractices}
-    SEO             : ${scores.seo}
-  </pre>
-</div>
-      `
+    SEO             : ${scores.seo}</pre></div>`
     );
   } catch (err) {
     output.insertAdjacentHTML(
