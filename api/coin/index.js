@@ -177,13 +177,17 @@ module.exports = async function (context, req) {
     const response = await fetch(url);
     const data = await response.json();
 
-    // ===============================
-    // Validate provider response
-    // ===============================
+    // Detect provider rate limit or malformed response
     if (!data || !data[coinId] || typeof data[coinId].usd === "undefined") {
+      const cooldownSeconds = getCooldownSeconds(endpoint);
+
       context.res = {
-        status: 500,
-        body: { error: "Invalid response from provider" }
+        status: 429,
+        body: {
+          error: "Provider rate limit reached",
+          cooldownSeconds,
+          message: `CoinGecko is rate limiting. Try again in ${cooldownSeconds} seconds.`
+        }
       };
       return;
     }
