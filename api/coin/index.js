@@ -5,7 +5,9 @@
  * 
  */
 
-/* Whitelist of allowed symbols */
+// ===============================
+// Whitelist of allowed symbols
+// ===============================
 const map = {
   btc: "bitcoin",
   eth: "ethereum",
@@ -19,7 +21,9 @@ const map = {
   matic: "polygon"
 };
 
-/* Rate limiting buckets */
+// ===============================
+// Rate limiting buckets
+// ===============================
 const rateLimits = {
   simple: { count: 0, limit: 30, windowMs: 60000, lastReset: Date.now() },
   coins:  { count: 0, limit: 10, windowMs: 60000, lastReset: Date.now() }
@@ -53,7 +57,9 @@ function getCooldownSeconds(endpoint) {
   return Math.ceil(remaining / 1000);
 }
 
-/* In-memory cache */
+// ===============================
+// In-memory cache
+// ===============================
 const cache = {};
 const CACHE_TTL = 10000; // 10 seconds
 
@@ -68,13 +74,17 @@ function setCache(key, data) {
   cache[key] = { data, timestamp: Date.now() };
 }
 
- /* Azure Function entry point */
+// ===============================
+// Azure Function entry point
+// ===============================
 module.exports = async function (context, req) {
   try {
     const symbol = (req.query.symbol || "").toLowerCase();
     const endpoint = (req.query.endpoint || "simple").toLowerCase();
 
-    /* 400: Missing symbol */
+    // ===============================
+    // 400: Missing symbol
+    // ===============================
     if (!symbol) {
       context.res = {
         status: 400,
@@ -86,7 +96,9 @@ module.exports = async function (context, req) {
       return;
     }
 
-    /* 400: Unsupported symbol */
+    // ===============================
+    // 400: Unsupported symbol
+    // ===============================
     if (!map[symbol]) {
       context.res = {
         status: 400,
@@ -99,7 +111,9 @@ module.exports = async function (context, req) {
       return;
     }
 
-    /* 400: Unsupported endpoint */
+    // ===============================
+    // Validate endpoint
+    // ===============================
     if (!rateLimits[endpoint]) {
       context.res = {
         status: 400,
@@ -114,21 +128,25 @@ module.exports = async function (context, req) {
     const coinId = map[symbol];
     const cacheKey = `${endpoint}:${symbol}`;
 
-    /* Cache hit */
+    // ===============================
+    // Cache hit
+    // ===============================
     const cached = getCache(cacheKey);
     if (cached) {
       context.res = {
         status: 200,
         body: {
           symbol,
-          price: cached[coinId].usd,
+          price: cached[coinId]?.usd,
           cached: true
         }
       };
       return;
     }
 
-    /* Rate limit check */
+    // ===============================
+    // Rate limit check
+    // ===============================
     if (!allowRequest(endpoint)) {
       const cooldownSeconds = getCooldownSeconds(endpoint);
 
@@ -143,7 +161,9 @@ module.exports = async function (context, req) {
       return;
     }
 
-    /* Build URL */
+    // ===============================
+    // Build URL
+    // ===============================
     let url = "";
     if (endpoint === "simple") {
       url = `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`;
@@ -151,11 +171,15 @@ module.exports = async function (context, req) {
       url = `https://api.coingecko.com/api/v3/coins/${coinId}`;
     }
 
-    /* Fetch from CoinGecko */
+    // ===============================
+    // Fetch from CoinGecko
+    // ===============================
     const response = await fetch(url);
     const data = await response.json();
 
-    /* Validate provider response */
+    // ===============================
+    // Validate provider response
+    // ===============================
     if (!data || !data[coinId] || typeof data[coinId].usd === "undefined") {
       context.res = {
         status: 500,
@@ -167,7 +191,9 @@ module.exports = async function (context, req) {
     // Cache result
     setCache(cacheKey, data);
 
-    /* 200: Success */
+    // ===============================
+    // 200: Success
+    // ===============================
     context.res = {
       status: 200,
       body: {
@@ -178,7 +204,9 @@ module.exports = async function (context, req) {
     };
 
   } catch (err) {
-    /* 500: Server error */
+    // ===============================
+    // 500: Server error
+    // ===============================
     context.res = {
       status: 500,
       body: { error: err.message }
