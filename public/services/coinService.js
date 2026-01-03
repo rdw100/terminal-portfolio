@@ -22,12 +22,20 @@ export const STATIC_TOP_COINS = [
 
 /* Fetch coin price from backend API */
 export async function getCoinPrice(symbol) {
-  const res = await fetch(`/api/coin?symbol=${symbol}`);
+  const response = await fetch(`/api/coin?symbol=${symbol}`);
 
-  const data = await res.json();
+  let data = null;
 
-  if (!res.ok) {
-    throw new Error(data.usage || data.error || 'Invalid coin command');
+  try {
+    data = await response.json();
+  } catch (e) {
+    throw new Error(`Request failed with status ${response.status}`);
+  }
+
+  // Handle backend errors (400, 429, 500)
+  if (!response.ok) {
+    const msg = data.message || data.error || `Error ${response.status}`;
+    throw new Error(msg);
   }
 
   return data;

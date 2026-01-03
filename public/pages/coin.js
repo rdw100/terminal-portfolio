@@ -15,7 +15,7 @@ export async function render(args = []) {
   if (args.length !== 1) {
     output.insertAdjacentHTML(
       'beforeend',
-      `<h2>Coin Price</h2><p>Usage: <b>coin <symbol></b><br>Example: coin btc</p>` + '<br/>'
+      `<h2>Coin Price</h2><p>Usage: <b>coin <symbol></b><br>Example: coin btc</p><br/>`
     );
     return;
   }
@@ -28,22 +28,15 @@ export async function render(args = []) {
 
     output.insertAdjacentHTML(
       'beforeend',
-      `<div>${data.symbol.toUpperCase()} USD: $${data.price}</div>` + '<br/>'
+      `<div>${data.symbol.toUpperCase()} USD: $${data.price}</div><br/>`
     );
+
   } catch (err) {
-    if (data.error) {
-      let html = `<div>${data.error}</div>`;
-
-      if (data.message) {
-        html += `<div>${data.message}</div>`;
-      }
-
-      if (data.cooldownSeconds) {
-        html += `<div>Cooldown: ${data.cooldownSeconds} seconds</div>`;
-      }
-
-      output.insertAdjacentHTML('beforeend', html + '<br/>');
-      return;
-    }
+    // SAFE ERROR HANDLING
+    output.insertAdjacentHTML(
+      'beforeend',
+      `<div>${err.message}</div><br/>`
+    );
+    return;
   }
 }
