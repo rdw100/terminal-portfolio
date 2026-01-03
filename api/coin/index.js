@@ -6,6 +6,17 @@
  */
 
 // ===============================
+// JSON response helper
+// ===============================
+function json(body, status = 200) {
+  return {
+    status,
+    headers: { "Content-Type": "application/json" },
+    body
+  };
+}
+
+// ===============================
 // Whitelist of allowed symbols
 // ===============================
 const map = {
@@ -86,13 +97,10 @@ module.exports = async function (context, req) {
     // 400: Missing symbol
     // ===============================
     if (!symbol) {
-      context.res = {
-        status: 400,
-        body: {
-          error: "Missing coin symbol",
-          usage: "Usage: coin <symbol> (e.g., coin btc)"
-        }
-      };
+      context.res = json({
+        error: "Missing coin symbol",
+        usage: "Usage: coin <symbol> (e.g., coin btc)"
+      }, 400);
       return;
     }
 
@@ -100,14 +108,11 @@ module.exports = async function (context, req) {
     // 400: Unsupported symbol
     // ===============================
     if (!map[symbol]) {
-      context.res = {
-        status: 400,
-        body: {
-          error: `Unsupported coin '${symbol}'`,
-          supported: Object.keys(map),
-          usage: "Usage: coin <symbol> (e.g., coin btc)"
-        }
-      };
+      context.res = json({
+        error: `Unsupported coin '${symbol}'`,
+        supported: Object.keys(map),
+        usage: "Usage: coin <symbol> (e.g., coin btc)"
+      }, 400);
       return;
     }
 
@@ -115,13 +120,10 @@ module.exports = async function (context, req) {
     // Validate endpoint
     // ===============================
     if (!rateLimits[endpoint]) {
-      context.res = {
-        status: 400,
-        body: {
-          error: `Unsupported endpoint '${endpoint}'`,
-          supported: Object.keys(rateLimits)
-        }
-      };
+      context.res = json({
+        error: `Unsupported endpoint '${endpoint}'`,
+        supported: Object.keys(rateLimits)
+      }, 400);
       return;
     }
 
@@ -133,14 +135,11 @@ module.exports = async function (context, req) {
     // ===============================
     const cached = getCache(cacheKey);
     if (cached) {
-      context.res = {
-        status: 200,
-        body: {
-          symbol,
-          price: cached[coinId]?.usd,
-          cached: true
-        }
-      };
+      context.res = json({
+        symbol,
+        price: cached[coinId]?.usd,
+        cached: true
+      });
       return;
     }
 
@@ -150,14 +149,11 @@ module.exports = async function (context, req) {
     if (!allowRequest(endpoint)) {
       const cooldownSeconds = getCooldownSeconds(endpoint);
 
-      context.res = {
-        status: 429,
-        body: {
-          error: `Rate limit exceeded for endpoint '${endpoint}'`,
-          cooldownSeconds,
-          message: `Please wait ${cooldownSeconds} seconds before trying again.`
-        }
-      };
+      context.res = json({
+        error: `Rate limit exceeded for endpoint '${endpoint}'`,
+        cooldownSeconds,
+        message: `Please wait ${cooldownSeconds} seconds before trying again.`
+      }, 429);
       return;
     }
 
@@ -181,14 +177,11 @@ module.exports = async function (context, req) {
     if (!data || !data[coinId] || typeof data[coinId].usd === "undefined") {
       const cooldownSeconds = getCooldownSeconds(endpoint);
 
-      context.res = {
-        status: 429,
-        body: {
-          error: "Provider rate limit reached",
-          cooldownSeconds,
-          message: `CoinGecko is rate limiting. Try again in ${cooldownSeconds} seconds.`
-        }
-      };
+      context.res = json({
+        error: "Provider rate limit reached",
+        cooldownSeconds,
+        message: `CoinGecko is rate limiting. Try again in ${cooldownSeconds} seconds.`
+      }, 429);
       return;
     }
 
@@ -198,22 +191,16 @@ module.exports = async function (context, req) {
     // ===============================
     // 200: Success
     // ===============================
-    context.res = {
-      status: 200,
-      body: {
-        symbol,
-        price: data[coinId].usd,
-        cached: false
-      }
-    };
+    context.res = json({
+      symbol,
+      price: data[coinId].usd,
+      cached: false
+    });
 
   } catch (err) {
     // ===============================
     // 500: Server error
     // ===============================
-    context.res = {
-      status: 500,
-      body: { error: err.message }
-    };
+    context.res = json({ error: err.message }, 500);
   }
 };
