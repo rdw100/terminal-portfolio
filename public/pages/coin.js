@@ -30,16 +30,18 @@ export async function render(args = []) {
 
   // 3. Handle "coin <symbol>"
   const symbol = args[0].toLowerCase();
-  const cachedLabel = data.cached
-    ? " <span style='color:yellow'>[cached]</span>"
-    : "";
 
   try {
     const data = await getCoinPrice(symbol);
 
+    // Cached indicator (Option C)
+    const cachedLabel = data.cached
+      ? " <span style='color:yellow'>[cached]</span>"
+      : "";
+
     output.insertAdjacentHTML(
       'beforeend',
-      `<div>${data.symbol.toUpperCase()} USD: $${data.price}</div><br/>`
+      `<div>${data.symbol.toUpperCase()} USD: $${data.price}${cachedLabel}</div><br/>`
     );
     scrollToBottom(output);
 
@@ -59,10 +61,7 @@ export async function render(args = []) {
       scrollToBottom(output);
     }
 
-    output.insertAdjacentHTML(
-      'beforeend',
-      `<div>${data.symbol.toUpperCase()} USD: $${data.price}${cachedLabel}</div><br/>`
-    );
+    output.insertAdjacentHTML('beforeend', '<br/>');
     scrollToBottom(output);
     return;
   }
