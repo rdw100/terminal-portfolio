@@ -1,6 +1,6 @@
 /* --- Shared user interface helper for cooldown timers using color coding and 
 * animated spinner --- */
-import { scrollToBottom } from 'scroll.js';
+import { scrollToBottom } from './scroll.js';
 
 const SPINNER_FRAMES = ["⠋","⠙","⠹","⠸","⠼","⠴","⠦","⠧","⠇","⠏"];
 
