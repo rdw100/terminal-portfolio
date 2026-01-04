@@ -1,13 +1,13 @@
 /* --- Shared user interface helper for cooldown timers using color coding and 
 * animated spinner --- */
-// uiCooldown.js
+import { scrollToBottom } from '.ui/scroll.js';
+
 const SPINNER_FRAMES = ["⠋","⠙","⠹","⠸","⠼","⠴","⠦","⠧","⠇","⠏"];
 
 export function startCooldownTimer(outputEl, seconds) {
   let remaining = seconds;
   let frame = 0;
 
-  // Create lines in the terminal
   const spinnerLine = document.createElement("div");
   spinnerLine.style.color = "yellow";
 
@@ -17,22 +17,23 @@ export function startCooldownTimer(outputEl, seconds) {
   outputEl.appendChild(spinnerLine);
   outputEl.appendChild(barLine);
 
+  scrollToBottom(outputEl);
+
   const interval = setInterval(() => {
     const spinner = SPINNER_FRAMES[frame % SPINNER_FRAMES.length];
     frame++;
 
-    // Spinner + countdown
     spinnerLine.innerHTML = `${spinner} Waiting… ${remaining}s remaining`;
 
-    // Progress bar
     const total = seconds;
     const percent = Math.max(0, Math.min(1, (total - remaining) / total));
     const barWidth = 12;
     const filled = Math.round(percent * barWidth);
     const empty = barWidth - filled;
 
-    const bar = `[${"█".repeat(filled)}${"░".repeat(empty)}] ${Math.round(percent * 100)}%`;
-    barLine.innerHTML = bar;
+    barLine.innerHTML = `[${"█".repeat(filled)}${"░".repeat(empty)}] ${Math.round(percent * 100)}%`;
+
+    scrollToBottom(outputEl);
 
     remaining--;
 
@@ -44,6 +45,8 @@ export function startCooldownTimer(outputEl, seconds) {
 
       spinnerLine.innerHTML = `✔ Cooldown complete. You may retry the command.`;
       barLine.innerHTML = `[${"█".repeat(barWidth)}] 100%`;
+
+      scrollToBottom(outputEl);
     }
   }, 1000);
 }
