@@ -31,53 +31,22 @@ export async function render(args = []) {
       'beforeend',
       `<div>${data.symbol.toUpperCase()} USD: $${data.price}</div><br/>`
     );
-    } catch (err) {
-      // Print the main error message
-      output.insertAdjacentHTML(
-        'beforeend',
-        `<div>${err.message}</div>`
-      );
 
-      // Extract cooldown seconds if present
-      const match = err.message.match(/(\d+)\s*seconds?/i);
-      if (match) {
-        const seconds = parseInt(match[1], 10);
-        startCooldownTimer(output, seconds);
-      }
-
-      output.insertAdjacentHTML('beforeend', '<br/>');
-      return;
-    }
-/*   } catch (err) {
+  } catch (err) {
+    // Print the backend error message
     output.insertAdjacentHTML(
       'beforeend',
       `<div>${err.message}</div>`
     );
 
-    // Extract seconds from the message if present
+    // Extract cooldown seconds from the message
     const match = err.message.match(/(\d+)\s*seconds?/i);
-    if (!match) {
-      output.insertAdjacentHTML('beforeend', '<br/>');
-      return;
+    if (match) {
+      const seconds = parseInt(match[1], 10);
+      startCooldownTimer(output, seconds);
     }
-
-    let seconds = parseInt(match[1], 10);
-
-    // Create a live-updating line
-    const line = document.createElement('div');
-    output.appendChild(line);
-
-    const interval = setInterval(() => {
-      line.innerHTML = `⏳ Waiting… ${seconds}s remaining`;
-      seconds--;
-
-      if (seconds < 0) {
-        clearInterval(interval);
-        line.innerHTML = `Cooldown complete. You may retry the command.`;
-      }
-    }, 1000);
 
     output.insertAdjacentHTML('beforeend', '<br/>');
     return;
-  } */
+  }
 }
