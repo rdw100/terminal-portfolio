@@ -1,5 +1,5 @@
 import { getCoinPrice, renderCoinList } from '../services/coinService.js';
-import { startCooldownTimer } from '../shared/ui/uiCooldown.js';
+import { startCooldownTimer } from '../shared/ui/Cooldown.js';
 
 const output = document.getElementById('output');
 
