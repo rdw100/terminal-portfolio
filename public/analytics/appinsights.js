@@ -1,5 +1,3 @@
-// analytics/appinsights.js
-
 export const Analytics = (() => {
     let appInsights = null;
     let sessionId = null;
