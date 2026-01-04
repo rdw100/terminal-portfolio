@@ -1,5 +1,6 @@
 import { getCoinPrice, renderCoinList } from '../services/coinService.js';
-import { startCooldownTimer } from '../shared/ui/cooldown.js';
+import { startCooldownTimer } from '../shared/ui/uiCooldown.js';
+import { scrollToBottom } from '../shared/ui/scroll.js';
 
 const output = document.getElementById('output');
 
@@ -12,6 +13,7 @@ export async function render(args = []) {
       'beforeend',
       `<h2>Available Coins</h2>${html}<br/>`
     );
+    scrollToBottom(output);
     return;
   }
 
@@ -22,6 +24,7 @@ export async function render(args = []) {
       `<h2>Coin Price</h2>
        <p>Usage: <b>coin &lt;symbol&gt;</b><br>Example: coin btc</p><br/>`
     );
+    scrollToBottom(output);
     return;
   }
 
@@ -35,6 +38,7 @@ export async function render(args = []) {
       'beforeend',
       `<div>${data.symbol.toUpperCase()} USD: $${data.price}</div><br/>`
     );
+    scrollToBottom(output);
 
   } catch (err) {
     // Print backend error message
@@ -42,15 +46,18 @@ export async function render(args = []) {
       'beforeend',
       `<div>${err.message}</div>`
     );
+    scrollToBottom(output);
 
     // Extract cooldown seconds
     const match = err.message.match(/(\d+)\s*seconds?/i);
     if (match) {
       const seconds = parseInt(match[1], 10);
       startCooldownTimer(output, seconds);
+      scrollToBottom(output);
     }
 
     output.insertAdjacentHTML('beforeend', '<br/>');
+    scrollToBottom(output);
     return;
   }
 }
