@@ -28,11 +28,11 @@ export async function getCoinPrice(symbol) {
 
   try {
     data = await response.json();
-  } catch (e) {
+  } catch {
     throw new Error(`Request failed with status ${response.status}`);
   }
 
-  // Handle backend errors (400, 429, 500)
+  // Normalize backend errors into a single Error message
   if (!response.ok) {
     const msg = data.message || data.error || `Error ${response.status}`;
     throw new Error(msg);

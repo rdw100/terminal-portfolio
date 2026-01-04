@@ -1,8 +1,9 @@
 /* --- Coin API Azure Function ---
  *
- * This function handles requests for cryptocurrency prices.
- * It supports rate limiting and in-memory caching.
- * 
+ * Per-endpoint minimal cooldown (token bucket)
+ * Deterministic cooldown: "time until next request allowed"
+ * Clean JSON responses
+ * Caching + provider rate-limit detection
  */
 
 // ===============================
@@ -33,39 +34,42 @@ const map = {
 };
 
 // ===============================
-// Rate limiting buckets
+// Per-endpoint token bucket
 // ===============================
 const rateLimits = {
-  simple: { count: 0, limit: 30, windowMs: 60000, lastReset: Date.now() },
-  coins:  { count: 0, limit: 10, windowMs: 60000, lastReset: Date.now() }
+  simple: { limit: 30, windowMs: 60000, timestamps: [] },
+  coins:  { limit: 10, windowMs: 60000, timestamps: [] }
 };
 
-function checkAndReset(bucket) {
-  const now = Date.now();
-  if (now - bucket.lastReset >= bucket.windowMs) {
-    bucket.count = 0;
-    bucket.lastReset = now;
-  }
-}
-
+// Remove expired timestamps + check if request allowed
 function allowRequest(endpoint) {
   const bucket = rateLimits[endpoint];
-  checkAndReset(bucket);
+  const now = Date.now();
 
-  if (bucket.count >= bucket.limit) {
+  // Remove timestamps older than window
+  bucket.timestamps = bucket.timestamps.filter(
+    ts => now - ts < bucket.windowMs
+  );
+
+  if (bucket.timestamps.length >= bucket.limit) {
     return false;
   }
 
-  bucket.count++;
+  bucket.timestamps.push(now);
   return true;
 }
 
+// Minimal cooldown: time until oldest timestamp expires
 function getCooldownSeconds(endpoint) {
   const bucket = rateLimits[endpoint];
   const now = Date.now();
-  const elapsed = now - bucket.lastReset;
-  const remaining = bucket.windowMs - elapsed;
-  return Math.ceil(remaining / 1000);
+
+  if (bucket.timestamps.length === 0) return 0;
+
+  const oldest = bucket.timestamps[0];
+  const expiresIn = bucket.windowMs - (now - oldest);
+
+  return Math.ceil(expiresIn / 1000);
 }
 
 // ===============================
@@ -144,7 +148,7 @@ module.exports = async function (context, req) {
     }
 
     // ===============================
-    // Rate limit check
+    // Rate limit check (per-endpoint)
     // ===============================
     if (!allowRequest(endpoint)) {
       const cooldownSeconds = getCooldownSeconds(endpoint);

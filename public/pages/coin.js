@@ -1,5 +1,5 @@
 import { getCoinPrice, renderCoinList } from '../services/coinService.js';
-import { startCooldownTimer } from '../shared/ui/cooldown.js';
+import { startCooldownTimer } from '../ui/uiCooldown.js';
 
 const output = document.getElementById('output');
 
@@ -8,7 +8,10 @@ export async function render(args = []) {
   // 1. Handle "coin list"
   if (args[0] === "list") {
     const html = renderCoinList();
-    output.insertAdjacentHTML('beforeend', `<h2>Available Coins</h2>${html}<br/>`);
+    output.insertAdjacentHTML(
+      'beforeend',
+      `<h2>Available Coins</h2>${html}<br/>`
+    );
     return;
   }
 
@@ -16,7 +19,8 @@ export async function render(args = []) {
   if (args.length !== 1) {
     output.insertAdjacentHTML(
       'beforeend',
-      `<h2>Coin Price</h2><p>Usage: <b>coin <symbol></b><br>Example: coin btc</p><br/>`
+      `<h2>Coin Price</h2>
+       <p>Usage: <b>coin &lt;symbol&gt;</b><br>Example: coin btc</p><br/>`
     );
     return;
   }
@@ -33,13 +37,13 @@ export async function render(args = []) {
     );
 
   } catch (err) {
-    // Print the backend error message
+    // Print backend error message
     output.insertAdjacentHTML(
       'beforeend',
       `<div>${err.message}</div>`
     );
 
-    // Extract cooldown seconds from the message
+    // Extract cooldown seconds
     const match = err.message.match(/(\d+)\s*seconds?/i);
     if (match) {
       const seconds = parseInt(match[1], 10);
