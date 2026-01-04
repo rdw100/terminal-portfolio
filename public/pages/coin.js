@@ -30,13 +30,36 @@ export async function render(args = []) {
       'beforeend',
       `<div>${data.symbol.toUpperCase()} USD: $${data.price}</div><br/>`
     );
-
   } catch (err) {
-    // SAFE ERROR HANDLING
     output.insertAdjacentHTML(
       'beforeend',
-      `<div>${err.message}</div><br/>`
+      `<div>${err.message}</div>`
     );
+
+    // Extract seconds from the message if present
+    const match = err.message.match(/(\d+)\s*seconds?/i);
+    if (!match) {
+      output.insertAdjacentHTML('beforeend', '<br/>');
+      return;
+    }
+
+    let seconds = parseInt(match[1], 10);
+
+    // Create a live-updating line
+    const line = document.createElement('div');
+    output.appendChild(line);
+
+    const interval = setInterval(() => {
+      line.innerHTML = `⏳ Waiting… ${seconds}s remaining`;
+      seconds--;
+
+      if (seconds < 0) {
+        clearInterval(interval);
+        line.innerHTML = `Cooldown complete. You may retry the command.`;
+      }
+    }, 1000);
+
+    output.insertAdjacentHTML('beforeend', '<br/>');
     return;
   }
 }
