@@ -1,4 +1,5 @@
 import { getCoinPrice, renderCoinList } from '../services/coinService.js';
+import { startCooldownTimer } from '../shared/ui/uiCooldown.js';
 
 const output = document.getElementById('output');
 
@@ -30,7 +31,24 @@ export async function render(args = []) {
       'beforeend',
       `<div>${data.symbol.toUpperCase()} USD: $${data.price}</div><br/>`
     );
-  } catch (err) {
+    } catch (err) {
+      // Print the main error message
+      output.insertAdjacentHTML(
+        'beforeend',
+        `<div>${err.message}</div>`
+      );
+
+      // Extract cooldown seconds if present
+      const match = err.message.match(/(\d+)\s*seconds?/i);
+      if (match) {
+        const seconds = parseInt(match[1], 10);
+        startCooldownTimer(output, seconds);
+      }
+
+      output.insertAdjacentHTML('beforeend', '<br/>');
+      return;
+    }
+/*   } catch (err) {
     output.insertAdjacentHTML(
       'beforeend',
       `<div>${err.message}</div>`
@@ -61,5 +79,5 @@ export async function render(args = []) {
 
     output.insertAdjacentHTML('beforeend', '<br/>');
     return;
-  }
+  } */
 }
