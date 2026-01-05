@@ -177,6 +177,17 @@ Example:
 
 ---
 
+## 🎯 Coin Rate Limit Demo
+
+- A coin price request (coin btc, coin eth, etc.)
+- A smooth animated progress bar that runs while the request is in flight
+- Automatic transition from yellow → green as the request completes
+- A clean, minimal cooldown indicator if the API rate limit is hit
+
+![Coin Rate Limit Demo](https://github.com/rdw100/terminal-portfolio/blob/main/public/img/ProgressBarAnimation.gif)
+
+---
+
 ## 🧪 Troubleshooting (Azure Static Web Apps)
 
 ### 🐳 Docker 403 Errors During Build
