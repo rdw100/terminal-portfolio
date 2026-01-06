@@ -27,7 +27,7 @@ export const Analytics = (() => {
             config: {
                 connectionString,
 
-                // Keep these disabled
+                // Disable all auto-collection
                 disableAjaxTracking: true,
                 disableFetchTracking: true,
                 disableCorrelationHeaders: true,
@@ -36,8 +36,14 @@ export const Analytics = (() => {
                 enableResponseHeaderTracking: false,
                 enableAutoDependencyTracking: false,
 
-                // Safe to enable
-                disableExceptionTracking: false,
+                // Disable all unload-triggering features
+                disableExceptionTracking: true,
+                disablePerfTracking: true,
+                disablePageViewPerformance: true,
+                disableFlushOnBeforeUnload: true,
+                disableFlushOnUnload: true,
+
+                // Safe
                 disableTelemetry: false,
                 disableInstrumentationKeyValidation: true
             }
