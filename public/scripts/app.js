@@ -1,4 +1,4 @@
-import { Analytics } from "../../shared/telemetry/appLiteInsights.js";
+import { LiteAnalytics as Analytics } from "../../shared/telemetry/appLiteInsights.js";
 
 Analytics.init("__TP_INSIGHTS_CONN__");
 
