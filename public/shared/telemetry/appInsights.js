@@ -29,7 +29,7 @@ export const Analytics = (() => {
             disableExceptionTracking: false
         });
 
-        ai.loadAppInsights();
+        // No loadAppInsights() in Lite SDK
         appInsights = ai;
 
         // Session start
