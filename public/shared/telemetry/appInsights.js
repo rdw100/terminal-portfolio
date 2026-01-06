@@ -4,14 +4,13 @@ export const Analytics = (() => {
     let userId = null;
 
     async function init(connectionString) {
-        // Skip telemetry if the connection string is missing or still a placeholder
         if (!connectionString || connectionString.startsWith("__")) {
             console.warn("Telemetry disabled (no valid connection string)");
             return;
         }
 
-        // Load the Lite SDK (self-hosted)
-        await loadScript("/scripts/vendor/appinsights-lite.bundle.js");
+        // Load the full SDK (global bundle)
+        await loadScript("../../scripts/vendor/ai.3.min.js");
 
         // Persistent user ID
         userId = localStorage.getItem("ai_userId");
@@ -23,20 +22,33 @@ export const Analytics = (() => {
         // New session per load
         sessionId = crypto.randomUUID();
 
-        // Initialize Lite SDK
-        const ai = new Microsoft.ApplicationInsights({
-            connectionString,
-            disableExceptionTracking: false
+        // Initialize full SDK with ALL auto-collection disabled
+        const ai = new Microsoft.ApplicationInsights.ApplicationInsights({
+            config: {
+                connectionString,
+
+                // Disable everything except manual tracking
+                disableAjaxTracking: true,
+                disableFetchTracking: true,
+                disableCorrelationHeaders: true,
+                disableExceptionTracking: true,
+                disableTelemetry: false,
+                enableAutoRouteTracking: false,
+                enableRequestHeaderTracking: false,
+                enableResponseHeaderTracking: false,
+                enableAutoDependencyTracking: false,
+                disableInstrumentationKeyValidation: true
+            }
         });
 
-        // No loadAppInsights() in Lite SDK
+        ai.loadAppInsights();
         appInsights = ai;
 
-        // Session start
+        // Manual session start
         trackEvent("SessionStarted");
 
-        // Session end
-        window.addEventListener("beforeunload", () => {
+        // Manual session end
+        window.addEventListener("pagehide", () => {
             trackEvent("SessionEnded");
         });
     }
@@ -51,6 +63,8 @@ export const Analytics = (() => {
             document.head.appendChild(s);
         });
     }
+
+    // --- Public API ---
 
     function trackEvent(name, properties = {}) {
         if (!appInsights) return;
