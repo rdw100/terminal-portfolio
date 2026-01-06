@@ -1,6 +1,7 @@
 import { Analytics } from "../analytics/appinsights.js";
 
-Analytics.init("__TP_INSIGHTS_CONN__");
+// Analytics.init("__TP_INSIGHTS_CONN__");
+Analytics.init("");
 
 /* --- DYNAMIC PAGE LOADING USING GENERIC --- */
 async function loadAndRender(page, name, args = null) {
