@@ -22,7 +22,7 @@ export const Analytics = (() => {
         }
 
         // Lazy-load the App Insights SDK as a global script
-        await loadScript("https://js.monitor.azure.com/scripts/b/ai.3.gbl.min.js");
+        await loadScript("../scripts/vendor/ai.3.gbl.min.js");
 
         // Persistent user ID
         userId = localStorage.getItem("ai_userId");
