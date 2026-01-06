@@ -27,17 +27,19 @@ export const Analytics = (() => {
             config: {
                 connectionString,
 
-                // Disable everything except manual tracking
-                disableAjaxTracking: true,
-                disableFetchTracking: true,
-                disableCorrelationHeaders: true,
-                disableExceptionTracking: true,
-                disableTelemetry: false,
-                enableAutoRouteTracking: false,
-                enableRequestHeaderTracking: false,
-                enableResponseHeaderTracking: false,
-                enableAutoDependencyTracking: false,
-                disableInstrumentationKeyValidation: true
+            // Keep these disabled
+            disableAjaxTracking: true,
+            disableFetchTracking: true,
+            disableCorrelationHeaders: true,
+            enableAutoRouteTracking: false,
+            enableRequestHeaderTracking: false,
+            enableResponseHeaderTracking: false,
+            enableAutoDependencyTracking: false,
+
+            // Safe to enable
+            disableExceptionTracking: false,
+            disableTelemetry: false,
+            disableInstrumentationKeyValidation: true
             }
         });
 
