@@ -27,8 +27,6 @@ export const Analytics = (() => {
         const ai = new Microsoft.ApplicationInsights({
             config: {
                 connectionString,
-                disableAjaxTracking: true,
-                disableFetchTracking: true,
                 disableExceptionTracking: false
             }
         });
