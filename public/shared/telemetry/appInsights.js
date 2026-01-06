@@ -2,9 +2,16 @@ export const Analytics = (() => {
     let appInsights = null;
     let sessionId = null;
     let userId = null;
+    let initStarted = false;
 
     function loadScript(src) {
         return new Promise((resolve, reject) => {
+            // Prevent duplicate loads
+            if (document.querySelector(`script[src="${src}"]`)) {
+                resolve();
+                return;
+            }
+
             const s = document.createElement("script");
             s.src = src;
             s.async = true;
@@ -20,6 +27,13 @@ export const Analytics = (() => {
             console.warn("Telemetry disabled (no valid connection string)");
             return;
         }
+
+        // Prevent double initialization
+        if (initStarted) return;
+        initStarted = true;
+
+        // Wait until browser is idle or after load
+        await waitForIdle();
 
         // Lazy-load the App Insights SDK as a global script
         await loadScript("../scripts/vendor/ai.3.gbl.min.js");
@@ -54,6 +68,18 @@ export const Analytics = (() => {
         // Session end
         window.addEventListener("beforeunload", () => {
             trackEvent("SessionEnded");
+        });
+    }
+
+    function waitForIdle() {
+        return new Promise(resolve => {
+            if ("requestIdleCallback" in window) {
+                requestIdleCallback(() => resolve());
+            } else {
+                window.addEventListener("load", () => {
+                    setTimeout(resolve, 250);
+                });
+            }
         });
     }
 

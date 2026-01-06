@@ -1,7 +1,6 @@
-import { Analytics } from "../analytics/appinsights.js";
+import { Analytics } from "../../shared/telemetry/appInsights.js";
 
-// Analytics.init("__TP_INSIGHTS_CONN__");
-Analytics.init("");
+Analytics.init("__TP_INSIGHTS_CONN__");
 
 /* --- DYNAMIC PAGE LOADING USING GENERIC --- */
 async function loadAndRender(page, name, args = null) {
