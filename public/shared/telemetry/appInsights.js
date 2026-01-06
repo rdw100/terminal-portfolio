@@ -25,10 +25,8 @@ export const Analytics = (() => {
 
         // Initialize Lite SDK
         const ai = new Microsoft.ApplicationInsights({
-            config: {
-                connectionString,
-                disableExceptionTracking: false
-            }
+            connectionString,
+            disableExceptionTracking: false
         });
 
         ai.loadAppInsights();
