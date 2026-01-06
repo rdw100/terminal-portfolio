@@ -2,24 +2,6 @@ export const Analytics = (() => {
     let appInsights = null;
     let sessionId = null;
     let userId = null;
-    let initStarted = false;
-
-    function loadScript(src) {
-        return new Promise((resolve, reject) => {
-            // Prevent duplicate loads
-            if (document.querySelector(`script[src="${src}"]`)) {
-                resolve();
-                return;
-            }
-
-            const s = document.createElement("script");
-            s.src = src;
-            s.async = true;
-            s.onload = resolve;
-            s.onerror = reject;
-            document.head.appendChild(s);
-        });
-    }
 
     async function init(connectionString) {
         // Skip telemetry if the connection string is missing or still a placeholder
@@ -28,15 +10,8 @@ export const Analytics = (() => {
             return;
         }
 
-        // Prevent double initialization
-        if (initStarted) return;
-        initStarted = true;
-
-        // Wait until browser is idle or after load
-        await waitForIdle();
-
-        // Lazy-load the App Insights SDK as a global script
-        await loadScript("../scripts/vendor/ai.3.gbl.min.js");
+        // Load the Lite SDK (self-hosted)
+        await loadScript("/scripts/vendor/appinsights-lite.bundle.js");
 
         // Persistent user ID
         userId = localStorage.getItem("ai_userId");
@@ -48,11 +23,11 @@ export const Analytics = (() => {
         // New session per load
         sessionId = crypto.randomUUID();
 
-        // Initialize SDK
+        // Initialize Lite SDK
         const ai = new Microsoft.ApplicationInsights.ApplicationInsights({
             config: {
                 connectionString,
-                enableAutoRouteTracking: false,
+                // Lite SDK ignores auto-tracking features anyway
                 disableAjaxTracking: true,
                 disableFetchTracking: true,
                 disableExceptionTracking: false
@@ -71,15 +46,14 @@ export const Analytics = (() => {
         });
     }
 
-    function waitForIdle() {
-        return new Promise(resolve => {
-            if ("requestIdleCallback" in window) {
-                requestIdleCallback(() => resolve());
-            } else {
-                window.addEventListener("load", () => {
-                    setTimeout(resolve, 250);
-                });
-            }
+    function loadScript(src) {
+        return new Promise((resolve, reject) => {
+            const s = document.createElement("script");
+            s.src = src;
+            s.async = true;
+            s.onload = resolve;
+            s.onerror = reject;
+            document.head.appendChild(s);
         });
     }
 
