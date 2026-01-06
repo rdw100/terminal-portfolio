@@ -10,7 +10,7 @@ export const Analytics = (() => {
         }
 
         // Load the full SDK (global bundle)
-        await loadScript("../../scripts/vendor/ai.3.min.js");
+        await loadScript("../../scripts/vendor/ai.3.gbl.min.js");
 
         // Persistent user ID
         userId = localStorage.getItem("ai_userId");
