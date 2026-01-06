@@ -24,10 +24,9 @@ export const Analytics = (() => {
         sessionId = crypto.randomUUID();
 
         // Initialize Lite SDK
-        const ai = new Microsoft.ApplicationInsights.ApplicationInsights({
+        const ai = new Microsoft.ApplicationInsights.ApplicationInsightsBasic({
             config: {
                 connectionString,
-                // Lite SDK ignores auto-tracking features anyway
                 disableAjaxTracking: true,
                 disableFetchTracking: true,
                 disableExceptionTracking: false
