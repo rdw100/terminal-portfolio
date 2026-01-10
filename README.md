@@ -184,7 +184,7 @@ Example:
 - Automatic transition from yellow → green as the request completes
 - A clean, minimal cooldown indicator if the API rate limit is hit
 
-![Coin Rate Limit Demo](https://github.com/rdw100/terminal-portfolio/blob/main/public/img/ProgressBarAnimation.gif)
+![Coin Rate Limit Demo](https://github.com/rdw100/terminal-portfolio/blob/main/assets/ProgressBarAnimation.gif)
 
 ---
 

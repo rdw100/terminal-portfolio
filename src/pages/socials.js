@@ -1,0 +1,53 @@
+/* Display socials information from markdown template and config */
+import { ensureMarked } from '../services/markdownService.js';
+import { getConfig } from '../services/configService.js';
+import { applyTemplate } from '../services/templateService.js';
+
+export async function render(args = []) {
+  const output = document.getElementById('output');
+
+  await ensureMarked();
+  const config = await getConfig();
+
+  // Load markdown template
+  let markdown = await fetch('/src/content/socials.md').then(r => r.text());
+
+  // Inject face ASCII
+  if (markdown.includes('${ascii}')) {
+    const ascii = await fetch('/src/content/ascii.txt').then(r => r.text());
+    markdown = markdown.replace('${ascii}', `\`\`\`\n${ascii}\n\`\`\``);
+  }
+
+  // Inject name ASCII
+  if (markdown.includes('${name_ascii}')) {
+    const nameAscii = await fetch('/src/content/name.txt').then(r => r.text());
+    markdown = markdown.replace('${name_ascii}', `\`\`\`\n${nameAscii}\n\`\`\``);
+  }
+
+  // Apply YAML placeholders
+  markdown = applyTemplate(markdown, config);
+
+  // Convert Markdown to HTML
+  const html = marked.parse(markdown, { mangle: false, headerIds: false });
+
+  // Insert Markdown portion
+  output.insertAdjacentHTML('beforeend', html);
+
+  // -----------------------------------------
+  // DYNAMIC SOCIAL LINKS LIST
+  // -----------------------------------------
+  const socials = config.socials || {};
+
+  const entries = Object.entries(socials).map(([key, url]) => ({
+    name: key.charAt(0).toUpperCase() + key.slice(1),
+    url
+  }));
+
+  const listHtml = entries
+    .map((entry, i) => {
+      return `<div>&nbsp;&nbsp;&nbsp;&nbsp;${i + 1}. <a href="${entry.url}" target="_blank" rel="noopener">${entry.name}</a></div>`;
+    })
+    .join('');
+
+  output.insertAdjacentHTML('beforeend', listHtml + '<br/>');
+}

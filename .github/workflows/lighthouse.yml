@@ -34,7 +34,7 @@ jobs:
             accessibility: (.categories.accessibility.score * 100 | round),
             bestPractices: (.categories["best-practices"].score * 100 | round),
             seo: (.categories.seo.score * 100 | round)
-          }' "$REPORT" > public/lighthouse/scores.json
+          }' "$REPORT" > src/content/lighthouse/scores.json
 
       - name: Commit scores.json if changed
         run: |

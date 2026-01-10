@@ -15,8 +15,8 @@
         content="Interactive terminal-based portfolio with ASCII resume and GitHub projects." />
     <meta property="og:type" content="website" />
     <title>Dusty Wright | Terminal Portfolio</title>
-    <link rel="stylesheet" href="styles/styles.css" media="print" onload="this.media='all'" />
-    <link rel="stylesheet" href="styles/themes.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="../src/styles/styles.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="../src/styles/themes.css" media="print" onload="this.media='all'" />
     <link rel="icon" href="favicon.ico" />
 </head>
 
@@ -27,12 +27,13 @@
             <div id="prompt">
                 <span class="prompt-user">guest@dustywright.me:</span>
                 <span class="prompt-symbol">~$&gt;&nbsp;</span>
-                <label for="command" class="sr-only">Terminal command input</label>
-                <input id="command" type="text" autocomplete="off" />
+                <label for="terminal-input" class="sr-only">Terminal command input</label>
+                <input id="terminal-input" type="text" autocomplete="off" />
             </div>
         </div>
     </main>
-    <script type="module" src="scripts/app.js"></script>
+    <!-- <script type="module" src="scripts/app.js"></script> -->
+    <script type="module" src="src/main.js"></script>
 </body>
 
 </html>

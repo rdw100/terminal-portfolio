@@ -1,5 +1,5 @@
-import { Analytics } from "../../shared/telemetry/appInsights.js";
-
+import { Analytics } from "../shared/telemetry/appinsights.js";
+//public\shared\telemetry\appInsights.js
 Analytics.init("__TP_INSIGHTS_CONN__");
 
 /* --- DYNAMIC PAGE LOADING USING GENERIC --- */
