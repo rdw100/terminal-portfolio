@@ -13,21 +13,8 @@ import { handleGui } from '../commands/gui/index.js';
 import { handleCoin } from '../commands/coin/index.js';
 import { handleClear } from '../commands/clear/index.js';
 
-/* export const commandRegistry = {
-  welcome: { handler: handleWelcome },
-  about: { handler: handleAbout },
-  projects: { handler: handleProjects },
-  socials: { handler: handleSocials },
-  help: { handler: handleHelp },
-  resume: { handler: handleResume },
-  theme: { handler: handleTheme },
-  lighthouse: { handler: handleLighthouse }, 
-  gui: { handler: handleGui },
-  coin: { handler: handleCoin },
-  clear: { handler: handleClear },
-}; */
-
 export const commandRegistry = {
+  // Primary commands with associated pages
   welcome:   { handler: handleWelcome,   page: "welcome" },
   about:     { handler: handleAbout,     page: "about" },
   projects:  { handler: handleProjects,  page: "projects" },
@@ -41,3 +28,5 @@ export const commandRegistry = {
   coin:      { handler: handleCoin },
   clear:     { handler: handleClear },
 };
+
+export const availableCommands = Object.keys(commandRegistry);

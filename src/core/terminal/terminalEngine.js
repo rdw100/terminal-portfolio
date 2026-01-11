@@ -42,34 +42,50 @@ export function initializeTerminal() {
   });
 } 
 */
-
-import { Telemetry } from "./telemetry.js";
 import { commandRegistry } from "./commandRegistry.js";
+import { Telemetry } from "./telemetry.js";
 
-export async function executeCommand(baseCmd, args, context) {
-  const entry = commandRegistry[baseCmd];
+export async function executeCommand(rawInput, context) {
+  const trimmed = rawInput.trim();
 
-  if (!entry) {
-    Telemetry.trackEvent("CommandNotFound", { baseCmd, args });
-    context.print(`<div>Command not found</div>`);
+  if (!trimmed) {
     return;
   }
 
-  // --- Telemetry: Command Start ---
+  const [baseCmd, ...args] = trimmed.split(/\s+/);
+  const entry = commandRegistry[baseCmd];
+
+  // Track the raw command event (like old CommandExecuted)
+  Telemetry.trackEvent("CommandExecuted", {
+    raw: rawInput,
+    baseCmd,
+    args
+  });
+
+  if (!entry) {
+    context.print(`<div>Command not found</div><br/>`);
+    Telemetry.trackEvent("CommandNotFound", { baseCmd, args });
+    return;
+  }
+
   const start = performance.now();
   Telemetry.trackEvent("CommandStart", { baseCmd, args });
 
-  // --- Telemetry: Page View (if applicable) ---
   if (entry.page) {
     Telemetry.trackPage(entry.page, { baseCmd, args });
   }
 
   try {
-    // --- Run the handler ---
-    const result = await entry.handler(context);
+    const handlerContext = {
+      ...context,
+      baseCmd,
+      args
+    };
 
-    // --- Telemetry: Command End (success) ---
+    const result = await entry.handler(handlerContext);
+
     const duration = performance.now() - start;
+
     Telemetry.trackEvent("CommandEnd", {
       baseCmd,
       args,
@@ -78,9 +94,7 @@ export async function executeCommand(baseCmd, args, context) {
     });
 
     return result;
-
   } catch (err) {
-    // --- Telemetry: Exception ---
     const duration = performance.now() - start;
 
     Telemetry.trackException(err, {
@@ -96,6 +110,10 @@ export async function executeCommand(baseCmd, args, context) {
       duration,
       success: false
     });
+
+    context.print(
+      `<div class="error">An error occurred while executing <code>${baseCmd}</code>.</div>`
+    );
 
     throw err;
   }
