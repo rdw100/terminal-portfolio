@@ -1,7 +1,12 @@
-// shared/ui/scroll.js
-export function scrollToBottom(el) {
-  if (!el) return;
-  requestAnimationFrame(() => {
-    el.scrollTop = el.scrollHeight;
-  });
+/* Scroll utility module to manage scrolling behavior in 
+the terminal UI */
+let scrollContainer = null;
+
+export function registerScrollContainer(element) {
+  scrollContainer = element;
+}
+
+export function scrollToBottom() {
+  if (!scrollContainer) return;
+  scrollContainer.scrollTop = scrollContainer.scrollHeight;
 }

@@ -110,7 +110,7 @@ export async function dispatchCommand(rawInput, ctx) {
   await entry.handler({ ...ctx, args });
 } */
 /* Revised terminal.js with integrated scrolling and command execution */
-import { renderLivePrompt, renderPrompt } from "./prompt.js";
+/* import { renderLivePrompt, renderPrompt } from "./prompt.js";
 import { executeCommand } from "./terminalEngine.js";
 import { scrollToBottom } from "../../shared/ui/scroll.js"; // adjust path if needed
 
@@ -224,5 +224,101 @@ export function initializeTerminal() {
     executeCommand(initialCmd, context).finally(() => {
       input.focus();
     });
+  });
+} */
+// src/core/terminal/terminal.js
+import { renderLivePrompt, renderPrompt } from "./prompt.js";
+import { executeCommand } from "./terminalEngine.js";
+import { registerScrollContainer, scrollToBottom } from "../../shared/ui/scroll.js";
+
+export function initializeTerminal() {
+  const terminal = document.getElementById("terminal");
+  const output = document.getElementById("output");
+  const live = document.getElementById("live");
+
+  if (!terminal || !output || !live) {
+    console.error("Terminal elements not found");
+    return;
+  }
+
+  // 🔹 Register scroll container ONCE
+  registerScrollContainer(terminal);
+
+  live.innerHTML = renderLivePrompt();
+  const input = document.getElementById("terminal-input");
+  if (!input) {
+    console.error("terminal-input not found after renderLivePrompt");
+    return;
+  }
+
+  input.focus();
+
+  const commandHistory = [];
+  let historyIndex = -1;
+
+  const context = {
+    terminal,
+    output,
+    print: (html) => {
+      output.insertAdjacentHTML("beforeend", html);
+      // ❌ no scrollToBottom here
+    },
+    printCommand: (cmd) => {
+      output.insertAdjacentHTML(
+        "beforeend",
+        `<div class="terminal-command">${renderPrompt()} ${cmd}</div>`
+      );
+      // ❌ no scrollToBottom here
+    }
+  };
+
+  terminal.addEventListener("click", () => {
+    input.focus();
+  });
+
+  input.addEventListener("keydown", async (e) => {
+    // history handling unchanged ...
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      const raw = input.value;
+      const cmd = raw.trim();
+
+      if (cmd) {
+        commandHistory.push(cmd);
+        if (commandHistory.length > 100) commandHistory.shift();
+      }
+
+      input.value = "";
+      historyIndex = -1;
+
+      context.printCommand(cmd);
+
+      try {
+        await executeCommand(raw, context);
+      } finally {
+        input.focus();
+        // 🔹 This is the pattern that worked yesterday
+        Promise
+          .resolve()
+          .then(() => scrollToBottom());
+      }
+
+      return;
+    }
+  });
+
+  // initial welcome
+  requestAnimationFrame(() => {
+    const initialCmd = "welcome";
+    context.printCommand(initialCmd);
+    executeCommand(initialCmd, context)
+      .finally(() => {
+        input.focus();
+        Promise
+          .resolve()
+          .then(() => scrollToBottom());
+      });
   });
 }
