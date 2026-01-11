@@ -1,3 +1,4 @@
+/*
 import { dispatchCommand } from '../commandRegistry.js';
 import { addToHistory, getPrev, getNext } from './history.js';
 import { renderPrompt } from './prompt.js';
@@ -39,4 +40,63 @@ export function initializeTerminal() {
       autoScroll(output);
     }
   });
+} 
+*/
+
+import { Telemetry } from "./telemetry.js";
+import { commandRegistry } from "./commandRegistry.js";
+
+export async function executeCommand(baseCmd, args, context) {
+  const entry = commandRegistry[baseCmd];
+
+  if (!entry) {
+    Telemetry.trackEvent("CommandNotFound", { baseCmd, args });
+    context.print(`<div>Command not found</div>`);
+    return;
+  }
+
+  // --- Telemetry: Command Start ---
+  const start = performance.now();
+  Telemetry.trackEvent("CommandStart", { baseCmd, args });
+
+  // --- Telemetry: Page View (if applicable) ---
+  if (entry.page) {
+    Telemetry.trackPage(entry.page, { baseCmd, args });
+  }
+
+  try {
+    // --- Run the handler ---
+    const result = await entry.handler(context);
+
+    // --- Telemetry: Command End (success) ---
+    const duration = performance.now() - start;
+    Telemetry.trackEvent("CommandEnd", {
+      baseCmd,
+      args,
+      duration,
+      success: true
+    });
+
+    return result;
+
+  } catch (err) {
+    // --- Telemetry: Exception ---
+    const duration = performance.now() - start;
+
+    Telemetry.trackException(err, {
+      baseCmd,
+      args,
+      duration,
+      success: false
+    });
+
+    Telemetry.trackEvent("CommandEnd", {
+      baseCmd,
+      args,
+      duration,
+      success: false
+    });
+
+    throw err;
+  }
 }

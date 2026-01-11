@@ -17,18 +17,13 @@ function scrollToBottom() {
 
 export async function initializeTerminal() {
   const output = document.getElementById('output');
-  const live = document.getElementById("live");
+
   // Render the live prompt
+  const live = document.getElementById("live");
   live.innerHTML = renderLivePrompt();
 
   // Re-bind the input reference AFTER rendering
   const input = document.getElementById("terminal-input");
-
-  if (!input) {
-    console.error("terminal-input not found after rendering live prompt");
-    return;
-  }
-
   input.focus();
   
   // Assign the global scroll container (this is the missing piece)
