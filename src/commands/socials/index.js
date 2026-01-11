@@ -1,5 +1,5 @@
 import { loadAndRender } from '../../core/pageLoader.js';
-import { getConfig } from '../../services/configService.js';
+import { getConfig } from '../../core/services/configService.js';
 
 export async function handleSocials(ctx) {
   const [action, index] = ctx.args;

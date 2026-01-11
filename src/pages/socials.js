@@ -1,7 +1,7 @@
 /* Display socials information from markdown template and config */
-import { ensureMarked } from '../services/markdownService.js';
-import { getConfig } from '../services/configService.js';
-import { applyTemplate } from '../services/templateService.js';
+import { ensureMarked } from '../core/services/markdownService.js';
+import { getConfig } from '../core/services/configService.js';
+import { applyTemplate } from '../core/services/templateService.js';
 
 export async function render(args = []) {
   const output = document.getElementById('output');

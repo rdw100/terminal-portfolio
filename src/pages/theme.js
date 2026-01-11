@@ -1,6 +1,6 @@
 /* Display theme information from markdown template */
 
-import { ensureMarked } from '../services/markdownService.js';
+import { ensureMarked } from '../core/services/markdownService.js';
 
 export async function render(args = []) {
   const output = document.getElementById('output');

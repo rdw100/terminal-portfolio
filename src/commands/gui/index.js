@@ -1,4 +1,4 @@
-import { getConfig } from '../../services/configService.js';
+import { getConfig } from '../../core/services/configService.js';
 
 export async function handleGui(ctx) {
   const config = await getConfig();

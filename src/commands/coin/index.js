@@ -1,4 +1,4 @@
-import { getCoinPrice, renderCoinList } from '../../services/coinService.js';
+import { getCoinPrice, renderCoinList } from './coinService.js';
 import { startCooldownTimer } from '../../shared/ui/cooldown.js';
 import { scrollToBottom } from '../../shared/ui/scroll.js';
 
