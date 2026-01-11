@@ -1,3 +1,5 @@
+// src/core/terminal/prompt.js
+
 export function getPrompt() {
   return "guest@dustywright.me:~$>";
 }
