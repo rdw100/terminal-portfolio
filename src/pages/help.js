@@ -1,6 +1,6 @@
 /* Display help information for available commands from markdown 
  * template and config */
-
+/* 
 import { ensureMarked } from '../services/markdownService.js';
 import { getConfig } from '../services/configService.js';
 import { applyTemplate } from '../services/templateService.js';
@@ -34,4 +34,60 @@ export async function render(args = []) {
 
   // Insert into terminal
   output.insertAdjacentHTML('beforeend', html);
+} */
+import { ensureMarked } from '../services/markdownService.js';
+import { getConfig } from '../services/configService.js';
+import { applyTemplate } from '../services/templateService.js';
+import { commandRegistry } from '../core/terminal/commandRegistry.js'; 
+
+export async function render(args = []) {
+  const output = document.getElementById('output');
+
+  await ensureMarked();
+  const config = await getConfig();
+
+  // Load markdown
+  let markdown = await fetch('/src/content/help.md').then(r => r.text());
+
+  // Inject face ASCII if referenced
+  if (markdown.includes('${ascii}')) {
+    const ascii = await fetch('/src/content/ascii.txt').then(r => r.text());
+    markdown = markdown.replace('${ascii}', `\`\`\`\n${ascii}\n\`\`\``);
+  }
+
+  // Inject name ASCII if referenced
+  if (markdown.includes('${name_ascii}')) {
+    const nameAscii = await fetch('/src/content/name.txt').then(r => r.text());
+    markdown = markdown.replace('${name_ascii}', `\`\`\`\n${nameAscii}\n\`\`\``);
+  }
+
+  // Apply YAML placeholders
+  markdown = applyTemplate(markdown, config);
+
+  // ⭐ NEW: Inject dynamic command list
+  if (markdown.includes('{{commands}}')) {
+    const commandsHtml = generateCommandListHtml();
+    markdown = markdown.replace('{{commands}}', commandsHtml);
+  }
+
+  // Convert to HTML
+  const html = marked.parse(markdown, { mangle: false, headerIds: false });
+
+  // Insert into terminal
+  output.insertAdjacentHTML('beforeend', html);
+}
+
+// ⭐ NEW: Build dynamic command list HTML
+function generateCommandListHtml() {
+  const entries = Object.entries(commandRegistry);
+
+  // Sort alphabetically
+  entries.sort(([a], [b]) => a.localeCompare(b));
+
+  const lines = entries.map(([name, meta]) => {
+    const desc = meta.description || '';
+    return `- **${name}** — ${desc}`;
+  });
+
+  return lines.join('\n');
 }

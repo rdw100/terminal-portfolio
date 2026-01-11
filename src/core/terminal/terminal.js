@@ -230,7 +230,7 @@ export function initializeTerminal() {
 import { renderLivePrompt, renderPrompt } from "./prompt.js";
 import { executeCommand } from "./terminalEngine.js";
 import { registerScrollContainer, scrollToBottom } from "../../shared/ui/scroll.js";
-import { commandRegistry } from "../commandRegistry.js";
+import { commandRegistry } from "./commandRegistry.js";
 
 export function initializeTerminal() {
   const terminal = document.getElementById("terminal");
