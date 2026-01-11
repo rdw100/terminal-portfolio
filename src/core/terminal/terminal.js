@@ -285,10 +285,10 @@ export function initializeTerminal() {
     input.focus();
   });
 
-  // --- TAB COMPLETION ---
+  // --- KEYPRESS EVENTS ---
   input.addEventListener("keydown", async (e) => {
 
-    // Reset tab state on normal keypresses
+    // --- RESETS TAB STATE --- 
     if (e.key.length === 1 || e.key === "Backspace" || e.key === "Delete") {
       input._tabIndex = null;
       input._tabBase = null;
@@ -330,8 +330,63 @@ export function initializeTerminal() {
       return;
     }
     
-    // --- HISTORY HANDLING (unchanged) ---
-    // (your ArrowUp / ArrowDown logic goes here)
+    // --- HISTORY NAVIGATION ---
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+
+      if (commandHistory.length === 0) return;
+
+      if (historyIndex === -1) {
+        historyIndex = commandHistory.length - 1;
+      } else if (historyIndex > 0) {
+        historyIndex--;
+      }
+
+      input.value = commandHistory[historyIndex];
+      return;
+    }
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+
+      if (commandHistory.length === 0) return;
+
+      if (historyIndex === -1) {
+        return; // nothing to show
+      }
+
+      if (historyIndex < commandHistory.length - 1) {
+        historyIndex++;
+        input.value = commandHistory[historyIndex];
+      } else {
+        historyIndex = -1;
+        input.value = "";
+      }
+
+      return;
+    }
+
+    // --- ESC EXECUTES CLEAR COMMAND ---
+    if (e.key === "Escape") {
+      e.preventDefault();
+
+      const raw = "clear";
+      const cmd = "clear";
+
+      // Print the command itself (UX symmetry)
+      context.printCommand(cmd);
+
+      try {
+        await executeCommand(raw, context);
+      } finally {
+        input.value = "";
+        historyIndex = -1;
+        input.focus();
+        Promise.resolve().then(() => scrollToBottom());
+      }
+
+      return;
+    }
 
     // --- ENTER EXECUTION ---
     if (e.key === "Enter") {

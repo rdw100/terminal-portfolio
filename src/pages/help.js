@@ -42,17 +42,37 @@ export async function render(args = []) {
   output.insertAdjacentHTML('beforeend', html);
 }
 
-// ⭐ NEW: Build dynamic command list HTML
+// Build dynamic command list HTML
 function generateCommandListHtml() {
   const entries = Object.entries(commandRegistry);
 
-  // Sort alphabetically
-  entries.sort(([a], [b]) => a.localeCompare(b));
+  // Group commands by category
+  const groups = {};
+  for (const [name, meta] of entries) {
+    const category = meta.category || "Other";
+    if (!groups[category]) groups[category] = [];
+    groups[category].push([name, meta]);
+  }
 
-  const lines = entries.map(([name, meta]) => {
-    const desc = meta.description || '';
-    return `- **${name}** — ${desc}`;
-  });
+  // Sort categories alphabetically
+  const sortedCategories = Object.keys(groups).sort();
 
-  return lines.join('\n');
+  // Build output
+  let output = "";
+
+  for (const category of sortedCategories) {
+    output += `### ${category}\n\n`;
+
+    // Sort commands inside category
+    const commands = groups[category].sort(([a], [b]) => a.localeCompare(b));
+
+    for (const [name, meta] of commands) {
+      const desc = meta.description || "";
+      output += `- **${name}** — ${desc}\n`;
+    }
+
+    output += `\n`;
+  }
+
+  return output;
 }

@@ -15,18 +15,18 @@ import { handleClear } from '../../commands/clear/index.js';
 
 export const commandRegistry = {
   // Primary commands with associated pages
-  welcome: { handler: handleWelcome, page: "welcome", description: "Displays the welcome message" },
-  about: { handler: handleAbout, page: "about", description: "Displays information about me" },
-  projects: { handler: handleProjects, page: "projects", description: "Lists my GitHub projects" },
-  socials: { handler: handleSocials, page: "socials", description: "Lists my social media links" },
-  help: { handler: handleHelp, page: "help", description: "Lists all available commands" },
-  resume: { handler: handleResume, page: "resume", description: "Displays my resume" },
-  theme: { handler: handleTheme, page: "theme", description: "Change the terminal theme" },
-  lighthouse: { handler: handleLighthouse, page: "lighthouse", description: "Check my Lighthouse scores" },
-  gui: { handler: handleGui, page: "gui", description: "Open the GUI version of my portfolio" },
+  welcome: { handler: handleWelcome, page: "welcome", description: "Displays the welcome message", category: "Navigation" },
+  about: { handler: handleAbout, page: "about", description: "Learn about Dusty", category: "Navigation" },
+  projects: { handler: handleProjects, page: "projects", description: "View featured GitHub projects", category: "Navigation" },
+  socials: { handler: handleSocials, page: "socials", description: "Lists my social media links", category: "Navigation" },
+  help: { handler: handleHelp, page: "help", description: "Lists all available commands", category: "System" },
+  resume: { handler: handleResume, page: "resume", description: "Displays my resume", category: "Navigation" },
+  theme: { handler: handleTheme, page: "theme", description: "Change the terminal theme", category: "System" },
+  lighthouse: { handler: handleLighthouse, page: "lighthouse", description: "Check my Lighthouse scores", category: "System" },
+  gui: { handler: handleGui, page: "gui", description: "Open the GUI version of my portfolio", category: "Navigation" },
   // Utility commands without associated pages
-  coin: { handler: handleCoin, description: "Flip a crypto coin" },
-  clear: { handler: handleClear, description: "Clear the terminal screen" },
+  coin: { handler: handleCoin, description: "Flip a crypto coin", category: "Fun" },
+  clear: { handler: handleClear, description: "Clear the terminal screen", category: "System" },
 };
 
 export const availableCommands = Object.keys(commandRegistry);
