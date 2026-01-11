@@ -230,6 +230,7 @@ export function initializeTerminal() {
 import { renderLivePrompt, renderPrompt } from "./prompt.js";
 import { executeCommand } from "./terminalEngine.js";
 import { registerScrollContainer, scrollToBottom } from "../../shared/ui/scroll.js";
+import { commandRegistry } from "../commandRegistry.js";
 
 export function initializeTerminal() {
   const terminal = document.getElementById("terminal");
@@ -261,24 +262,78 @@ export function initializeTerminal() {
     output,
     print: (html) => {
       output.insertAdjacentHTML("beforeend", html);
-      // ❌ no scrollToBottom here
     },
     printCommand: (cmd) => {
       output.insertAdjacentHTML(
         "beforeend",
         `<div class="terminal-command">${renderPrompt()} ${cmd}</div>`
       );
-      // ❌ no scrollToBottom here
     }
   };
+
+  requestAnimationFrame(() => {
+    const initialCmd = "welcome";
+    context.printCommand(initialCmd);
+    executeCommand(initialCmd, context)
+      .finally(() => {
+        input.focus();
+        Promise.resolve().then(() => scrollToBottom());
+      });
+  });
 
   terminal.addEventListener("click", () => {
     input.focus();
   });
 
+  // --- TAB COMPLETION ---
   input.addEventListener("keydown", async (e) => {
-    // history handling unchanged ...
 
+    // Reset tab state on normal keypresses
+    if (e.key.length === 1 || e.key === "Backspace" || e.key === "Delete") {
+      input._tabIndex = null;
+      input._tabBase = null;
+    }
+
+    // --- TAB COMPLETION ---
+    if (e.key === "Tab") {
+      e.preventDefault();
+
+      const current = input.value.trim();
+      const commands = Object.keys(commandRegistry); // import needed at top
+      
+      // No input → do nothing
+      if (!current) return;
+
+      // Filter matches
+      const matches = commands.filter(cmd => cmd.startsWith(current));
+      if (matches.length === 0) return;
+
+      // If only one match → autocomplete immediately
+      if (matches.length === 1) {
+        input.value = matches[0] + " ";
+        return;
+      }
+
+      // Multiple matches → cycle through them
+      if (!input._tabIndex || input._tabBase !== current) {
+        input._tabIndex = 0;
+        input._tabBase = current;
+      } else {
+        if (e.shiftKey) {
+          input._tabIndex = (input._tabIndex - 1 + matches.length) % matches.length;
+        } else {
+          input._tabIndex = (input._tabIndex + 1) % matches.length;
+        }
+      }
+
+      input.value = matches[input._tabIndex];
+      return;
+    }
+    
+    // --- HISTORY HANDLING (unchanged) ---
+    // (your ArrowUp / ArrowDown logic goes here)
+
+    // --- ENTER EXECUTION ---
     if (e.key === "Enter") {
       e.preventDefault();
 
@@ -299,7 +354,6 @@ export function initializeTerminal() {
         await executeCommand(raw, context);
       } finally {
         input.focus();
-        // 🔹 This is the pattern that worked yesterday
         Promise
           .resolve()
           .then(() => scrollToBottom());
@@ -307,18 +361,5 @@ export function initializeTerminal() {
 
       return;
     }
-  });
-
-  // initial welcome
-  requestAnimationFrame(() => {
-    const initialCmd = "welcome";
-    context.printCommand(initialCmd);
-    executeCommand(initialCmd, context)
-      .finally(() => {
-        input.focus();
-        Promise
-          .resolve()
-          .then(() => scrollToBottom());
-      });
   });
 }
