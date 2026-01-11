@@ -42,7 +42,7 @@ export const Telemetry = (() => {
         disablePageViewPerformance: true,
         disableFlushOnBeforeUnload: true,
         disableFlushOnUnload: true,
-
+        disableConfigSync: true,   // ⭐ False will automatically fetch remote configuration
         disableTelemetry: false,
         disableInstrumentationKeyValidation: true
       }
