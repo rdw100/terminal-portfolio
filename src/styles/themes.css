@@ -71,6 +71,11 @@
   caret-color: var(--accent);
 }
 
+.theme-vapor #live {
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--accent);
+}
+
 /* --------------------------------------------------
    Minimal Monochrome
 -------------------------------------------------- */

@@ -8,12 +8,4 @@ import { initializeTerminal, dispatchCommand } from './core/terminal.js';
 window.addEventListener('DOMContentLoaded', () => {
   // Wires input handler to the terminal input box
   initializeTerminal();
-
-  dispatchCommand('welcome', {
-    print: (text) => {
-      document.getElementById('output')
-        .insertAdjacentHTML('beforeend', text + '<br/>');
-    },
-    args: []
-  });
 });

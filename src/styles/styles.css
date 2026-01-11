@@ -1,31 +1,65 @@
-html,
-body {
-  width: 100%;
-  height: 100%;
+html, body {
   margin: 0;
-}
-
-body {
+  height: 100%;
+  overflow: hidden;
   background: #000;
   color: #00ff00;
   font-family: monospace;
 }
 
-#terminal {
-  box-sizing: border-box;
-  width: 100%;
-  height: 100vh; /* fills the viewport */
-  margin: 0;
-  padding: 10px; /* keep some padding for the terminal look */
-  overflow-y: auto;
+main {
+  overflow: hidden;
 }
 
+/* body, main {
+  overflow: visible;
+} */
+
+#terminal {  
+  height: 100vh;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Printed output behaves like a console */
+/* preserves ASCII formatting */
+#output {
+   white-space: normal; 
+}
+
+/* Live prompt + cursor */
+#live {
+  display: inline-block; /* keeps prompt + input on same line */
+}
+
+.prompt {
+  margin-right: 4px;
+}
+
+#terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  font-family: inherit;
+  caret-color: #00ff00;
+}
+
+/* Optional: style for echoed commands */
+.terminal {
+  white-space: normal;
+}
+
+/* Links */
 a {
   color: #4fdfff;
   text-decoration: underline;
 }
 
-pre,
+/* Code blocks */
+/* pre,
 pre code {
   white-space: pre;
   overflow-x: auto;
@@ -34,68 +68,34 @@ pre code {
 pre code.language-ansi {
   display: block;
   color: var(--accent);
-}
+} */
 
+/* ANSI art */
 .ansi-shadow {
-  /* color: #00ff00; */
   margin-bottom: 1em;
   line-height: 1.1;
   white-space: pre;
 }
 
+/* Paragraph spacing */
 p {
   margin: 0 0 1em 0;
 }
 
-#prompt {
-  display: flex;
-  align-items: center;
-}
-
-.prompt-user {
-  color: #00ff00;
-}
-
-.prompt-symbol {
-  color: #00ff00;
-}
-
-.prompt-text {
-  margin-left: 0.25em;
-}
-
-.terminal-command {
-  white-space: pre-wrap;
-  margin-bottom: 0.75em;
-}
-
-#command {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: inherit;
-  font-family: inherit;
-  width: 100%;
-}
-
+/* Screen-reader only */
 .sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
   padding: 0;
   margin: -1px;
-  overflow: hidden;
+  overflow: hidden; 
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
 }
 
-/* hide the caret by default */
-#command {
-  caret-color: transparent;
-}
-
-/* base cursor style (no glow) */
+/* Fake cursor block (if you ever use it) */
 .cursor {
   width: 10px;
   height: 1.2em;
@@ -103,6 +103,7 @@ p {
   display: inline-block;
 }
 
+/* Indentation utility */
 .indent {
   padding-left: 2rem;
 }
