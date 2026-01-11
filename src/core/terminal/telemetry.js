@@ -11,7 +11,7 @@ export const Telemetry = (() => {
       return;
     }
 
-    await loadScript("./vendor/ai.3.gbl.min.js");
+    await loadScript("../src/vendor/ai.3.gbl.min.js");
 
     // Persistent user ID
     userId = localStorage.getItem("ai_userId");
