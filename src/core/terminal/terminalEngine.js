@@ -42,7 +42,7 @@ export function initializeTerminal() {
   });
 } 
 */
-import { commandRegistry } from "./commandRegistry.js";
+import { commandRegistry } from "../commandRegistry.js";
 import { Telemetry } from "./telemetry.js";
 
 export async function executeCommand(rawInput, context) {
