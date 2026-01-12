@@ -107,3 +107,9 @@ p {
 .indent {
   padding-left: 2rem;
 }
+
+/* Lighthouse scores styling */
+#lighthouse-scores .lsData {
+  text-align: right;
+  color: var(--accent);
+}

@@ -8,16 +8,18 @@ export async function render(args = []) {
     const scores = await res.json();
 
     const html = `
-<div>
-  <h2>Lighthouse Scores (Production)</h2>
-  <pre>
-    Performance     : ${scores.performance}
-    Accessibility   : ${scores.accessibility}
-    Best Practices  : ${scores.bestPractices}
-    SEO             : ${scores.seo}
-  </pre>
-</div><br/>
-`;
+    <table id="lighthouse-scores">
+    <caption><strong>Lighthouse Scores (Production)</strong></caption>
+    <thead>
+      <tr><th style="text-align: left;">Category</th><th>Score</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Performance   </td><td class="lsData">${scores.performance}</td></tr>
+      <tr><td>Accessibility </td><td class="lsData">${scores.accessibility}</td></tr>
+      <tr><td>Best Practices</td><td class="lsData">${scores.bestPractices}</td></tr>
+      <tr><td>SEO           </td><td class="lsData">${scores.seo}</td></tr>
+    </tbody>
+    </table>`;
 
     output.insertAdjacentHTML('beforeend', html);
   } catch (err) {
