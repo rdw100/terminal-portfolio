@@ -1,7 +1,6 @@
-## Available Commands
-
+## HELP
+The command and function are described below by category.
 {{commands}}
-
-<p>Tab autocompletes the command<br>
+Tab autocompletes the command<br>
 Up Arrow or Down Arrow to view previous commands<br>
-ESC clears the terminal</p>
+ESC clears the terminal

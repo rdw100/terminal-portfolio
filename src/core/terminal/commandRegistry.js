@@ -25,7 +25,7 @@ export const commandRegistry = {
   lighthouse: { handler: handleLighthouse, page: "lighthouse", description: "Check my Lighthouse scores", category: "System" },
   gui: { handler: handleGui, page: "gui", description: "Open the GUI version of my portfolio", category: "Navigation" },
   // Utility commands without associated pages
-  coin: { handler: handleCoin, description: "Flip a crypto coin", category: "Fun" },
+  coin: { handler: handleCoin, description: "Get current price for selected crypto", category: "Services" },
   clear: { handler: handleClear, description: "Clear the terminal screen", category: "System" },
 };
 

@@ -11,7 +11,7 @@ export async function handleCoin(ctx) {
     const html = renderCoinList();
     output.insertAdjacentHTML(
       'beforeend',
-      `<h2>Available Coins</h2>${html}<br/>`
+      `<h2>COINS</h2>${html}<br/>`
     );
     scrollToBottom(output);
     return;

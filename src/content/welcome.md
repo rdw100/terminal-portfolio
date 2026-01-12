@@ -1,6 +1,6 @@
 ${name_ascii}
 
-### Welcome to my interactive terminal. 
+### WELCOME to my interactive terminal. 
 (Version 2.1.1). [Source Code](https://github.com/rdw100/terminal-portfolio). 
 
 ---

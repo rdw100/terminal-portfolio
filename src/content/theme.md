@@ -1,4 +1,4 @@
-## Available Themes
+## THEMES
 
 - retro — classic green CRT
 - azure — VS Code / Cloud Shell
