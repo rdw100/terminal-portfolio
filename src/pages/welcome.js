@@ -23,7 +23,7 @@ export async function render(args = []) {
   // Inject name ASCII
   if (markdown.includes('${name_ascii}')) {
     const nameAscii = await fetch('/src/content/name.txt').then(r => r.text());
-    const fenced = `\`\`\`\n${nameAscii}\n\`\`\``;
+    const fenced = `\`\`\`ansi\n${nameAscii}\n\`\`\``;
     markdown = markdown.replace('${name_ascii}', fenced);
   }
 
