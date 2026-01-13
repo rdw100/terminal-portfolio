@@ -217,7 +217,7 @@ flowchart TD
 
     %% Shared UI
     subgraph SHARED["Shared UI Utilities"]
-        F1[scroll.js<br/>scrollToBottom()]
+        F1[scroll.js<br/>scrollToBottom]
     end
 
     F --> G[Content Files<br/>src/content/*]
@@ -270,6 +270,33 @@ sequenceDiagram
     H->>P: renderPage()
     P->>S: loadMarkdown / loadConfig / applyTemplate
     S-->>P: return HTML content
+    P->>O: insertAdjacentHTML()
+    O->>T: content rendered
+    T->>T: scrollToBottom()
+```
+---
+🧭 Command Lifecycle Diagram (Mermaid)
+```mermaid
+sequenceDiagram
+    autonumber
+
+    participant U as User
+    participant T as Terminal UI
+    participant E as Terminal Engine
+    participant R as Command Registry
+    participant H as Command Handler
+    participant P as Page Renderer
+    participant S as Services
+    participant O as Output
+
+    U->>T: types "example" + Enter
+    T->>E: sendInput("example")
+    E->>R: lookup("example")
+    R-->>E: return handler reference
+    E->>H: example()
+    H->>P: renderExamplePage()
+    P->>S: loadMarkdown("example.md")
+    S-->>P: return HTML
     P->>O: insertAdjacentHTML()
     O->>T: content rendered
     T->>T: scrollToBottom()
