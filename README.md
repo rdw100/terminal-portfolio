@@ -248,34 +248,7 @@ flowchart TD
 
 ```
 ---
-🔁 Sequence Diagram — Command Execution Flow (Mermaid)
-```mermaid
-sequenceDiagram
-    autonumber
-
-    participant U as User
-    participant T as Terminal UI<br/>terminal.js
-    participant E as Terminal Engine<br/>terminalEngine.js
-    participant R as Command Registry<br/>commandRegistry.js
-    participant H as Command Handler<br/>commands/*
-    participant P as Page Renderer<br/>pages/*
-    participant S as Services<br/>markdown/config/template
-    participant O as Output<br/>#output
-
-    U->>T: Types command + presses Enter
-    T->>E: sendInput(commandString)
-    E->>R: lookup(command)
-    R-->>E: return handler reference
-    E->>H: execute handler()
-    H->>P: renderPage()
-    P->>S: loadMarkdown / loadConfig / applyTemplate
-    S-->>P: return HTML content
-    P->>O: insertAdjacentHTML()
-    O->>T: content rendered
-    T->>T: scrollToBottom()
-```
----
-🧭 Command Lifecycle Diagram (Mermaid)
+🧭 Command Lifecycle Sequence Diagram (Mermaid)
 ```mermaid
 sequenceDiagram
     autonumber
