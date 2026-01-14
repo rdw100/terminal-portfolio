@@ -43,7 +43,7 @@ export function initializeTerminal() {
     }
   };
 
-  // After the browser paints the static ASCII, initialize the terminal UI
+/*   // After the browser paints the static ASCII, initialize the terminal UI
   requestAnimationFrame(() => {
     // Render the live prompt (the blinking cursor)
     live.innerHTML = renderLivePrompt();
@@ -62,7 +62,7 @@ export function initializeTerminal() {
           Promise.resolve().then(() => scrollToBottom());
         });
     });
-  });
+  }); */
 
   terminal.addEventListener("click", () => {
     input.focus();
