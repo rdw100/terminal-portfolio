@@ -1,3 +1,4 @@
+/* Main terminal initialization and event handling */
 import { renderLivePrompt, renderPrompt } from "./prompt.js";
 import { executeCommand } from "./terminalEngine.js";
 import { registerScrollContainer, scrollToBottom } from "../../shared/ui/scroll.js";

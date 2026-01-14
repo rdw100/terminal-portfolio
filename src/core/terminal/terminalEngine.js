@@ -1,3 +1,6 @@
+/* Process and execute a command input string */
+ 
+
 import { commandRegistry } from "./commandRegistry.js";
 import { Telemetry } from "./telemetry.js";
 

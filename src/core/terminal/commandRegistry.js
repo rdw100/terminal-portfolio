@@ -1,5 +1,5 @@
 /* Registers available commands, their handlers, and 
-their associated pages or command metadata. */
+their associated pages or command metadata. Uses dynamic-imports. */
 export const commandRegistry = {
   welcome: {
     loader: () => import('../../commands/welcome/index.js'),
