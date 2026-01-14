@@ -19,6 +19,7 @@ export function initializeTerminal() {
 
   live.innerHTML = renderLivePrompt();
   const input = document.getElementById("terminal-input");
+
   if (!input) {
     console.error("terminal-input not found after renderLivePrompt");
     return;
@@ -42,6 +43,18 @@ export function initializeTerminal() {
       );
     }
   };
+
+  // After the browser paints the static ASCII, initialize the terminal UI
+  requestAnimationFrame(() => {
+    input.focus();
+
+    requestIdleCallback(() => {
+      executeCommand("boot", context)
+        .finally(() => {
+          input.focus();
+        });
+    });
+  });
 
 /*   // After the browser paints the static ASCII, initialize the terminal UI
   requestAnimationFrame(() => {

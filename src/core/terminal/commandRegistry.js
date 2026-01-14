@@ -1,6 +1,11 @@
 /* Registers available commands, their handlers, and 
 their associated pages or command metadata. Uses dynamic-imports. */
 export const commandRegistry = {
+  boot: {
+    loader: () => import('../../commands/boot/index.js'),
+    description: "Internal warm-up command",
+    category: "System"
+  },
   welcome: {
     loader: () => import('../../commands/welcome/index.js'),
     page: "welcome",
