@@ -69,3 +69,11 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_PURPLE_SAND_0AC49090F }}
           action: "close"
 
+  purge_cache:
+    needs: build_and_deploy_job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge SWA Cache
+        run: |
+          az extension add --name staticwebapp --upgrade
+          az staticwebapp purge --name terminal-portfolio
