@@ -15,9 +15,17 @@
         content="Interactive terminal-based portfolio with ASCII resume and GitHub projects." />
     <meta property="og:type" content="website" />
     <title>Dusty Wright | Terminal Portfolio</title>
-    <link rel="stylesheet" href="/src/styles/styles.css" media="all">
-    <link rel="stylesheet" href="/src/styles/terminal.css" media="all">
-    <link rel="stylesheet" href="/src/styles/themes.css" media="all">
+    
+    <!-- Preload FIRST --> 
+    <link rel="preload" href="/src/styles/styles.css" as="style"> 
+    <link rel="preload" href="/src/styles/terminal.css" as="style"> 
+    <link rel="preload" href="/src/styles/themes.css" as="style"> 
+    
+    <!-- Then normal CSS --> 
+    <link rel="stylesheet" href="/src/styles/styles.css"> 
+    <link rel="stylesheet" href="/src/styles/terminal.css"> 
+    <link rel="stylesheet" href="/src/styles/themes.css">
+    
     <link rel="icon" href="favicon.ico" />
 </head>
 
