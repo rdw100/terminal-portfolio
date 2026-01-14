@@ -11,6 +11,6 @@ export function renderPrompt() {
 export function renderLivePrompt() {
   return `
     <span class="prompt">${getPrompt()}</span>
-    <input id="terminal-input" type="text" autocomplete="off" />
+    <input id="terminal-input" type="text" autocomplete="off" aria-label="Terminal command input" />
   `;
 }
