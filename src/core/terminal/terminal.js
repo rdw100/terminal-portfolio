@@ -43,14 +43,19 @@ export function initializeTerminal() {
     }
   };
 
-  // Paint the prompt + ASCII immediately
-  requestAnimationFrame(async () => {
-    // Print the prompt for UX symmetry
-    const initialCmd = "welcome";
-    context.printCommand(initialCmd);
+  // After the browser paints the static ASCII, initialize the terminal UI
+  requestAnimationFrame(() => {
+    // Render the live prompt (the blinking cursor)
+    live.innerHTML = renderLivePrompt();
+    input.focus();
 
-    // 2. Defer the heavy welcome command until after first paint
+    // Defer the heavy welcome command until the browser is idle
     requestIdleCallback(() => {
+      const initialCmd = "welcome";
+
+      // Print the command for UX symmetry
+      context.printCommand(initialCmd);
+
       executeCommand(initialCmd, context)
         .finally(() => {
           input.focus();
