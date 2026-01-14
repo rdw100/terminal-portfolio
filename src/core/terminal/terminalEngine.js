@@ -38,7 +38,19 @@ export async function executeCommand(rawInput, context) {
       args
     };
 
-    const result = await entry.handler(handlerContext);
+    // Dynamically import the command module
+    const module = await entry.loader();
+
+    // Support both:
+    // export function handleX() {}
+    // export default function() {}
+    // Resolve handler function
+    const handler =
+      module.handler ||
+      module.default ||
+      Object.values(module)[0];
+
+    const result = await handler(handlerContext);
 
     const duration = performance.now() - start;
 
