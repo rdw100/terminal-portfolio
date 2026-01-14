@@ -43,14 +43,20 @@ export function initializeTerminal() {
     }
   };
 
-  requestAnimationFrame(() => {
+  // Paint the prompt + ASCII immediately
+  requestAnimationFrame(async () => {
+    // Print the prompt for UX symmetry
     const initialCmd = "welcome";
     context.printCommand(initialCmd);
-    executeCommand(initialCmd, context)
-      .finally(() => {
-        input.focus();
-        Promise.resolve().then(() => scrollToBottom());
-      });
+
+    // 2. Defer the heavy welcome command until after first paint
+    requestIdleCallback(() => {
+      executeCommand(initialCmd, context)
+        .finally(() => {
+          input.focus();
+          Promise.resolve().then(() => scrollToBottom());
+        });
+    });
   });
 
   terminal.addEventListener("click", () => {
