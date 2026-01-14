@@ -1,0 +1,137 @@
+/* ============================================================
+   TERMINAL CORE STYLES
+   This file adds:
+   - caret animation
+   - smooth theme transitions
+   - scroll smoothing
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   TERMINAL CONTAINER
+   ------------------------------------------------------------ */
+
+#terminal {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Fira Code", monospace;
+
+  /* Smooth theme transitions */
+  transition:
+    background-color 300ms ease,
+    color 300ms ease;
+}
+
+/* ------------------------------------------------------------
+   OUTPUT AREA
+   ------------------------------------------------------------ */
+#output {
+  flex: 1;
+  overflow-y: auto;
+  /* padding: 1rem; */
+
+  /* Smooth scroll */
+  scroll-behavior: smooth;
+}
+
+/* ------------------------------------------------------------
+   CLICK ANYWHERE TO FOCUS TERMINAL
+   (paired with JS that calls input.focus())
+   ------------------------------------------------------------ */
+#terminal:focus-within {
+  cursor: text;
+}
+
+/* Scroll-to-bottom button */
+#scroll-to-bottom {
+  position: absolute;
+  right: 1rem;
+  bottom: 4rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--accent);
+  color: var(--bg);
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 200ms ease,
+    background-color 300ms ease,
+    color 300ms ease;
+}
+
+/* instead of absolute */
+/* #scroll-to-bottom {
+  position: fixed; 
+  z-index: 9999;
+} 
+
+#scroll-to-bottom {
+  pointer-events: auto;
+}
+
+.scanlines {
+  z-index: 1;
+}
+
+#scroll-to-bottom {
+  z-index: 9999;
+}
+*/
+
+/* Visible state */
+#scroll-to-bottom.visible {
+  opacity: 0.9;
+  pointer-events: auto;
+}
+
+/* Hover effect */
+#scroll-to-bottom:hover {
+  opacity: 1;
+}
+
+/* FAT CURSOR */
+#terminal-input {
+  caret-color: var(--cursor);
+  caret-shape: block;
+  animation: cursorPulse 1.2s infinite;
+}
+
+@keyframes cursorPulse {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.25; }
+  100% { opacity: 1; }
+}
+
+#terminal-input:focus {
+  text-shadow:
+    0 0 4px var(--cursor),
+    0 0 8px var(--cursor),
+    0 0 12px var(--cursor);
+}
+
+.theme-vapor #terminal-input:focus {
+  text-shadow:
+    0 0 6px var(--accent),
+    0 0 12px var(--accent),
+    0 0 20px var(--accent),
+    0 0 30px var(--accent);
+}
+
+/* ------------------------------------------------------------
+   TERMINAL CONTENT STYLES
+   ------------------------------------------------------------ */
+#live {
+  font-size: inherit;        /* ensures it matches the page default */
+  white-space: normal;       /* prevents pre-style shrinking */
+}
+
+#terminal-input {
+  font-size: inherit;        /* inherits from #live */
+  white-space: normal;       /* ensures normal text flow */
+}

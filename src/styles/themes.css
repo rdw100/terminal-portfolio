@@ -20,11 +20,6 @@
   --scanline-opacity: 0.04;
 }
 
-/* Retro — soft CRT bloom */
-.theme-retro .cursor {
-  box-shadow: 0 0 4px var(--cursor);
-}
-
 /* --------------------------------------------------
    Azure Console
 -------------------------------------------------- */
@@ -36,14 +31,8 @@
   --scanline-opacity: 0;
 }
 
-.theme-azure .prompt-symbol,
-.theme-azure .prompt-user {
+.theme-azure .prompt {
   color: var(--accent);
-}
-
-/* Azure — subtle blue halo */
-.theme-azure .cursor {
-  box-shadow: 0 0 5px var(--accent);
 }
 
 /* --------------------------------------------------
@@ -53,7 +42,8 @@
   --bg: #1a002b;
   --fg: #ff77ff;
   --accent: #00e5ff;
-  --cursor: #00e5ff;
+  --cursor: #F2AF13;
+  --text: white; /* #8f00ff; */  
   --scanline-opacity: 0.02;
 }
 
@@ -61,19 +51,102 @@
   text-shadow: 0 0 8px var(--accent); 
 }
 
-.theme-vapor .prompt-symbol,
-.theme-vapor .prompt-user {
+.theme-vapor .prompt {
   color: var(--accent);
-}
-
-/* Vapor — neon caret */
-.theme-vapor #command {
-  caret-color: var(--accent);
 }
 
 .theme-vapor #live {
   color: var(--accent);
   text-shadow: 0 0 6px var(--accent);
+}
+
+.theme-vapor h1,
+.theme-vapor h2,
+.theme-vapor h3,
+.theme-vapor h4,
+.theme-vapor h5,
+.theme-vapor h6 {
+  color: var(--text);
+  text-shadow: 0 0 8px var(--fg);
+}
+
+.theme-vapor p {
+  color: var(--accent);
+} 
+
+.theme-vapor a {
+  color: var(--cursor);
+}
+
+.theme-vapor a:hover {
+  color: var(--cursor);
+  text-shadow: 0 0 8px var(--cursor);
+  text-decoration: var(--cursor) wavy underline;
+}
+
+/* Scanline effect for screen background */
+.theme-vapor #terminal::after {
+  position: relative;
+  background: var(--bg);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.theme-vapor #terminal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.05) 0px,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+.theme-vapor #terminal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.08) 0px,
+    rgba(255, 255, 255, 0.08) 1px,
+    rgba(0, 0, 0, 0.15) 1px,
+    rgba(0, 0, 0, 0.15) 3px
+  );
+}
+
+.theme-vapor #terminal::after {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 255, 255, 0.12) 0px,
+    rgba(0, 255, 255, 0.12) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+.theme-vapor #terminal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    transparent 100%
+  );
+  animation: flicker 4s infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.2; }
 }
 
 /* --------------------------------------------------
@@ -87,11 +160,6 @@
   --scanline-opacity: 0;
 }
 
-/* Minimal — no glow */
-.theme-minimal .cursor {
-  box-shadow: none;
-}
-
 /* --------------------------------------------------
    Amber Terminal
 -------------------------------------------------- */
@@ -103,14 +171,8 @@
   --scanline-opacity: 0.03;
 }
 
-.theme-amber .prompt-symbol,
-.theme-amber .prompt-user {
+.theme-amber .prompt{
   color: var(--accent);
-}
-
-/* Amber — warm terminal glow */
-.theme-amber .cursor {
-  box-shadow: 0 0 6px var(--cursor);
 }
 
 /* --------------------------------------------------
@@ -128,13 +190,9 @@
   --link-color: var(--accent);
 }
 
-.theme-dusty .prompt-symbol {
+.theme-dusty .prompt {
   color: var(--accent);
   text-shadow: 0 0 4px var(--accent);
-}
-
-.theme-dusty #command {
-  caret-color: var(--accent);
 }
 
 .theme-dusty a:hover {
@@ -149,6 +207,15 @@
     transparent 1px,
     transparent 3px
   );
+}
+
+.theme-dusty h1, 
+.theme-dusty h2, 
+.theme-dusty h3, 
+.theme-dusty h4, 
+.theme-dusty h5, 
+.theme-dusty h6 {
+  color: var(--cursor);
 }
 
 /* --------------------------------------------------
@@ -167,10 +234,6 @@ body {
   outline: none;
 }
 
-.cursor {
-  background: var(--cursor);
-}
-
 a {
   color: var(--accent);
 }
@@ -185,8 +248,4 @@ a {
     rgba(255,255,255,0) 2px
   );
   z-index: 9999;
-}
-
-.cursor {
-  background: var(--cursor);
 }
