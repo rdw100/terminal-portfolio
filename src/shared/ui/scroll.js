@@ -8,5 +8,8 @@ export function registerScrollContainer(element) {
 
 export function scrollToBottom() {
   if (!scrollContainer) return;
-  scrollContainer.scrollTop = scrollContainer.scrollHeight;
+
+  requestAnimationFrame(() => {
+    scrollContainer.scrollTop = scrollContainer.scrollHeight;
+  });
 }
