@@ -11,7 +11,7 @@ export async function handleCoin(ctx) {
     const html = renderCoinList();
     output.insertAdjacentHTML(
       'beforeend',
-      `<h2>COINS</h2>${html}<br/>`
+      `<h2>COINS</h2>${html}`
     );
     scrollToBottom(output);
     return;
@@ -22,7 +22,7 @@ export async function handleCoin(ctx) {
     output.insertAdjacentHTML(
       'beforeend',
       `<h2>Coin Price</h2>
-       <p>Usage: <b>coin &lt;symbol&gt;</b><br>Example: coin btc</p><br/>`
+       <p>Usage: <b>coin &lt;symbol&gt;</b><br>Example: coin <i>btc</i></p>`
     );
     scrollToBottom(output);
     return;
@@ -40,7 +40,7 @@ export async function handleCoin(ctx) {
 
     output.insertAdjacentHTML(
       'beforeend',
-      `<div>${data.symbol.toUpperCase()} USD: $${data.price}${cachedLabel}</div><br/>`
+      `<div>${data.symbol.toUpperCase()} USD: $${data.price}${cachedLabel}</div>`
     );
     scrollToBottom(output);
 
@@ -60,7 +60,7 @@ export async function handleCoin(ctx) {
       scrollToBottom(output);
     }
 
-    output.insertAdjacentHTML('beforeend', '<br/>');
+    output.insertAdjacentHTML('beforeend', '');
     scrollToBottom(output);
   }
 }

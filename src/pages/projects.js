@@ -35,7 +35,7 @@ export async function render(args = []) {
     })
     .join('');
 
-  output.insertAdjacentHTML('beforeend', listHtml + '<br/>');
+  output.insertAdjacentHTML('beforeend', listHtml);
 
   // -----------------------------------------
   // GOTO LOGIC

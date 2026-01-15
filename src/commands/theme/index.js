@@ -6,13 +6,13 @@ const validThemes = ["retro", "azure", "vapor", "minimal", "amber", "dusty"];
 
 function applyTheme(name) {
   if (!validThemes.includes(name)) {
-    return `<div>Unknown theme: ${name}. Available: ${validThemes.join(", ")}</div><br/>`;
+    return `<div>Unknown theme: ${name}. Available: ${validThemes.join(", ")}</div>`;
   }
 
   document.body.className = `theme-${name}`;
   localStorage.setItem("theme", name);
 
-  return `<div>The new theme is <strong>${name}</strong>.</div><br/>`;
+  return `<div>The new theme is <strong>${name}</strong>.</div>`;
 }
 
 function getCurrentTheme() {
@@ -25,7 +25,7 @@ export async function handleTheme(ctx) {
   // CASE 1: "theme" → show current theme
   if (!sub) {
     const current = getCurrentTheme();
-    ctx.print(`<div>The current theme is <strong>${current}</strong>.</div><br/>`);
+    ctx.print(`<div>The current theme is <strong>${current}</strong>.</div>`);
     return;
   }
 

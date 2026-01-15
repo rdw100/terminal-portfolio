@@ -1,4 +1,4 @@
 ## SOCIALS
 
-Usage: `socials goto <number>`  
-Example: `socials goto 2`
+Usage: socials goto _number_  
+Example: socials goto _2_

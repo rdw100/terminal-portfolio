@@ -33,9 +33,9 @@ export async function render(args = []) {
 
   const listHtml = entries
     .map((entry, i) => {
-      return `<div>&nbsp;&nbsp;&nbsp;&nbsp;${i + 1}. <a href="${entry.url}" target="_blank" rel="noopener">${entry.name}</a></div>`;
+      return `<div class="hlinkList">&nbsp;&nbsp;&nbsp;&nbsp;${i + 1}. <a href="${entry.url}" target="_blank" rel="noopener">${entry.name}</a></div>`;
     })
     .join('');
 
-  output.insertAdjacentHTML('beforeend', listHtml + '<br/>');
+  output.insertAdjacentHTML('beforeend', listHtml);
 }

@@ -18,15 +18,8 @@ export async function render(args = []) {
   // Inject face ASCII if referenced
   if (markdown.includes('${ascii}')) {
     const ascii = await fetch('../src/content/ascii.txt').then(r => r.text());
-    const fenced = `\`\`\`\n${ascii}\n\`\`\``;
+    const fenced = `\`\`\`ascii\n${ascii}\n\`\`\``;
     markdown = markdown.replace('${ascii}', fenced);
-  }
-
-  // Inject name ASCII if referenced
-  if (markdown.includes('${name_ascii}')) {
-    const nameAscii = await fetch('../src/content/name.txt').then(r => r.text());
-    const fenced = `\`\`\`\n${nameAscii}\n\`\`\``;
-    markdown = markdown.replace('${name_ascii}', fenced);
   }
 
   // Apply YAML placeholders

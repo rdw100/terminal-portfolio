@@ -9,7 +9,7 @@ export async function render(args = []) {
 
     const html = `
     <table id="lighthouse-scores">
-    <caption><strong>Lighthouse Scores (Production)</strong></caption>
+    <h2>Lighthouse Scores</h2>
     <thead>
       <tr><th style="text-align: left;">Category</th><th>Score</th></tr>
     </thead>

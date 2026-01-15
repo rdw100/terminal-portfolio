@@ -49,7 +49,7 @@ function generateCommandListHtml() {
   let output = "";
 
   for (const category of sortedCategories) {
-    output += `### ${category}\n\n`;
+    output += `\n\n${category}\n\n`;
 
     // Sort commands inside category
     const commands = groups[category].sort(([a], [b]) => a.localeCompare(b));

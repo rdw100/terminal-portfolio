@@ -1,4 +1,4 @@
 ## PROJECTS
 
-Usage: ```projects goto <number>```  
-Example: ```projects goto 2```
+Usage: projects goto _number_  
+Example: projects goto _2_

@@ -22,7 +22,7 @@ export async function executeCommand(rawInput, context) {
   });
 
   if (!entry) {
-    context.print(`<div>Command not found</div><br/>`);
+    context.print(`<div>Command not found</div>`);
     Telemetry.trackEvent("CommandNotFound", { baseCmd, args });
     return;
   }
