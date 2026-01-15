@@ -24,7 +24,7 @@ jobs:
         uses: treosh/lighthouse-ci-action@v11
         with:
           urls: |
-            https://purple-sand-0ac49090f.3.azurestaticapps.net
+            https://www.dustywright.me
           uploadArtifacts: true
           temporaryPublicStorage: true
 
