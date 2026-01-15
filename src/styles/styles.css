@@ -22,7 +22,15 @@ main {
 /* Printed output behaves like a console */
 /* preserves ASCII formatting */
 #output {
-   white-space: normal; 
+   white-space: normal;
+}
+
+#ascii-lcp-wrapper {  
+  padding: 10px;
+  white-space: normal;
+  box-sizing: border-box;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 /* Live prompt + cursor */
