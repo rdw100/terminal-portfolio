@@ -58,6 +58,11 @@
   --scanline-opacity: 0.02;
 }
 
+.theme-vapor #ascii-lcp {
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent); 
+ }
+
 .theme-vapor pre code.language-ansi {
   text-shadow: 0 0 8px var(--accent); 
 }

@@ -45,7 +45,7 @@ export function initializeTerminal() {
   };
 
   // After the browser paints the static ASCII, initialize the terminal UI
-  requestAnimationFrame(() => {
+/*   requestAnimationFrame(() => {
     input.focus();
 
     requestIdleCallback(() => {
@@ -54,12 +54,12 @@ export function initializeTerminal() {
           input.focus();
         });
     });
-  });
+  }); */
 
-/*   // After the browser paints the static ASCII, initialize the terminal UI
+  // After the browser paints the static ASCII, initialize the terminal UI
   requestAnimationFrame(() => {
     // Render the live prompt (the blinking cursor)
-    live.innerHTML = renderLivePrompt();
+    //live.innerHTML = renderLivePrompt();
     input.focus();
 
     // Defer the heavy welcome command until the browser is idle
@@ -75,14 +75,7 @@ export function initializeTerminal() {
           Promise.resolve().then(() => scrollToBottom());
         });
     });
-  }); */
-
-  document.addEventListener("pointerdown", start, { once: true });
-  document.addEventListener("keydown", start, { once: true });
-  function start() {
-    document.getElementById("press-any-key").remove();
-    executeCommand("welcome");
-  }
+  });
 
   terminal.addEventListener("click", () => {
     input.focus();
