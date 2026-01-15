@@ -67,11 +67,6 @@ pre code.language-ansi {
   color: var(--accent);
 }
 
-#ascii-lcp pre code {
-  display: block;
-  color: var(--accent);
-}
-
 /* ANSI art */
 .ansi-shadow {
   margin-bottom: 1em;

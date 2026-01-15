@@ -181,8 +181,8 @@
 .theme-dusty {
   --bg: #0d0f12;        /* deep charcoal */
   --fg: #d7e1f8;        /* soft ice-blue */
-  --accent: #276CF5;    /* your new electric blue */
-  --cursor: #B027F5;    /* your new violet cursor */
+  --accent: #276CF5;    /* new electric blue */
+  --cursor: #B027F5;    /* new violet cursor */
   --muted: #6c7480;     /* neutral gray */
 
   --prompt-user: var(--accent);
