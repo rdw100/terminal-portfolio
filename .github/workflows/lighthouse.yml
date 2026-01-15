@@ -1,8 +1,10 @@
 name: Lighthouse (Production)
 
 on:
-  push:
-    branches: [ main ]
+  workflow_run: 
+    workflows: ["Azure Static Web Apps CI/CD"] 
+    types: 
+      - completed 
   workflow_dispatch:
 
 permissions:
