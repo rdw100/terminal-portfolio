@@ -77,6 +77,13 @@ export function initializeTerminal() {
     });
   }); */
 
+  document.addEventListener("pointerdown", start, { once: true });
+  document.addEventListener("keydown", start, { once: true });
+  function start() {
+    document.getElementById("press-any-key").remove();
+    executeCommand("welcome");
+  }
+
   terminal.addEventListener("click", () => {
     input.focus();
   });
