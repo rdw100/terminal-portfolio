@@ -13,18 +13,6 @@ export async function render(args = []) {
   // Load markdown template
   let markdown = await fetch('/src/content/projects.md').then(r => r.text());
 
-  // Inject face ASCII if referenced
-  if (markdown.includes('${ascii}')) {
-    const ascii = await fetch('/src/content/ascii.txt').then(r => r.text());
-    markdown = markdown.replace('${ascii}', `\`\`\`\n${ascii}\n\`\`\``);
-  }
-
-  // Inject name ASCII if referenced
-  if (markdown.includes('${name_ascii}')) {
-    const nameAscii = await fetch('content/name.txt').then(r => r.text());
-    markdown = markdown.replace('${name_ascii}', `\`\`\`\n${nameAscii}\n\`\`\``);
-  }
-
   // Apply YAML placeholders
   markdown = applyTemplate(markdown, config);
 
