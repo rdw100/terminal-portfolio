@@ -115,14 +115,6 @@
     0 0 12px var(--cursor);
 }
 
-.theme-vapor #terminal-input:focus {
-  text-shadow:
-    0 0 6px var(--accent),
-    0 0 12px var(--accent),
-    0 0 20px var(--accent),
-    0 0 30px var(--accent);
-}
-
 /* ------------------------------------------------------------
    TERMINAL CONTENT STYLES
    ------------------------------------------------------------ */
