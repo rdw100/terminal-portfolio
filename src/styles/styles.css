@@ -26,7 +26,7 @@ main {
 }
 
 #lcp-spacer {
-  height: 120px; /* must be larger than the prompt */
+  height: 240px; /* must be larger than the prompt */
 }
 
 #ascii-lcp-wrapper {
