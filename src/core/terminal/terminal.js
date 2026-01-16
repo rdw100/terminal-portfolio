@@ -48,9 +48,16 @@ export function initializeTerminal() {
   };
 
   // Auto-run welcome AFTER first paint, during idle time
-  requestAnimationFrame(() => {
-    safeFocus(input);
+  requestIdleCallback(() => {
+    const cmd = "welcome";
+    context.printCommand(cmd);
+    executeCommand(cmd, context).finally(() => {
+      safeFocus(input);
+      queueMicrotask(scrollToBottom);
+    });
+  });
 
+/*   requestAnimationFrame(() => {
     requestIdleCallback(() => {
       const initialCmd = "welcome";
 
@@ -62,7 +69,7 @@ export function initializeTerminal() {
           queueMicrotask(scrollToBottom);
         });
     });
-  });
+  }); */
 
   // Focus terminal on click
   terminal.addEventListener("click", () => safeFocus(input));
