@@ -3,8 +3,8 @@
 import { initializeTerminal } from "./core/terminal/terminal.js";
 
 window.addEventListener("DOMContentLoaded", () => {
-  // Terminal init ASAP after paint
-  requestAnimationFrame(() => initializeTerminal());
+  // Terminal init ASAP after DOM is ready
+  initializeTerminal();
 
   // Preload registry during idle (small, safe)
   if ("requestIdleCallback" in window) {
@@ -16,7 +16,6 @@ window.addEventListener("DOMContentLoaded", () => {
   // Telemetry much later (heavy)
   setTimeout(loadTelemetry, 2000);
 });
-
 
 function loadTelemetry() {
   import("./core/terminal/telemetry.js")
