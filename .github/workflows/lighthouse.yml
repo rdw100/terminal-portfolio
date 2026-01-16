@@ -15,6 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Delay lighthouse until cache warms
+      - name: Wait for CDN warmup
+        run: sleep 120
+
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
