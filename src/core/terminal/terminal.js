@@ -48,7 +48,7 @@ export function initializeTerminal() {
   };
 
   // Auto-run welcome AFTER first paint, during idle time
-/*   requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
     safeFocus(input);
 
     requestIdleCallback(() => {
@@ -63,7 +63,6 @@ export function initializeTerminal() {
         });
     });
   });
- */
 
   // Focus terminal on click
   terminal.addEventListener("click", () => safeFocus(input));
