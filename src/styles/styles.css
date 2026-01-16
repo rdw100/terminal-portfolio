@@ -29,6 +29,12 @@ main {
   height: 240px; /* must be larger than the prompt */
 }
 
+.lcp-content {
+  opacity: 0;
+  display: block;
+  height: 100%;
+}
+
 #ascii-lcp-wrapper {
   min-height: 40vh;
   padding: 10px;
