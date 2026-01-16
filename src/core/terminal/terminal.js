@@ -72,62 +72,62 @@ export function initializeTerminal() {
   }, 0); */
 
   // --- PRESS ANY KEY OR CLICK ANYWHERE TO BEGIN ---
-function removeWelcomeHint() {
-  const hint = document.getElementById("welcome-hint");
-  if (hint) hint.remove();
-}
+// function removeWelcomeHint() {
+//   const hint = document.getElementById("welcome-hint");
+//   if (hint) hint.remove();
+// }
 
-async function runWelcome() {
-  removeWelcomeHint();
+// async function runWelcome() {
+//   removeWelcomeHint();
 
-  // Remove both listeners so welcome only fires once
-  input.removeEventListener("keydown", startWelcomeKey);
-  terminal.removeEventListener("click", startWelcomeClick);
+//   // Remove both listeners so welcome only fires once
+//   input.removeEventListener("keydown", startWelcomeKey);
+//   terminal.removeEventListener("click", startWelcomeClick);
 
-  const cmd = "welcome";
-  context.printCommand(cmd);
-  await executeCommand(cmd, context);
+//   const cmd = "welcome";
+//   context.printCommand(cmd);
+//   await executeCommand(cmd, context);
 
-  queueMicrotask(scrollToBottom);
-  safeFocus(input);
-}
+//   queueMicrotask(scrollToBottom);
+//   safeFocus(input);
+// }
 
-// Keypress version (only printable keys)
-async function startWelcomeKey(e) {
-  const hint = document.getElementById("welcome-hint");
-  if (!hint) return; // already triggered
+// // Keypress version (only printable keys)
+// async function startWelcomeKey(e) {
+//   const hint = document.getElementById("welcome-hint");
+//   if (!hint) return; // already triggered
 
-  if (e.key.length !== 1) return; // ignore arrows, shift, ctrl, etc.
-  e.stopImmediatePropagation();
+//   if (e.key.length !== 1) return; // ignore arrows, shift, ctrl, etc.
+//   e.stopImmediatePropagation();
 
-  runWelcome();
-}
+//   runWelcome();
+// }
 
-// Click‑anywhere version
-async function startWelcomeClick() {
-  const hint = document.getElementById("welcome-hint");
-  if (!hint) return; // already triggered
+// // Click‑anywhere version
+// async function startWelcomeClick() {
+//   const hint = document.getElementById("welcome-hint");
+//   if (!hint) return; // already triggered
 
-  runWelcome();
-}
+//   runWelcome();
+// }
 
-// Attach AFTER focus settles to avoid synthetic key events
-setTimeout(() => {
-  input.addEventListener("keydown", startWelcomeKey);
-  terminal.addEventListener("click", startWelcomeClick);
-}, 0);
+// // Attach AFTER focus settles to avoid synthetic key events
+// setTimeout(() => {
+//   input.addEventListener("keydown", startWelcomeKey);
+//   terminal.addEventListener("click", startWelcomeClick);
+// }, 0);
 
 
   // Auto-run welcome AFTER first paint, during idle time
   /* Perf 96; TBT 210 ms*/
-/*   requestIdleCallback(() => {
+  requestIdleCallback(() => {
     const cmd = "welcome";
     context.printCommand(cmd);
     executeCommand(cmd, context).finally(() => {
       safeFocus(input);
       queueMicrotask(scrollToBottom);
     });
-  }); */
+  });
 
 /*   requestAnimationFrame(() => {
     requestIdleCallback(() => {
