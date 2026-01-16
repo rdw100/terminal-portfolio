@@ -75,11 +75,3 @@ jobs:
           curl -I https://www.dustywright.me
           sleep 5
           curl -I https://www.dustywright.me
-
-# Retained for manual emergency workflows as purges every deployment causes increase in TTFB, First Byte 1080ms
-#      - name: Purge SWA Cache
-#        uses: Azure/static-web-apps-deploy@v1
-#        with:
-#          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_PURPLE_SAND_0AC49090F }}
-#          action: "purge"
-#          app_location: "/"
