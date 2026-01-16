@@ -3,15 +3,19 @@
 import { initializeTerminal } from "./core/terminal/terminal.js";
 
 window.addEventListener("DOMContentLoaded", () => {
-  // Initialize the terminal as soon as DOM is ready
-  initializeTerminal();
+  // Defer terminal initialization until the browser is idle
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(() => initializeTerminal());
+  } else {
+    // Fallback for older browsers
+    setTimeout(() => initializeTerminal(), 0);
+  }
 
-  // Defer telemetry load + init until the browser is idle
+  // Defer telemetry load + init until idle
   if ("requestIdleCallback" in window) {
     requestIdleCallback(loadTelemetry);
     requestIdleCallback(preloadCommandRegistry);
   } else {
-    // Fallback for older browsers
     setTimeout(loadTelemetry, 2000);
     setTimeout(preloadCommandRegistry, 2500);
   }
@@ -27,7 +31,6 @@ function loadTelemetry() {
     });
 }
 
-// ⭐ Optional: Preload command registry during idle time
 function preloadCommandRegistry() {
   import("./core/terminal/getRegistry.js")
     .then(mod => mod.getRegistry())
