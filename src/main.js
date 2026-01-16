@@ -3,23 +3,20 @@
 import { initializeTerminal } from "./core/terminal/terminal.js";
 
 window.addEventListener("DOMContentLoaded", () => {
-  // Defer terminal initialization until the browser is idle
-  if ("requestIdleCallback" in window) {
-    requestIdleCallback(() => initializeTerminal());
-  } else {
-    // Fallback for older browsers
-    setTimeout(() => initializeTerminal(), 0);
-  }
+  // Terminal init ASAP after paint
+  requestAnimationFrame(() => initializeTerminal());
 
-  // Defer telemetry load + init until idle
+  // Preload registry during idle (small, safe)
   if ("requestIdleCallback" in window) {
-    requestIdleCallback(loadTelemetry);
     requestIdleCallback(preloadCommandRegistry);
   } else {
-    setTimeout(loadTelemetry, 2000);
-    setTimeout(preloadCommandRegistry, 2500);
+    setTimeout(preloadCommandRegistry, 500);
   }
+
+  // Telemetry much later (heavy)
+  setTimeout(loadTelemetry, 2000);
 });
+
 
 function loadTelemetry() {
   import("./core/terminal/telemetry.js")
