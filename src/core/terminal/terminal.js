@@ -47,15 +47,87 @@ export function initializeTerminal() {
     }
   };
 
+/*   // --- PRESS ANY KEY TO BEGIN ---
+  const hint = document.getElementById("welcome-hint");
+
+  async function startWelcome(e) {
+    // Ignore non-printable keys
+    if (e.key.length !== 1) return;
+
+    // Prevent the main key handler from firing on this first key
+    e.stopImmediatePropagation();
+
+    hint.remove();
+    input.removeEventListener("keydown", startWelcome);
+
+    const cmd = "welcome";
+    context.printCommand(cmd);
+    await executeCommand(cmd, context);
+    queueMicrotask(scrollToBottom);
+  }
+
+  // Attach AFTER focus settles
+  setTimeout(() => {
+    input.addEventListener("keydown", startWelcome);
+  }, 0); */
+
+  // --- PRESS ANY KEY OR CLICK ANYWHERE TO BEGIN ---
+function removeWelcomeHint() {
+  const hint = document.getElementById("welcome-hint");
+  if (hint) hint.remove();
+}
+
+async function runWelcome() {
+  removeWelcomeHint();
+
+  // Remove both listeners so welcome only fires once
+  input.removeEventListener("keydown", startWelcomeKey);
+  terminal.removeEventListener("click", startWelcomeClick);
+
+  const cmd = "welcome";
+  context.printCommand(cmd);
+  await executeCommand(cmd, context);
+
+  queueMicrotask(scrollToBottom);
+  safeFocus(input);
+}
+
+// Keypress version (only printable keys)
+async function startWelcomeKey(e) {
+  const hint = document.getElementById("welcome-hint");
+  if (!hint) return; // already triggered
+
+  if (e.key.length !== 1) return; // ignore arrows, shift, ctrl, etc.
+  e.stopImmediatePropagation();
+
+  runWelcome();
+}
+
+// Click‑anywhere version
+async function startWelcomeClick() {
+  const hint = document.getElementById("welcome-hint");
+  if (!hint) return; // already triggered
+
+  runWelcome();
+}
+
+// Attach AFTER focus settles to avoid synthetic key events
+setTimeout(() => {
+  input.addEventListener("keydown", startWelcomeKey);
+  terminal.addEventListener("click", startWelcomeClick);
+}, 0);
+
+
   // Auto-run welcome AFTER first paint, during idle time
-  requestIdleCallback(() => {
+  /* Perf 96; TBT 210 ms*/
+/*   requestIdleCallback(() => {
     const cmd = "welcome";
     context.printCommand(cmd);
     executeCommand(cmd, context).finally(() => {
       safeFocus(input);
       queueMicrotask(scrollToBottom);
     });
-  });
+  }); */
 
 /*   requestAnimationFrame(() => {
     requestIdleCallback(() => {
