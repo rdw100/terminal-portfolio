@@ -1,13 +1,30 @@
 /* Entry point for the terminal portfolio application. 
    Sets up event listeners and dispatches the initial command. */
 import { initializeTerminal } from "./core/terminal/terminal.js";
-import { Telemetry } from "./core/terminal/telemetry.js";
 
-Telemetry.init("__TP_INSIGHTS_CONN__");
+// No top-level Telemetry import
+// import { Telemetry } from "./core/terminal/telemetry.js";
 
-/** Registers an event listener to load the welcome page 
- * on DOMContentLoaded and dispatch the command inside it */
-window.addEventListener('DOMContentLoaded', () => {
-  // Wires input handler to the terminal input box
+window.addEventListener("DOMContentLoaded", () => {
+  // Initialize the terminal as soon as DOM is ready
   initializeTerminal();
+
+  // Defer telemetry load + init until the browser is idle
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(loadTelemetry);
+  } else {
+    // Fallback for older browsers
+    setTimeout(loadTelemetry, 2000);
+  }
 });
+
+function loadTelemetry() {
+  import("./core/terminal/telemetry.js")
+    .then(({ Telemetry }) => {
+      Telemetry.init("__TP_INSIGHTS_CONN__");
+    })
+    .catch((err) => {
+      // Optional: log or ignore telemetry init failures
+      console.warn("Telemetry failed to initialize", err);
+    });
+}
