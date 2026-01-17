@@ -19,6 +19,9 @@ if ("requestIdleCallback" in window) {
     // Make config globally available to all pages
     window.__config = cfg;
 
+    // Lazy-load welcome UI 
+    loadWelcomeUI();
+
     // Conditionally load telemetry
     if (cfg.telemetry === true) {
       setTimeout(loadTelemetry, 2000);
@@ -30,6 +33,9 @@ if ("requestIdleCallback" in window) {
     preloadCommandRegistry();
 
     const cfg = await getConfig();
+
+    // Lazy-load welcome UI 
+    loadWelcomeUI();
 
     // Make config globally available to all pages
     window.__config = cfg;
@@ -57,3 +63,15 @@ function preloadCommandRegistry() {
     .catch(err => console.warn("Registry preload failed", err));
 }
 
+async function loadWelcomeUI() {
+  const { render } = await import('./pages/welcome.js');
+
+  // Render welcome page into the terminal
+  await render([], window.__config);
+
+  // Optional: scroll after render
+  requestAnimationFrame(() => {
+    const live = document.getElementById('live');
+    live?.scrollIntoView({ behavior: 'smooth' });
+  });
+}
