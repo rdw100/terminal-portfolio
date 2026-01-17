@@ -3,22 +3,27 @@
 import { initializeTerminal } from "./core/terminal/terminal.js";
 import { getConfig, isTelemetryEnabled } from './core/services/configService.js';
 
-window.addEventListener("DOMContentLoaded", async () => {
-  await getConfig();
-
-  // Terminal init ASAP after DOM is ready
+window.addEventListener("DOMContentLoaded", () => {
+  // 1. Initialize terminal immediately
   initializeTerminal();
 
-  // Preload registry during idle (small, safe)
+  // 2. Preload registry during idle
   if ("requestIdleCallback" in window) {
-    requestIdleCallback(preloadCommandRegistry);
-  } else {
-    setTimeout(preloadCommandRegistry, 500);
-  }
+    requestIdleCallback(async () => {
+      await getConfig();
 
-  // Telemetry much later (heavy)
-  if (isTelemetryEnabled()) { 
-    setTimeout(loadTelemetry, 2000);
+      if (isTelemetryEnabled()) {
+        setTimeout(loadTelemetry, 2000);
+      }
+    });
+  } else {
+    setTimeout(async () => {
+      await getConfig();
+
+      if (isTelemetryEnabled()) {
+        setTimeout(loadTelemetry, 2000);
+      }
+    }, 500);
   }
 });
 
