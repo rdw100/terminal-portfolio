@@ -42,7 +42,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-function scheduleWelcomeLoader() {
+/* function scheduleWelcomeLoader() {
   // Phase 1: Wait for first paint
   requestAnimationFrame(() => {
     // Phase 2: Wait for idle time
@@ -50,6 +50,17 @@ function scheduleWelcomeLoader() {
       const { render } = await import('./pages/welcome.js');
       await render([], window.__config);
     });
+  });
+} */
+
+function scheduleWelcomeLoader() {
+  // Phase 1: Wait for first paint
+  requestAnimationFrame(() => {
+    // Phase 2: Guaranteed post-LCP delay
+    setTimeout(async () => {
+      const { render } = await import('./pages/welcome.js');
+      await render([], window.__config);
+    }, 500); // 500ms is safe on throttled CPUs
   });
 }
 
