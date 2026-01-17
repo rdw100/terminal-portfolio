@@ -25,3 +25,5 @@ cryptoApi:
   endpoints:
     coins: "/coins/markets"
     simple: "/simple/price"
+
+telemetry: false

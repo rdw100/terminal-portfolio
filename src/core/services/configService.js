@@ -13,3 +13,7 @@ export async function getConfig() {
     configCache = jsyaml.load(yamlText);
     return configCache;
 }
+
+export function isTelemetryEnabled() { 
+    return configCache?.telemetry === true; 
+}
