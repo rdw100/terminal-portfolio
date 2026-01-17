@@ -69,9 +69,12 @@ async function loadWelcomeUI() {
   // Render welcome page into the terminal
   await render([], window.__config);
 
-  // Optional: scroll after render
+  // Phase 1: Wait for first paint
   requestAnimationFrame(() => {
-    const live = document.getElementById('live');
-    live?.scrollIntoView({ behavior: 'smooth' });
+    // Phase 2: Wait for idle time
+    requestIdleCallback(async () => {
+      const { render } = await import('./pages/welcome.js');
+      await render([], window.__config);
+    });
   });
 }
