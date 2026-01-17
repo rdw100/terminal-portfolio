@@ -14,6 +14,6 @@ export async function getConfig() {
     return configCache;
 }
 
-export function isTelemetryEnabled() { 
-    return configCache?.telemetry === true; 
+export function isTelemetryEnabled() {
+  return Boolean(configCache && configCache.telemetry);
 }

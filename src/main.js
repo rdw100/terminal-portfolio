@@ -1,9 +1,11 @@
 /* Entry point for the terminal portfolio application. 
    Sets up event listeners and dispatches the initial command. */
 import { initializeTerminal } from "./core/terminal/terminal.js";
-import { isTelemetryEnabled } from './core/services/configService.js';
+import { getConfig, isTelemetryEnabled } from './core/services/configService.js';
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
+  await getConfig();
+
   // Terminal init ASAP after DOM is ready
   initializeTerminal();
 
