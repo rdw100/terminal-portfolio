@@ -7,45 +7,51 @@ window.addEventListener("DOMContentLoaded", () => {
   // 1. Terminal init ASAP
   initializeTerminal();
 
-// 2. Idle work: preload registry + load config + maybe load telemetry
-if ("requestIdleCallback" in window) {
-  requestIdleCallback(async () => {
-    // Preload registry (cheap, safe)
-    preloadCommandRegistry();
+  // 2. Idle work: preload registry + load config + maybe load telemetry
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(async () => {
+      // Preload registry (cheap, safe)
+      preloadCommandRegistry();
 
-    // Load config (lazy JSON)
-    const cfg = await getConfig();
+      // Load config (lazy JSON)
+      const cfg = await getConfig();
+      window.__config = cfg;
 
-    // Make config globally available to all pages
-    window.__config = cfg;
+      // Conditionally load telemetry
+      if (cfg.telemetry === true) {
+        setTimeout(loadTelemetry, 2000);
+      }
 
-    // Lazy-load welcome UI 
-    loadWelcomeUI();
+      // ⭐ Schedule welcome loader AFTER config idle work
+      scheduleWelcomeLoader();
+    });
+  } else {
+    // Fallback for older browsers
+    setTimeout(async () => {
+      preloadCommandRegistry();
 
-    // Conditionally load telemetry
-    if (cfg.telemetry === true) {
-      setTimeout(loadTelemetry, 2000);
-    }
-  });
-} else {
-  // Fallback for older browsers
-  setTimeout(async () => {
-    preloadCommandRegistry();
+      const cfg = await getConfig();
+      window.__config = cfg;
 
-    const cfg = await getConfig();
+      if (cfg.telemetry === true) {
+        setTimeout(loadTelemetry, 2000);
+      }
 
-    // Lazy-load welcome UI 
-    loadWelcomeUI();
-
-    // Make config globally available to all pages
-    window.__config = cfg;
-
-    if (cfg.telemetry === true) {
-      setTimeout(loadTelemetry, 2000);
-    }
-  }, 500);
-}
+      scheduleWelcomeLoader();
+    }, 500);
+  }
 });
+
+function scheduleWelcomeLoader() {
+  // Phase 1: Wait for first paint
+  requestAnimationFrame(() => {
+    // Phase 2: Wait for idle time
+    requestIdleCallback(async () => {
+      const { render } = await import('./pages/welcome.js');
+      await render([], window.__config);
+    });
+  });
+}
 
 function loadTelemetry() {
   import("./core/terminal/telemetry.js")
@@ -61,15 +67,4 @@ function preloadCommandRegistry() {
   import("./core/terminal/getRegistry.js")
     .then(mod => mod.getRegistry())
     .catch(err => console.warn("Registry preload failed", err));
-}
-
-function loadWelcomeUI() {
-  // Phase 1: Wait for first paint
-  requestAnimationFrame(() => {
-    // Phase 2: Wait for idle time
-    requestIdleCallback(async () => {
-      const { render } = await import('./pages/welcome.js');
-      await render([], window.__config);
-    });
-  });
 }
