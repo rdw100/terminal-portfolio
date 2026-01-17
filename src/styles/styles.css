@@ -26,17 +26,15 @@ main {
 }
 
 #lcp-spacer {
-  height: 240px; /* must be larger than prompt */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 260px; /* must be larger than the prompt */
 }
 
 .lcp-content {
   opacity: 0; /* invisible but contentful */
-  font-size: 2rem;
-  white-space: pre;
+  font-size: 1px; /* smallest possible */
+  line-height: 1;
 }
+
 
 #ascii-lcp-wrapper {
   min-height: 40vh;
