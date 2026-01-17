@@ -63,7 +63,7 @@ function preloadCommandRegistry() {
     .catch(err => console.warn("Registry preload failed", err));
 }
 
-async function loadWelcomeUI() {
+function loadWelcomeUI() {
   // Phase 1: Wait for first paint
   requestAnimationFrame(() => {
     // Phase 2: Wait for idle time
