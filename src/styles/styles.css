@@ -29,11 +29,24 @@ main {
   height: 240px; /* must be larger than the prompt */
 }
 
+#lcp-spacer {
+  height: 240px; /* must be larger than prompt */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .lcp-content {
+  opacity: 0; /* invisible but contentful */
+  font-size: 2rem;
+  white-space: pre;
+}
+
+/* .lcp-content {
   opacity: 0;
   display: block;
   height: 100%;
-}
+} */
 
 #ascii-lcp-wrapper {
   min-height: 40vh;
