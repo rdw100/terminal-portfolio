@@ -14,7 +14,9 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   // Telemetry much later (heavy)
-  setTimeout(loadTelemetry, 2000);
+  if (import.meta.env.VITE_ENABLE_TELEMETRY === "true") {
+    setTimeout(loadTelemetry, 2000);
+  }
 });
 
 function loadTelemetry() {
