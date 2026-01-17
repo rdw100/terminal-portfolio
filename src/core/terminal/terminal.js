@@ -49,14 +49,14 @@ export function initializeTerminal() {
 
   // Auto-run welcome AFTER first paint, during idle time
   /* Perf 96; TBT 210 ms*/
-  requestIdleCallback(() => {
+/*   requestIdleCallback(() => {
     const cmd = "welcome";
     context.printCommand(cmd);
     executeCommand(cmd, context).finally(() => {
       safeFocus(input);
       queueMicrotask(scrollToBottom);
     });
-  });
+  }); */
 
 /*   requestAnimationFrame(() => {
     requestIdleCallback(() => {
