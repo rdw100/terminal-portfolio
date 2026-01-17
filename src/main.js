@@ -49,7 +49,7 @@ function scheduleWelcomeLoader() {
     setTimeout(async () => {
       const { render } = await import('./pages/welcome.js');
       await render([], window.__config);
-    }, 1500); // Safe for throttled CPUs
+    }, 500); // Safe for throttled CPUs
   });
 }
 
