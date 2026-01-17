@@ -64,11 +64,6 @@ function preloadCommandRegistry() {
 }
 
 async function loadWelcomeUI() {
-  const { render } = await import('./pages/welcome.js');
-
-  // Render welcome page into the terminal
-  await render([], window.__config);
-
   // Phase 1: Wait for first paint
   requestAnimationFrame(() => {
     // Phase 2: Wait for idle time
