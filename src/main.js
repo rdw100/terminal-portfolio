@@ -1,26 +1,24 @@
 /* Entry point for the terminal portfolio application. 
    Sets up event listeners and dispatches the initial command. */
 import { initializeTerminal } from "./core/terminal/terminal.js";
-import { getConfig, isTelemetryEnabled } from './core/services/configService.js';
+import { getConfig } from './core/services/configService.js';
 
 window.addEventListener("DOMContentLoaded", () => {
-  // 1. Initialize terminal immediately
   initializeTerminal();
 
-  // 2. Preload registry during idle
   if ("requestIdleCallback" in window) {
     requestIdleCallback(async () => {
-      await getConfig();
+      const cfg = await getConfig();
 
-      if (isTelemetryEnabled()) {
+      if (cfg.telemetry === true) {
         setTimeout(loadTelemetry, 2000);
       }
     });
   } else {
     setTimeout(async () => {
-      await getConfig();
+      const cfg = await getConfig();
 
-      if (isTelemetryEnabled()) {
+      if (cfg.telemetry === true) {
         setTimeout(loadTelemetry, 2000);
       }
     }, 500);
