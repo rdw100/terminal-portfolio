@@ -39,7 +39,9 @@ export async function executeCommand(rawInput, context) {
       }
     }
 
-    const result = await handler(handlerContext);
+   // const result = await handler(handlerContext);
+  const cfg = window.__config; // set by main.js
+  const result = await handler(handlerContext, cfg);
 
     window.__telemetry?.trackEvent("CommandEnd", {
       baseCmd,

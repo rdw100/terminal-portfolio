@@ -7,32 +7,38 @@ window.addEventListener("DOMContentLoaded", () => {
   // 1. Terminal init ASAP
   initializeTerminal();
 
-  // 2. Idle work: preload registry + load config + maybe load telemetry
-  if ("requestIdleCallback" in window) {
-    requestIdleCallback(async () => {
-      // Preload registry (cheap, safe)
-      preloadCommandRegistry();
+// 2. Idle work: preload registry + load config + maybe load telemetry
+if ("requestIdleCallback" in window) {
+  requestIdleCallback(async () => {
+    // Preload registry (cheap, safe)
+    preloadCommandRegistry();
 
-      // Load config (lazy YAML)
-      const cfg = await getConfig();
+    // Load config (lazy JSON)
+    const cfg = await getConfig();
 
-      // Conditionally load telemetry
-      if (cfg.telemetry === true) {
-        setTimeout(loadTelemetry, 2000);
-      }
-    });
-  } else {
-    // Fallback for older browsers
-    setTimeout(async () => {
-      preloadCommandRegistry();
+    // Make config globally available to all pages
+    window.__config = cfg;
 
-      const cfg = await getConfig();
+    // Conditionally load telemetry
+    if (cfg.telemetry === true) {
+      setTimeout(loadTelemetry, 2000);
+    }
+  });
+} else {
+  // Fallback for older browsers
+  setTimeout(async () => {
+    preloadCommandRegistry();
 
-      if (cfg.telemetry === true) {
-        setTimeout(loadTelemetry, 2000);
-      }
-    }, 500);
-  }
+    const cfg = await getConfig();
+
+    // Make config globally available to all pages
+    window.__config = cfg;
+
+    if (cfg.telemetry === true) {
+      setTimeout(loadTelemetry, 2000);
+    }
+  }, 500);
+}
 });
 
 function loadTelemetry() {
@@ -50,3 +56,4 @@ function preloadCommandRegistry() {
     .then(mod => mod.getRegistry())
     .catch(err => console.warn("Registry preload failed", err));
 }
+

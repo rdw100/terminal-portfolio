@@ -1,13 +1,12 @@
 import { loadAndRender } from '../../core/pageLoader.js';
-import { getConfig } from '../../core/services/configService.js';
 
-export async function handleSocials(ctx) {
+export async function handleSocials(ctx, config) {
+  const cfg = config || window.__config;
   const [action, index] = ctx.args;
 
   // Handle: socials goto <n>
   if (action === 'goto' && index) {
-    const config = await getConfig();
-    const socials = config.socials || {};
+    const socials = cfg.socials || {};
 
     const entries = Object.entries(socials).map(([key, url]) => ({
       name: key.charAt(0).toUpperCase() + key.slice(1),
@@ -28,5 +27,5 @@ export async function handleSocials(ctx) {
   }
 
   // Default: render socials page
-  await loadAndRender('socials', 'Socials', ctx.args);
+  await loadAndRender('socials', 'Socials', ctx.args, cfg);
 }

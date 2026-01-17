@@ -2,15 +2,13 @@
     by loading markdown content, injecting ASCII art,
     applying templates, and converting to HTML. */
 import { ensureMarked } from '../core/services/markdownService.js';
-import { getConfig } from '../core/services/configService.js';
 import { applyTemplate } from '../core/services/templateService.js';
 
-export async function render(args = []) {
+export async function render(args = [], config) {
+  const cfg = config || window.__config;
   const output = document.getElementById('output');
 
   await ensureMarked();
-
-  const config = await getConfig();
 
   // Load markdown
   let markdown = await fetch('../src/content/about.md').then(r => r.text());
@@ -22,8 +20,8 @@ export async function render(args = []) {
     markdown = markdown.replace('${ascii}', fenced);
   }
 
-  // Apply YAML placeholders
-  markdown = applyTemplate(markdown, config);
+  // Apply placeholders
+  markdown = applyTemplate(markdown, cfg);
 
   // Convert to HTML
   const html = marked.parse(markdown, { mangle: false, headerIds: false });

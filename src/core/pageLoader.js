@@ -8,6 +8,11 @@ export function resetPageState() {
 
 export async function loadAndRender(page, name, args = null) {
   const { render } = await import(`../pages/${page}.js`);
-  await render(args);
+
+  // Pull config from global (set by main.js after idle)
+  const cfg = window.__config;
+
+  await render(args, cfg);
+
   scrollToBottom();
 }

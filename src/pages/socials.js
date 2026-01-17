@@ -1,19 +1,18 @@
 /* Display socials information from markdown template and config */
 import { ensureMarked } from '../core/services/markdownService.js';
-import { getConfig } from '../core/services/configService.js';
 import { applyTemplate } from '../core/services/templateService.js';
 
-export async function render(args = []) {
+export async function render(args = [], config) {
+  const cfg = config || window.__config;
   const output = document.getElementById('output');
 
   await ensureMarked();
-  const config = await getConfig();
 
   // Load markdown template
   let markdown = await fetch('/src/content/socials.md').then(r => r.text());
 
-  // Apply YAML placeholders
-  markdown = applyTemplate(markdown, config);
+  // Apply placeholders
+  markdown = applyTemplate(markdown, cfg);
 
   // Convert Markdown to HTML
   const html = marked.parse(markdown, { mangle: false, headerIds: false });
@@ -24,7 +23,7 @@ export async function render(args = []) {
   // -----------------------------------------
   // DYNAMIC SOCIAL LINKS LIST
   // -----------------------------------------
-  const socials = config.socials || {};
+  const socials = cfg.socials || {};
 
   const entries = Object.entries(socials).map(([key, url]) => ({
     name: key.charAt(0).toUpperCase() + key.slice(1),
