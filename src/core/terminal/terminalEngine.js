@@ -1,7 +1,6 @@
 /* Process and execute a command input string */
 
 import { commandRegistry } from "./commandRegistry.js";
-import { Telemetry } from "./telemetry.js";
 
 export async function executeCommand(rawInput, context) {
   const trimmed = rawInput.trim();
@@ -10,8 +9,7 @@ export async function executeCommand(rawInput, context) {
   const [baseCmd, ...args] = trimmed.split(/\s+/);
   const entry = commandRegistry[baseCmd];
 
-  // Combined event: CommandExecuted + CommandStart
-  Telemetry.trackEvent("CommandStart", {
+  window.__telemetry?.trackEvent("CommandStart", {
     raw: rawInput,
     baseCmd,
     args
@@ -19,23 +17,20 @@ export async function executeCommand(rawInput, context) {
 
   if (!entry) {
     context.print('<div>Command not found</div>');
-    Telemetry.trackEvent("CommandNotFound", { baseCmd, args });
+    window.__telemetry?.trackEvent("CommandNotFound", { baseCmd, args });
     return;
   }
 
   const start = performance.now();
 
   if (entry.page) {
-    Telemetry.trackPage(entry.page, { baseCmd, args });
+    window.__telemetry?.trackPage(entry.page, { baseCmd, args });
   }
 
   try {
     const handlerContext = { ...context, baseCmd, args };
-
-    // Dynamic import
     const module = await entry.loader();
 
-    // Fastest handler resolution
     let handler = module.handler || module.default;
     if (!handler) {
       for (const key in module) {
@@ -46,7 +41,7 @@ export async function executeCommand(rawInput, context) {
 
     const result = await handler(handlerContext);
 
-    Telemetry.trackEvent("CommandEnd", {
+    window.__telemetry?.trackEvent("CommandEnd", {
       baseCmd,
       args,
       duration: performance.now() - start,
@@ -55,14 +50,14 @@ export async function executeCommand(rawInput, context) {
 
     return result;
   } catch (err) {
-    Telemetry.trackException(err, {
+    window.__telemetry?.trackException(err, {
       baseCmd,
       args,
       duration: performance.now() - start,
       success: false
     });
 
-    Telemetry.trackEvent("CommandEnd", {
+    window.__telemetry?.trackEvent("CommandEnd", {
       baseCmd,
       args,
       duration: performance.now() - start,

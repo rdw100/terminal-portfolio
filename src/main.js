@@ -4,18 +4,28 @@ import { initializeTerminal } from "./core/terminal/terminal.js";
 import { getConfig } from './core/services/configService.js';
 
 window.addEventListener("DOMContentLoaded", () => {
+  // 1. Terminal init ASAP
   initializeTerminal();
 
+  // 2. Idle work: preload registry + load config + maybe load telemetry
   if ("requestIdleCallback" in window) {
     requestIdleCallback(async () => {
+      // Preload registry (cheap, safe)
+      preloadCommandRegistry();
+
+      // Load config (lazy YAML)
       const cfg = await getConfig();
 
+      // Conditionally load telemetry
       if (cfg.telemetry === true) {
         setTimeout(loadTelemetry, 2000);
       }
     });
   } else {
+    // Fallback for older browsers
     setTimeout(async () => {
+      preloadCommandRegistry();
+
       const cfg = await getConfig();
 
       if (cfg.telemetry === true) {
