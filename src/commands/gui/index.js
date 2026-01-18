@@ -1,9 +1,5 @@
-// src/commands/gui/index.js
-
-export async function handleGui(ctx, config) {
-  // Fallback in case config wasn't passed (shouldn't happen)
-  const cfg = config || window.__config;
-
+export async function handle(ctx) {
+  const cfg = window.__config;
   const legacyUrl = cfg?.site?.legacy_url;
 
   if (!legacyUrl) {

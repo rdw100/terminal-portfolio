@@ -1,6 +1,6 @@
 /* Handle "theme" command: show current theme, list themes, or apply a new theme */
 
-import { loadAndRender } from '../../core/pageLoader.js';
+import { loadAndRender } from '../../core/runtime/pageLoader.js';
 
 const validThemes = ["retro", "azure", "vapor", "minimal", "amber", "dusty"];
 
@@ -19,8 +19,8 @@ function getCurrentTheme() {
   return localStorage.getItem("theme") || "retro";
 }
 
-export async function handleTheme(ctx) {
-  const [sub] = ctx.args;
+export async function handle(ctx) {
+  const sub = ctx.args?.[0];   // ⭐ FIXED
 
   // CASE 1: "theme" → show current theme
   if (!sub) {
@@ -35,7 +35,7 @@ export async function handleTheme(ctx) {
     return;
   }
 
-  // CASE 3: "theme <name>" → apply theme + print message + render theme.md
+  // CASE 3: "theme <name>"
   const result = applyTheme(sub);
   ctx.print(result);
 

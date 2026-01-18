@@ -1,5 +1,5 @@
-import { loadAndRender } from '../../core/pageLoader.js';
+import { loadAndRender } from '../../core/runtime/pageLoader.js';
 
-export async function handleAbout(ctx) {
-  await loadAndRender('about', 'About');
+export async function handle(ctx) {
+  await loadAndRender('about', 'About', ctx.args);
 }

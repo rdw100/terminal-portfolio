@@ -2,21 +2,16 @@ import { getCoinPrice, renderCoinList } from './coinService.js';
 import { startCooldownTimer } from '../../shared/ui/cooldown.js';
 import { scrollToBottom } from '../../shared/ui/scroll.js';
 
-export async function handleCoin(ctx) {
+export async function handle(ctx) {
   const output = ctx.output;
   const args = ctx.args || [];
-
   // 1. "coin list"
   if (args[0] === "list") {
     const html = renderCoinList();
-    output.insertAdjacentHTML(
-      'beforeend',
-      `<h2>COINS</h2>${html}`
-    );
+    output.insertAdjacentHTML('beforeend', `<h2>COINS</h2>${html}`);
     scrollToBottom(output);
     return;
   }
-
   // 2. Incorrect usage
   if (args.length !== 1) {
     output.insertAdjacentHTML(
@@ -27,7 +22,6 @@ export async function handleCoin(ctx) {
     scrollToBottom(output);
     return;
   }
-
   // 3. "coin <symbol>"
   const symbol = args[0].toLowerCase();
 
@@ -51,7 +45,6 @@ export async function handleCoin(ctx) {
       `<div>${err.message}</div>`
     );
     scrollToBottom(output);
-
     // Extract cooldown seconds
     const match = err.message.match(/(\d+)\s*seconds?/i);
     if (match) {
@@ -59,8 +52,5 @@ export async function handleCoin(ctx) {
       startCooldownTimer(output, seconds);
       scrollToBottom(output);
     }
-
-    output.insertAdjacentHTML('beforeend', '');
-    scrollToBottom(output);
   }
 }

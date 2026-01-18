@@ -1,4 +1,4 @@
-import { resetPageState } from '../../core/pageLoader.js';
+/* import { resetPageState } from '../../core/pageLoader.js';
 import { handleWelcome } from '../welcome/index.js';
 
 export async function handleClear(ctx) {
@@ -12,4 +12,7 @@ export async function handleClear(ctx) {
 
   // Re-run welcome page
   await handleWelcome(ctx);
+} */
+export async function handle(ctx) {
+  ctx.output.innerHTML = '';
 }

@@ -2,7 +2,6 @@
  * template and config */
 import { ensureMarked } from '../core/services/markdownService.js';
 import { applyTemplate } from '../core/services/templateService.js';
-import { commandRegistry } from '../core/terminal/commandRegistry.js'; 
 
 export async function render(args = [], config) {
   const cfg = config || window.__config;
@@ -18,7 +17,7 @@ export async function render(args = [], config) {
 
   // Inject dynamic command list
   if (markdown.includes('{{commands}}')) {
-    const commandsHtml = generateCommandListHtml();
+    const commandsHtml = await generateCommandListHtml();
     markdown = markdown.replace('{{commands}}', commandsHtml);
   }
 
@@ -30,7 +29,10 @@ export async function render(args = [], config) {
 }
 
 // Build dynamic command list HTML
-function generateCommandListHtml() {
+async function generateCommandListHtml() {
+  // ⭐ Load the Phase‑3 registry dynamically
+  const { commandRegistry } = await import('../core/runtime/commandRegistry.js');
+
   const entries = Object.entries(commandRegistry);
 
   // Group commands by category

@@ -1,10 +1,10 @@
-import { loadAndRender } from '../../core/pageLoader.js';
+import { loadAndRender } from '../../core/runtime/pageLoader.js';
 
-export async function handleSocials(ctx, config) {
-  const cfg = config || window.__config;
-  const [action, index] = ctx.args;
+export async function handle(ctx) {
+  const cfg = window.__config;
+  const [action, index] = ctx.args || [];
 
-  // Handle: socials goto <n>
+  // socials goto <n>
   if (action === 'goto' && index) {
     const socials = cfg.socials || {};
 
@@ -26,6 +26,6 @@ export async function handleSocials(ctx, config) {
     return;
   }
 
-  // Default: render socials page
+  // default: render socials page
   await loadAndRender('socials', 'Socials', ctx.args, cfg);
 }
