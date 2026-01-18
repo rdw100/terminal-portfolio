@@ -1,4 +1,4 @@
-import { renderLivePrompt, renderPrompt } from '../core/terminal/prompt.js';
+import { getPrompt } from '../core/terminal/prompt.js';
 import { scrollToBottom, registerScrollContainer } from '../shared/ui/scroll.js';
 
 export function initializeShellTerminal() {
@@ -8,7 +8,7 @@ export function initializeShellTerminal() {
 
   if (!terminal || !output || !live) return;
 
-  const staticPrompt = renderPrompt();
+  const staticPrompt = getPrompt();
 
   const input = document.getElementById("terminal-input");
   if (!input) return;

@@ -13,8 +13,7 @@ export async function initRuntime(ctx) {
 
   // RUNTIME KEY HANDLER (replaces shell handler)
   input.onkeydown = async (e) => {
-console.log("Runtime initialized: ");
-
+    
     // TAB completion
     if (e.key === "Tab") {
       e.preventDefault();
