@@ -22,7 +22,7 @@ export function initializeTerminal() {
   let commandList = null;
 
   // Render prompt and get input
-  live.innerHTML = renderLivePrompt();
+  // live.innerHTML = renderLivePrompt();
   const input = document.getElementById("terminal-input");
 
   if (!input) {

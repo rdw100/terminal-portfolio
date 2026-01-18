@@ -1,4 +1,4 @@
-const PROMPT = "guest@dustywright.me:~$>";
+/* const PROMPT = "guest@dustywright.me:~$>";
 const PROMPT_HTML = `<span class="prompt">${PROMPT}</span>`;
 
 export function getPrompt() {
@@ -14,4 +14,4 @@ export function renderLivePrompt() {
     ${PROMPT_HTML}
     <input id="terminal-input" type="text" autocomplete="off" aria-label="Terminal command input" />
   `;
-}
+} */

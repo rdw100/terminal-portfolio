@@ -9,7 +9,6 @@ export function initializeShellTerminal() {
   if (!terminal || !output || !live) return;
 
   const staticPrompt = renderPrompt();
-  //live.innerHTML = renderLivePrompt();
 
   const input = document.getElementById("terminal-input");
   if (!input) return;
