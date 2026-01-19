@@ -26,9 +26,15 @@ jobs:
         with:
           node-version: 18
 
-      # 🔹 REQUIRED: Generate resume.html
+      # 🔹 REQUIRED: Generate HTML static content
       - name: Build resume.html
         run: node tools/build-resume.js
+
+      - name: Build projects.html
+        run: node tools/build-projects.js
+
+      - name: Build socials.html
+        run: node tools/build-socials.js
 
       # 1. Build your app yourself
       - name: Build app

@@ -1,11 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
-const inputPath = path.resolve('src/content/resume.txt');
-const outputPath = path.resolve('src/pages/resume.html');
+const inputPath = path.resolve('./src/content/resume.txt');
+const outputPath = path.resolve('./src/content/resume.html');
 
 if (!fs.existsSync(inputPath)) {
-  throw new Error('resume.txt not found at src/content/resume.txt');
+  throw new Error('resume.txt not found at ./src/content/resume.txt');
 }
 
 const input = fs.readFileSync(inputPath, 'utf8');

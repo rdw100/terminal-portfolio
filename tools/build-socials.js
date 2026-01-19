@@ -1,13 +1,13 @@
-// tools/build-projects.js
+// tools/build-socials.js
 const fs = require('fs');
 const path = require('path');
 
-console.log("Running build-projects.js...");
+console.log("Running build-socials.js...");
 
 try {
   const configPath = path.resolve('./src/config/config.json');
   const outputDir = path.resolve('./src/content');
-  const outputPath = path.join(outputDir, 'projects.html');
+  const outputPath = path.join(outputDir, 'socials.html');
 
   // Ensure output directory exists
   if (!fs.existsSync(outputDir)) {
@@ -15,20 +15,22 @@ try {
   }
 
   const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  const socials = config.socials;
 
-  const username = config.github.username;
-  const projects = config.github.projects;
+  const entries = Object.entries(socials).map(([key, url]) => ({
+    name: key.charAt(0).toUpperCase() + key.slice(1),
+    url
+  }));
 
-  const listHtml = projects
-    .map((name, i) => {
-      const url = `https://github.com/${username}/${name}`;
-      return `<div>&nbsp;&nbsp;&nbsp;&nbsp;${i + 1}. <a href="${url}" target="_blank" rel="noopener">${name}</a></div>`;
+  const listHtml = entries
+    .map((entry, i) => {
+      return `<div>&nbsp;&nbsp;&nbsp;&nbsp;${i + 1}. <a href="${entry.url}" target="_blank" rel="noopener">${entry.name}</a></div>`;
     })
     .join('');
 
   const html = `
-<div class="section-title"><h2>Projects</h2></div>
-<div class="project-list">
+<div class="section-title"><h2>Socials</h2></div>
+<div class="social-list">
   ${listHtml}
 </div>
 `;
