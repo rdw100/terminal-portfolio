@@ -8,11 +8,3 @@ export function getPrompt() {
 export function renderPrompt() {
   return PROMPT_HTML;
 }
-
-/* export function renderLivePrompt() {
-  return `
-    ${PROMPT_HTML}
-    <input id="terminal-input" type="text" autocomplete="off" aria-label="Terminal command input" />
-  `;
-}
- */
