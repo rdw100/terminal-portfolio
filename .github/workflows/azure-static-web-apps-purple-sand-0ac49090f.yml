@@ -36,9 +36,9 @@ jobs:
 
       # 2. Inject the connection string AFTER the build
       # 🔹 REQUIRED: Inject Application Insights connection string
-      - name: Inject App Insights connection string
-        run: |
-          sed -i 's|__TP_INSIGHTS_CONN__|'"${{ secrets.TP_INSIGHTS_CONN }}"'|g' ./src/main.js
+      #- name: Inject App Insights connection string
+      #  run: |
+      #    sed -i 's|__TP_INSIGHTS_CONN__|'"${{ secrets.TP_INSIGHTS_CONN }}"'|g' ./src/main.js
 
       # 3. Deploy WITHOUT rebuilding
       - name: Build And Deploy
