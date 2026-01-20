@@ -4,7 +4,7 @@ const path = require('path');
 console.log("Running full build pipeline...\n");
 
 function run(script) {
-  const fullPath = path.resolve(`/${script}`);
+  const fullPath = path.join(__dirname, script);
   console.log(`➡️  Running ${script}...`);
   try {
     execSync(`node "${fullPath}"`, { stdio: 'inherit' });
