@@ -421,7 +421,7 @@ FodyWeavers.xsd
 /src/content/*about.html
 /src/content/*help.html
 /src/content/*welcome.html
-/src/content/*lighthouse.html
+/src/content/lighthouse/*lighthouse.html
 /src/content/*resume.html
 /src/content/*projects.html
 /src/content/*socials.html
