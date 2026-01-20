@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <!-- AI ingestion warmup -->
@@ -22,9 +21,9 @@
     <title>Dusty Wright | Terminal Portfolio</title>
     
     <!-- Preload FIRST --> 
-    <link rel="preload" href="/src/styles/styles.css" as="style"> 
+<!--     <link rel="preload" href="/src/styles/styles.css" as="style"> 
     <link rel="preload" href="/src/styles/terminal.css" as="style"> 
-    <link rel="preload" href="/src/styles/themes.css" as="style"> 
+    <link rel="preload" href="/src/styles/themes.css" as="style">  -->
     
     <!-- Then normal CSS --> 
     <link rel="stylesheet" href="/src/styles/styles.css"> 
@@ -36,19 +35,19 @@
 
 <body class="theme-vapor">
     <main>
-    <div id="lcp-spacer">
-        <span class="lcp-content">.</span>
-    </div>
-    <div id="terminal">        
-        <div id="output"></div>        
-        <div id="scroll-to-bottom">▼</div>
-        <div id="live">
-            <span class="prompt">guest@dustywright.me:~$></span>
-            <input id="terminal-input" type="text" autocomplete="off" aria-label="Terminal command input" />
-        </div>        
-    </div>
+        <div id="terminal">
+            <div id="output">
+                <div id="preboot-hint" class="terminal-output">
+                    Type <strong>boot</strong> or <strong>welcome</strong> to begin.
+                </div>
+            </div>
+            <div id="live">
+                <span class="prompt">guest@dustywright.me:~$></span>
+                <input id="terminal-input" type="text" autocomplete="off" />
+            </div>
+            <button id="scroll-to-bottom">▼</button>
+        </div>
     </main>
     <script type="module" src="/src/shell/shell.js"></script>
 </body>
-
 </html>

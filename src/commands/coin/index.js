@@ -1,6 +1,6 @@
 import { getCoinPrice, renderCoinList } from './coinService.js';
-import { startCooldownTimer } from '../../shared/ui/cooldown.js';
-import { scrollToBottom } from '../../shared/ui/scroll.js';
+import { startCooldownTimer } from '../../core/ui/cooldown.js';
+import { scrollToBottom } from '../../core/ui/scroll.js';
 
 export async function handle(ctx) {
   const output = ctx.output;

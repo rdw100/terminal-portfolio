@@ -1,26 +1,33 @@
-import { getRegistry } from './getRegistry.js';
-import { executeCommand } from './terminalEngine.js';
+import { scrollToBottom, registerScrollContainer } from '../ui/scroll.js';
+import { executeCommand } from './executeCommand.js';
 
-export async function initRuntime(ctx) {
+export async function initializeRuntime(ctx) {
   const input = document.getElementById("terminal-input");
   const output = ctx.output;
+  const scrollBtn = document.getElementById("scroll-to-bottom");
 
-  const registry = await getRegistry();
-  const commandList = Object.keys(registry);
+  registerScrollContainer(output);
+
+  output.addEventListener("scroll", () => {
+    const atBottom =
+      output.scrollTop + output.clientHeight >= output.scrollHeight - 10;
+    scrollBtn.classList.toggle("visible", !atBottom);
+  }, { passive: true });
+
+  scrollBtn.addEventListener("click", scrollToBottom);
 
   const history = [];
   let historyIndex = -1;
 
-  // RUNTIME KEY HANDLER (replaces shell handler)
   input.onkeydown = async (e) => {
-    
+
     // TAB completion
     if (e.key === "Tab") {
       e.preventDefault();
       const current = input.value.trim();
       if (!current) return;
 
-      const matches = commandList.filter(cmd => cmd.startsWith(current));
+      const matches = ctx.commandList.filter(cmd => cmd.startsWith(current));
       if (matches.length === 1) {
         input.value = matches[0] + " ";
         return;
@@ -89,11 +96,9 @@ export async function initRuntime(ctx) {
       if (history.length > 100) history.shift();
       historyIndex = -1;
 
-      // PARSE COMMAND + ARGS  ⭐ FIX
+      // PARSE COMMAND + ARGS
       const parts = trimmed.split(/\s+/);
-      const commandName = parts[0];
       const args = parts.slice(1);
-
       ctx.args = args;
 
       ctx.printCommand(trimmed);
@@ -101,9 +106,7 @@ export async function initRuntime(ctx) {
       try {
         await executeCommand(trimmed, ctx);
       } finally {
-        queueMicrotask(() => {
-          output.scrollTop = output.scrollHeight;
-        });
+        queueMicrotask(scrollToBottom);
       }
     }
   };

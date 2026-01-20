@@ -1,0 +1,46 @@
+{
+  "about": {
+    "description": "Type <b>about</b> to learn about Dusty.",
+    "category": "Navigation"
+  },
+  "projects": {
+    "description": "Type <b>projects</b> to view GitHub projects.",
+    "category": "Navigation"
+  },
+  "socials": {
+    "description": "Type <b>socials</b> to list media links.",
+    "category": "Navigation"
+  },
+  "resume": {
+    "description": "Type <b>resume</b> to display resume.",
+    "category": "Navigation"
+  },
+  "theme": {
+    "description": "Type <b>theme list</b> to view terminal themes.",
+    "category": "System"
+  },
+  "lighthouse": {
+    "description": "Type <b>lighthouse</b> for Lighthouse scores.",
+    "category": "System"
+  },
+  "gui": {
+    "description": "Type <b>gui</b> to open the GUI version this site.",
+    "category": "Navigation"
+  },
+  "coin": {
+    "description": "Type <b>coin</b> to get current price for selected crypto.",
+    "category": "Services"
+  },
+  "clear": {
+    "description": "Type <b>clear</b> to clear the terminal screen.",
+    "category": "System"
+  },
+  "welcome": {
+    "description": "Type <b>welcome</b> to display the welcome message.",
+    "category": "Navigation"
+  },
+  "help": {
+    "description": "Type <b>help</b> to list all available commands.",
+    "category": "System"
+  }
+}
