@@ -264,6 +264,20 @@ p {
   50% { opacity: 0.2; }
 }
 
+.theme-vapor code.language-ansi {
+  display: block;
+  color: var(--accent);
+  line-height: 1.1;
+  white-space: pre; 
+  text-shadow: 0 0 8px var(--accent); 
+}
+
+.theme-vapor pre, pre code {
+  white-space: pre;
+  overflow-x: auto;  
+  margin: 10px 0 0 0;
+}
+
 /* Minimal */
 .theme-minimal {
   --bg: #111111;
