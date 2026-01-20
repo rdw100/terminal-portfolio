@@ -53,7 +53,7 @@ jobs:
           action: "upload"
           app_location: "/"
           api_location: "api"
-          output_location: "src"
+          output_location: ""
           app_build_command: "npm run build"
 
   close_pull_request_job:
