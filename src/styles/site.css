@@ -41,7 +41,7 @@ main {
 }
 
 /* Welcome hint (merged) */
-#welcome-hint {
+/* #welcome-hint {
   text-align: left;
   opacity: 0.7;
   margin-bottom: 1rem;
@@ -51,7 +51,7 @@ main {
 }
 
 #terminal:hover #welcome-hint { opacity: 1; }
-#welcome-hint:hover { opacity: 0.8; }
+#welcome-hint:hover { opacity: 0.8; } */
 
 /* Live prompt */
 #live {
