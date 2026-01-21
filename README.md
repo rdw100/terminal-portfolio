@@ -2,14 +2,11 @@
 
 # 🚀 terminal-portfolio
 
-A terminal-style personal portfolio built with **vanilla JavaScript**, designed to feel like a real shell session rather than a traditional website.
+A terminal‑style personal portfolio built with **vanilla JavaScript**, designed to feel like a real shell session rather than a traditional website.
 
-Hyper‑optimized, framework‑free terminal interface that delivers a real shell‑like experience in the browser — with 100/100/100/100 Lighthouse scores, a 5 KB payload, and TBT under 60 ms.
+This project explores how far you can push a fully static, framework‑free, dependency‑acyclic architecture while keeping the experience fast, expressive, and easy to extend.
 
-This project demonstrates how far you can push vanilla JavaScript, static hosting, and clean architecture when every decision is intentional.
-
-The site is command-driven, fully static, and hosted as an **Azure Static Web App** with content and behavior cleanly separated.
-
+The site is command‑driven, content‑first, and hosted as an **Azure Static Web Apps**.
 ---
 
 ## 🔦 Lighthouse Scores
@@ -21,41 +18,16 @@ The site is command-driven, fully static, and hosted as an **Azure Static Web Ap
 
 ---
 ## 🌟 Highlights & Achievements
-⚡ 100 Performance. 100 Accessibility. 100 Best Practices. 100 SEO.
-Achieved through a combination of architectural discipline, zero‑framework design, and aggressive micro‑optimization.
 
-🪶 5 KB Total Payload
-The entire site — HTML, CSS, JS — fits into a footprint smaller than most favicon files.
+⚡ Fast by design — tiny payload, minimal JavaScript, and a clean critical path
+📝 Content‑driven — Markdown, YAML, ASCII, and static HTML
+🧠 Predictable architecture — explicit layers, no circular dependencies
+🧱 Command‑based UX — interaction over navigation
+🧩 Build‑time content pipeline — Markdown → HTML during CI
+🧭 Zero frameworks, zero bundlers — just HTML, CSS, and ES modules
+🧪 Automated Lighthouse CI — scores tracked on every commit (SWA free tier may vary)
+🎨 Theme‑Aware Terminal UI — themes all powered by CSS variables and zero JS
 
-🧠 60 ms Total Blocking Time
-A level of responsiveness typically reserved for native apps and hand‑tuned demos.
-
-🧱 Dependency‑Acyclic Architecture
-Every module has a single responsibility.
-No circular imports.
-No hidden side effects.
-No framework magic.
-
-🧩 Dynamic Command System
-Commands are declarative, lazy‑loaded, and follow a predictable lifecycle:
-\```
-User Input → Engine → Registry → Handler → Renderer → Output
-\```
-
-📝 Build‑Time Markdown → HTML Pipeline
-Content is authored in Markdown and converted to static HTML during CI, ensuring:
-- zero runtime parsing
-- zero client‑side overhead
-- deterministic deploys
-
-🎨 Theme‑Aware Terminal UI
-Retro, Azure, Vapor, Minimal, Amber, and Dusty themes — all powered by CSS variables and zero JS.
-
-🧪 Automated Lighthouse CI
-Every push triggers a full Lighthouse audit, with scores published as badges and stored as static JSON.
-
-🧭 Zero Frameworks. Zero Bundlers. Zero Client‑Side Routing.
-Just HTML, CSS, and JavaScript — intentionally simple, intentionally fast.
 ---
 
 ## 🛠️ Built With
@@ -120,7 +92,15 @@ This terminal-style portfolio was built using a modern, lightweight web stack wi
 
 ---
 
-🧱 Technical Architecture
+## 🧩 Dynamic Command System
+Commands are declarative, lazy‑loaded, and follow a predictable lifecycle:
+\```
+User Input → Engine → Registry → Handler → Renderer → Output
+\```
+
+---
+
+## 🧱 Technical Architecture
 The system is organized into explicit layers:
 - Terminal Core — input, output, engine, prompt, telemetry
 - Command Handlers — minimal, declarative, async
@@ -137,7 +117,7 @@ This structure ensures:
 
 ---
 
-🛠️ Technology Stack
+## 🛠️ Technology Stack
 - Vanilla JavaScript (ES Modules)
 - HTML5 + CSS3
 - Markdown content pipeline
@@ -147,28 +127,6 @@ This structure ensures:
 - YAML configuration
 - Dynamic module loading
 - ASCII‑driven resume
-
----
-## ⚙️ Configuration
-
-All environment-specific and external values are stored in **YAML**:
-
-```yaml
-site:
-  legacy_url: https://gray-glacier-0dd347e0f.azurestaticapps.net/
-  contact_email: dusty@dustywright.me
-
-github:
-  username: rdw100
-  projects:
-    - anthrocloud
-    - northwind-api
-
-socials:
-  linkedin: https://linkedin.com/in/rdw100
-  github: https://github.com/rdw100
-  gui: https://gray-glacier-0dd347e0f.azurestaticapps.net/
-```
 
 ---
 
@@ -201,7 +159,7 @@ socials:
 ![Coin Rate Limit Demo](https://github.com/rdw100/terminal-portfolio/blob/main/assets/ProgressBarAnimation.gif)
 
 ---
-🧱 Architecture Diagram (Mermaid)
+🧱 Architecture Diagram
 ```mermaid
 flowchart TD
 
@@ -285,6 +243,40 @@ flowchart TD
     class F,F1 shared;
     class G,G1,G2,G3,G4 content;
 
+```
+---
+🧱Layered Architecture Diagram
+```mermaid
+flowchart TD
+
+    %% UI
+    A[index.html<br/>site.css]:::ui
+
+    %% Shell
+    A --> B[shell.js<br/>shellTerminal.js]:::shell
+
+    %% Terminal Core
+    B --> C[Terminal Core<br/>runtime/*]:::core
+
+    %% Commands
+    C --> D[Command Handlers<br/>commands/*]:::commands
+
+    %% Pages
+    D --> E[Page Renderers<br/>pages/*]:::pages
+
+    %% Services
+    E --> F[Shared Services<br/>core/services/*]:::services
+
+    %% Content
+    F --> G[Content Files<br/>content/*]:::content
+
+    classDef ui fill:#222,color:#fff,stroke:#555;
+    classDef shell fill:#333,color:#fff,stroke:#666;
+    classDef core fill:#444,color:#fff,stroke:#777;
+    classDef commands fill:#555,color:#fff,stroke:#888;
+    classDef pages fill:#666,color:#fff,stroke:#999;
+    classDef services fill:#777,color:#fff,stroke:#aaa;
+    classDef content fill:#888,color:#fff,stroke:#bbb;
 ```
 ---
 🧭 Command Lifecycle Sequence Diagram (Mermaid)
