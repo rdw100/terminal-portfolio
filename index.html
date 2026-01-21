@@ -3,6 +3,91 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description"
+        content="Terminal-style portfolio for Dusty Wright featuring an ASCII resume, GitHub projects, and interactive command-based navigation." />
+    <meta name="author" content="Dusty Wright" />
+    <meta property="og:title" content="Dusty Wright | Terminal Portfolio" />
+    <meta property="og:description"
+        content="Interactive terminal-based portfolio with ASCII resume and GitHub projects." />
+    <meta property="og:type" content="website" />
+
+    <title>Dusty Wright | Terminal Portfolio</title>
+
+    <!-- Minimal critical CSS for LCP -->
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            color: #00ff00;
+            font-family: ui-monospace, Menlo, Consolas, monospace;
+        }
+
+        #terminal {
+            padding: 10px;
+            white-space: pre-wrap;
+        }
+
+        .prompt {
+            color: var(--accent);
+        }
+
+        /* Input caret (animation disabled until after boot) */
+        #terminal-input {
+            caret-color: var(--cursor);
+            caret-shape: block;
+            animation: none; /* re-enabled after boot */
+        }
+    </style>
+
+    <!-- Full stylesheet (loads after LCP) -->
+    <link rel="stylesheet" href="/src/styles/site.css">
+
+    <link rel="icon" href="favicon.ico" />
+
+    <!-- Defer JS so nothing blocks LCP -->
+    <script defer type="module" src="/src/shell/shell.js"></script>
+</head>
+
+<body class="theme-vapor">
+    <main>
+        <div id="terminal">
+
+            <!-- Preboot hint -->
+            <div id="output">
+                <div id="preboot-hint" class="terminal-output">
+                    Type <strong>boot</strong> or <strong>welcome</strong> to begin.
+                </div>
+            </div>
+
+            <!-- LCP element: static prompt + input -->
+            <div id="live">
+                <span class="prompt">guest@dustywright.me:~$></span>
+                <input id="terminal-input" type="text" autocomplete="off"
+                       aria-label="Terminal command input" />
+            </div>
+
+            <button id="scroll-to-bottom">▼</button>
+        </div>
+    </main>
+
+    <!-- Re-enable caret animation AFTER LCP -->
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            requestAnimationFrame(() => {
+                const input = document.getElementById("terminal-input");
+                if (input) input.style.animation = "cursorPulse 1.2s infinite";
+            });
+        });
+    </script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description"
         content="Terminal-style portfolio for Dusty Wright featuring an ASCII resume, GitHub projects, and interactive command-based navigation." />
     <meta name="author" content="Dusty Wright" />
@@ -33,4 +118,4 @@
     </main>
     <script type="module" src="/src/shell/shell.js"></script>
 </body>
-</html>
+</html> -->
