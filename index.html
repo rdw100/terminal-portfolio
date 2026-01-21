@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-vapor">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -49,7 +49,7 @@
     <script defer type="module" src="/src/shell/shell.js"></script>
 </head>
 
-<body class="theme-vapor">
+<body>
     <main>
         <div id="terminal">
 
@@ -72,12 +72,14 @@
     </main>
 
     <!-- Re-enable caret animation AFTER LCP -->
-    <script nonce="sha256-iR56QBb+eoiVhROjUt4ul6M8BsozAomtKXtgJ2cq8a0=">
+    <script nonce="abc123">
         window.addEventListener("DOMContentLoaded", () => {
+        requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-                const input = document.getElementById("terminal-input");
-                if (input) input.style.animation = "cursorPulse 1.2s infinite";
+            const input = document.getElementById("terminal-input");
+            if (input) input.style.animation = "cursorPulse 1.2s infinite";
             });
+        });
         });
     </script>
 </body>
