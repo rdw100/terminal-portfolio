@@ -19,46 +19,28 @@ The site is command‑driven, content‑first, and hosted as an **Azure Static W
 
 ---
 
-## 🌟 Highlights
+## 🧠 Design Philosophy
+
+- Terminal‑first UX — interaction over navigation
+- Content‑driven — Markdown, JSON, ASCII
+- Minimal JS — only what’s necessary
+- Predictable architecture — no hidden state
+- Performance as a feature — not an afterthought
+
+---
+
+## 🏆 Highlights & Achievements
 
 - ⚡ Fast by design — tiny payload, minimal JavaScript, clean critical path
-- 📝 Content‑driven — Markdown, YAML, ASCII, and static HTML
 - 🧠 Predictable architecture — explicit layers, no circular dependencies
-- 🧱 Command‑based UX — interaction over navigation
+- 🎛️ Dynamic module loading — commands and pages load only when needed
+- 🧱 Layered terminal engine — shell → engine → registry → handler → renderer → services
+- 🧭 Static hosting only — no server, no backend, no runtime dependencies
+- 🔒 Deterministic deploys — all content prebuilt, no runtime parsing
 - 🧩 Build‑time content pipeline — Markdown → HTML during CI
+- 📝 Content‑driven — Markdown, JSON, ASCII, and static HTML
 - 🧭 Zero frameworks, zero bundlers — pure HTML, CSS, and ES modules
 - 🧪 Automated Lighthouse CI — scores tracked on every commit
-- 🎨 Theme‑aware terminal UI — CSS‑variable themes with zero JS
-
----
-
-## ✨ Features
-
-- 🖥️ Terminal‑style UI with persistent prompt
-- 🧭 Command‑based navigation
-- 📄 Markdown‑driven content pages
-- 🧾 YAML/JSON configuration for links and metadata
-- 🧱 Modular command architecture
-- 🔍 GitHub project integration
-- 🧠 Autocomplete (TAB)
-- ⬆️⬇️ Command history
-- 💰 Coin API with animated progress bar + cooldown indicator
-- 🎨 Theme switching (Retro, Azure, Vapor, Minimal, etc.)
-- ⚡ Zero frameworks, zero build step
-
----
-
-## 🏆 Achievements
-
-- 🪶 Tiny footprint — entire site fits in a few kilobytes
-- 🔒 Deterministic deploys — all content prebuilt, no runtime parsing
-- 🧩 Dependency‑acyclic architecture — every module has a single responsibility
-- 🧱 Layered terminal engine — shell → engine → registry → handler → renderer → services
-- 🧪 CI‑verified quality — Lighthouse audits run automatically on every push
-- 🧾 ASCII‑driven resume pipeline — diff‑friendly, consistent formatting
-- 🧭 Static hosting only — no server, no backend, no runtime dependencies
-- 🎛️ Dynamic module loading — commands and pages load only when needed
-- 🧠 Content‑first design — Markdown and YAML drive the entire site structure
 
 ---
 
@@ -70,19 +52,20 @@ The site is command‑driven, content‑first, and hosted as an **Azure Static W
 - 📄 Markdown — content-driven pages (About, Help, Projects, Socials)
 - ⚡ Azure Static Web Apps (SWA) — globally distributed hosting
 - 🔁 GitHub Actions — CI/CD and automated Lighthouse audits
-- 📊 Lighthouse CI — performance, accessibility, and quality scoring
-- 🧾 YAML Configuration — centralized config for commands and links
 - 🧠 Dynamic Module Loading — deferred page loading for optimal LCP
 - ♿ Accessibility-first design — semantic HTML, focus management, and keyboard navigation
 
 ---
 
-## 🧠 Design Philosophy
-- Terminal‑first UX — interaction over navigation
-- Content‑driven — Markdown, JSON, ASCII
-- Minimal JS — only what’s necessary
-- Predictable architecture — no hidden state
-- Performance as a feature — not an afterthought
+## ✨ Features
+
+- 🧭 Command‑based navigation
+- 🧠 Autocomplete (TAB)
+- ⬆️⬇️ Command history
+- 📄 Markdown‑driven content pages
+- 🧾 JSON configuration for links and metadata
+- 💰 Coin API with animated progress bar + cooldown indicator
+- 🎨 Theme switching (Retro, Azure, Vapor, Minimal, etc.)
 
 ---
 
@@ -98,49 +81,20 @@ The site is command‑driven, content‑first, and hosted as an **Azure Static W
 | `socials` | Social links list |
 | `socials goto <n>` | Opens selected link |
 | `coin` | Check the latest crypto price |
+| `coin list` | List available crypto |
 | `lighthouse` | View latest Lighthouse scores (production) |
 | `theme` | Choose a theme |
 | `gui` | Opens legacy GUI site |
 | `clear` | Clears the terminal |
 | `help` | Displays command help |
 
----
+## ⌨️ Keyboard Shortcuts
 
-## 🧩 Dynamic Command System
-Commands are declarative, lazy‑loaded, and follow a predictable lifecycle:
-\```
-User Input → Engine → Registry → Handler → Renderer → Output
-\```
-
----
-
-## 🧱 Technical Architecture
-The system is organized into explicit layers:
-- Terminal Core — input, output, engine, prompt, telemetry
-- Command Handlers — minimal, declarative, async
-- Page Renderers — Markdown/HTML loaders
-- Shared Services — config, markdown, templates
-- Shared UI Utilities — scrolling, formatting
-- Content Files — Markdown, YAML, ASCII, HTML
-
-This structure ensures:
-- no circular dependencies
-- predictable behavior
-- clean separation of concerns
-- easy extensibility
-
----
-
-## 🛠️ Technology Stack
-- Vanilla JavaScript (ES Modules)
-- HTML5 + CSS3
-- Markdown content pipeline
-- Azure Static Web Apps
-- GitHub Actions CI/CD
-- Lighthouse CI automation
-- YAML configuration
-- Dynamic module loading
-- ASCII‑driven resume
+| Key        | Action                     |
+|------------|-----------------------------|
+| `TAB`      | Autocomplete command names  |
+| `ESC`      | Clear current input         |
+| `↑` / `↓`  | Command history navigation  |
 
 ---
 
@@ -173,6 +127,19 @@ This structure ensures:
 ![Coin Rate Limit Demo](https://github.com/rdw100/terminal-portfolio/blob/main/assets/ProgressBarAnimation.gif)
 
 ---
+
+## 🧱 Technical Architecture
+
+The system is organized into explicit layers:
+- Terminal Core — input, output, engine, prompt, telemetry
+- Command Handlers — minimal, declarative, async
+- Page Renderers — Markdown/HTML loaders
+- Shared Services — config, markdown, templates
+- Shared UI Utilities — scrolling, formatting
+- Content Files — Markdown, YAML, ASCII, HTML
+
+---
+
 ## 🧱Layered Architecture Diagram
 ```mermaid
 flowchart TD
@@ -238,35 +205,6 @@ Content Files
 
 ---
 
-## 🧭 Command Lifecycle Sequence Diagram
-
-```mermaid
-sequenceDiagram
-    autonumber
-
-    participant U as User
-    participant T as Terminal UI
-    participant E as Terminal Engine
-    participant R as Command Registry
-    participant H as Command Handler (projects)
-    participant P as Page Renderer (projects)
-    participant S as Services
-    participant O as Output
-
-    U->>T: types "projects" + Enter
-    T->>E: sendInput("projects")
-    E->>R: lookup("projects")
-    R-->>E: return handler reference
-    E->>H: projects()
-    H->>P: renderProjectsPage()
-    P->>S: loadMarkdown("projects.md")
-    S-->>P: return HTML
-    P->>O: insertAdjacentHTML()
-    O->>T: content rendered
-    T->>T: scrollToBottom()
-```
----
-
 ## ⚡ Boot + Shell + Runtime Lifecycle
 
 ```mermaid
@@ -311,24 +249,3 @@ sequenceDiagram
 ```
 
 ---
-
-
-## ❓ Why this stack?
-
-- Zero framework overhead — fast load times and minimal JavaScript
-- Content-first architecture — Markdown over hardcoded UI
-- CI-verified quality — Lighthouse scores tracked automatically
-- Terminal-native UX — keyboard-driven, distraction-free interaction
-- Production-focused — runs exactly as deployed, no mock data
-
----
-
-## ❓ Why Terminal UI?
-
-This project favors a terminal interface because it:
-
-- Emphasizes interaction over navigation
-- Encourages exploration through commands
-- Avoids visual noise and layout complexity
-- Reflects how engineers actually work
-- Architecture is simple and explicit
