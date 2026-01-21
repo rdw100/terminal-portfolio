@@ -26,21 +26,11 @@ jobs:
         with:
           node-version: 18
 
-      # 🔹 REQUIRED: Generate HTML static content
-      # - name: Build all static pages
-      #  run: node tools/build-all.js
-
       # 1. Install dependencies (optional but recommended)
       - name: Install dependencies
         run: npm install
 
-      # 2. Inject the connection string AFTER the build
-      # 🔹 REQUIRED: Inject Application Insights connection string
-      #- name: Inject App Insights connection string
-      #  run: |
-      #    sed -i 's|__TP_INSIGHTS_CONN__|'"${{ secrets.TP_INSIGHTS_CONN }}"'|g' ./src/main.js
-
-      # 3. Deploy WITHOUT rebuilding
+      # 2. Deploy WITHOUT rebuilding
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
