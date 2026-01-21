@@ -8,7 +8,7 @@ html, body {
   overflow: hidden;
   background: #000;
   color: #00ff00;
-  font-family: monospace;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
 }
 
 main {
@@ -26,7 +26,7 @@ main {
   overflow: hidden;
   background: var(--bg);
   color: var(--fg);
-  font-family: "Fira Code", monospace;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
   transition:
     background-color 300ms ease,
     color 300ms ease;
