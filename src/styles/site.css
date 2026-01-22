@@ -103,6 +103,14 @@ main {
   }
 }
 
+#output {
+  flex: 1 1 auto;
+}
+
+#live {
+  flex: 0 0 auto;
+}
+
 /* Scroll-to-bottom button */
 #scroll-to-bottom {
   position: absolute;
