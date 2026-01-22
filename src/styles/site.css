@@ -354,17 +354,7 @@ p {
   color: var(--cursor);
 }
 
-/* temporary debug block style begin*/
-/* #live {
-  background: rgba(255, 0, 0, 0.4) !important;
-  outline: 2px solid red !important;
-} */
-
-/* #terminal-input {
-  display: block; width: 100%; white-space: nowrap; outline: 2px solid var(--accent) !important;
-  outline: 2px solid var(--accent) !important;
-}
- */
+/* Terminal input background with rounded corners */
 #live {
   display: flex;
   flex-direction: row;
@@ -377,22 +367,8 @@ p {
   min-width: 0;
   width: auto;
   display: block;
-  outline: 2px solid var(--accent) !important; /* your debug outline */
+  outline: 2px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg)); 
+  border-radius: 8px; 
+  padding: 4px 6px;
 }
-
-#terminal {
-  overflow: visible;
-}
-
-/* In safari #output is overflowing and clipping #live */
-/* #terminal {
-  overflow-x: hidden;
-  overflow-y: visible;
-}
-
-@supports (-webkit-touch-callout: none) {
-  #terminal {
-    overflow: visible;
-  }
-} */
-/* temporary debug block style end*/
