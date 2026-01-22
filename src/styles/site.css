@@ -32,6 +32,13 @@ main {
     color 300ms ease;
 }
 
+/* In safari #output is overflowing and clipping #live */
+@supports (-webkit-touch-callout: none) {
+  #terminal {
+    overflow: visible;
+  }
+}
+
 /* Output area (merged) */
 #output {
   flex: 1;
