@@ -32,18 +32,6 @@ main {
     color 300ms ease;
 }
 
-/* In safari #output is overflowing and clipping #live */
-#terminal {
-  overflow-x: hidden;
-  overflow-y: visible;
-}
-
-@supports (-webkit-touch-callout: none) {
-  #terminal {
-    overflow: visible;
-  }
-}
-
 /* Output area (merged) */
 #output {
   flex: 1;
@@ -373,13 +361,38 @@ p {
 } */
 
 /* #terminal-input {
-  background: #ffffff !important; ;
+  display: block; width: 100%; white-space: nowrap; outline: 2px solid var(--accent) !important;
   outline: 2px solid var(--accent) !important;
-  width: 100%;
-} */
+}
+ */
+#live {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+}
+
+#terminal-input {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  display: block;
+  outline: 2px solid var(--accent) !important; /* your debug outline */
+}
+
 #terminal {
   overflow: visible;
 }
 
+/* In safari #output is overflowing and clipping #live */
+/* #terminal {
+  overflow-x: hidden;
+  overflow-y: visible;
+}
 
+@supports (-webkit-touch-callout: none) {
+  #terminal {
+    overflow: visible;
+  }
+} */
 /* temporary debug block style end*/
