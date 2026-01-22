@@ -78,9 +78,6 @@ main {
   caret-color: var(--cursor);
   caret-shape: block;
   animation: cursorPulse 1.2s infinite;
-
-  /* Prevent Safari from collapsing input to 0px */
-  min-height: 1.2em;
 }
 
 #terminal-input:focus {
@@ -95,41 +92,6 @@ main {
   0%   { opacity: 1; }
   50%  { opacity: 0.25; }
   100% { opacity: 1; }
-}
-
-/* FLEX FIXES (Safari 12 flex child collapse) */
-#output {
-  flex: 1 1 auto;
-}
-
-#live {
-  flex: 0 0 auto;
-}
-
-/* iOS Safari 10–11: 100vh + flex bug
-   (Keeps layout stable on older WebKit) */
-@supports (-webkit-touch-callout: none) {
-  #terminal {
-    height: auto;
-    min-height: 100vh;
-  }
-  #terminal-input {
-    background-color: red !important; /* debug */
-  }
-}
-
-/* iOS Safari 12: RARE overflow:hidden 
-clipping bug (This is the one that fixes
- iPhone 8 Safari) */ 
- @supports (-webkit-touch-callout: none) { 
-  #terminal {
-    /* prevent last flex child from being clipped */ 
-    overflow: visible; 
-  } 
-  #live { 
-    /* ensure input paints even if layout is confused */
-    min-height: 1.2em;  
-  }
 }
 
 /* Scroll-to-bottom button */
