@@ -68,7 +68,7 @@ main {
 
 /* Terminal input (merged) */
 #terminal-input {
-  background: transparent;
+  background: none;
   border: none;
   outline: none;
   color: inherit;
@@ -93,6 +93,14 @@ main {
   0%   { opacity: 1; }
   50%  { opacity: 0.25; }
   100% { opacity: 1; }
+}
+
+/* iOS Safari fix for flex + 100vh bug */
+@supports (-webkit-touch-callout: none) {
+  #terminal {
+    height: auto;
+    min-height: 100vh;
+  }
 }
 
 /* Scroll-to-bottom button */
