@@ -1,3 +1,4 @@
+/* Handles the 'coin' command, fetching and displaying cryptocurrency prices. */
 import { getCoinPrice, renderCoinList } from './coinService.js';
 import { startCooldownTimer } from '../../core/ui/cooldown.js';
 import { scrollToBottom } from '../../core/ui/scroll.js';

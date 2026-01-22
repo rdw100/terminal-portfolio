@@ -1,8 +1,4 @@
-// import { loadAndRender } from '../../core/runtime/pageLoader.js';
-
-// export async function handle(ctx) {
-//   await loadAndRender('lighthouse', 'Lighthouse', ctx.args);
-// }
+/* Handles the 'lighthouse' command, displaying Lighthouse audit information. */
 export async function handler(ctx) {
   const html = await fetch('/src/content/lighthouse/lighthouse.html').then(r => r.text());
   ctx.print(html);

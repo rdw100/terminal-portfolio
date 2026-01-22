@@ -1,15 +1,4 @@
-/* import { loadAndRender } from '../../core/runtime/pageLoader.js';
-
-export async function handle(ctx) {
-  await loadAndRender('projects', 'Projects', ctx.args);
-}
- */
-/* export async function handler(ctx) {
-  const html = await fetch('/src/content/projects.html').then(r => r.text());
-  ctx.print(html);
-}
- */
-// src/commands/projects/index.js
+/* Handles the 'projects' command, displaying a list of projects and allowing navigation to them. */
 export async function handler(ctx) {
   // Load static HTML (Lighthouse-safe)
   const html = await fetch('/src/content/projects.html').then(r => r.text());

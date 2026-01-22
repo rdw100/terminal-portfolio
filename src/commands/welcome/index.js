@@ -1,3 +1,4 @@
+/* Handles the 'welcome' command, displaying the welcome page and initializing the runtime. */
 export async function handler(ctx) {
   // 1. Clear hint + output BEFORE runtime starts
   const hint = document.getElementById("preboot-hint");

@@ -1,3 +1,4 @@
+/* Handles the 'boot' command, initializing the terminal application. */
 export async function handler(ctx) {
   // 1. Clear hint + output BEFORE runtime starts
   const hint = document.getElementById("preboot-hint");

@@ -1,4 +1,4 @@
-/* Handle "theme" command: show current theme, list themes, or apply a new theme */
+/* Handles "theme" command: show current theme, list themes, or apply a new theme */
 
 import { loadAndRender } from '../../core/runtime/pageLoader.js';
 
