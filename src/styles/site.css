@@ -33,6 +33,11 @@ main {
 }
 
 /* In safari #output is overflowing and clipping #live */
+#terminal {
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
 @supports (-webkit-touch-callout: none) {
   #terminal {
     overflow: visible;
