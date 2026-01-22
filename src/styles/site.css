@@ -77,7 +77,7 @@ main {
   white-space: normal;
   caret-color: var(--cursor);
   caret-shape: block;
-  animation: cursorPulse 1.2s infinite;
+  /* animation: cursorPulse 1.2s infinite; */
 }
 
 #terminal-input:focus {
@@ -88,11 +88,11 @@ main {
 }
 
 /* Cursor animation */
-@keyframes cursorPulse {
+/* @keyframes cursorPulse {
   0%   { opacity: 1; }
   50%  { opacity: 0.25; }
   100% { opacity: 1; }
-}
+} */
 
 /* Scroll-to-bottom button */
 #scroll-to-bottom {
