@@ -106,39 +106,6 @@ main {
   100% { opacity: 1; }
 }
 
-/* temporary debug block style begin*/
-#live {
-  background: rgba(255, 0, 0, 0.4) !important;
-  outline: 2px solid red !important;
-}
-
-#terminal-input {
-  background: var(--cursor) !important;
-  outline: 2px solid darkorange !important;
-  width: 100%;
-}
-
-/* PATCH: Allow #live to render on iPhone Safari */
-#terminal {
-  overflow-x: hidden;   /* keep horizontal containment */
-  overflow-y: visible;  /* allow the live prompt to paint */
-}
-
-@supports (-webkit-touch-callout: none) {
-  #terminal {
-    overflow: visible;
-  }
-}
-
-@supports (-webkit-touch-callout: none) {
-  #terminal {
-    overflow-x: hidden;
-    overflow-y: visible;
-  }
-}
-
-/* temporary debug block style end*/
-
 /* Scroll-to-bottom button */
 #scroll-to-bottom {
   position: absolute;
@@ -398,3 +365,36 @@ p {
 .theme-dusty h6 {
   color: var(--cursor);
 }
+
+/* temporary debug block style begin*/
+#live {
+  background: rgba(255, 0, 0, 0.4) !important;
+  outline: 2px solid red !important;
+}
+
+#terminal-input {
+  background: var(--cursor) !important;
+  outline: 2px solid darkorange !important;
+  width: 100%;
+}
+
+/* PATCH: Allow #live to render on iPhone Safari */
+#terminal {
+  overflow-x: hidden;   /* keep horizontal containment */
+  overflow-y: visible;  /* allow the live prompt to paint */
+}
+
+@supports (-webkit-touch-callout: none) {
+  #terminal {
+    overflow: visible;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  #terminal {
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+}
+
+/* temporary debug block style end*/
