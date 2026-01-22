@@ -55,9 +55,10 @@ main {
 
 /* Live prompt */
 #live {
-  display: inline-block;
+  /* display: inline-block; */
   font-size: inherit;
   white-space: normal;
+  display: block;
 }
 
 .prompt {
@@ -75,6 +76,7 @@ main {
   font-size: inherit;
   white-space: normal;
   caret-color: var(--cursor);
+  min-height: 1.2em;
   caret-shape: block;
   animation: cursorPulse 1.2s infinite;
 }
