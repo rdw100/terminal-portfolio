@@ -94,6 +94,17 @@ main {
   100% { opacity: 1; }
 }
 
+/* temporary debug block style */
+#live {
+  background: rgba(255, 0, 0, 0.4) !important;
+  outline: 2px solid red !important;
+}
+
+#terminal-input {
+  background: rgba(0, 255, 0, 0.4) !important;
+  outline: 2px solid lime !important;
+}
+
 /* Scroll-to-bottom button */
 #scroll-to-bottom {
   position: absolute;
