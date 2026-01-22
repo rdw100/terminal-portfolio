@@ -122,12 +122,13 @@ main {
 clipping bug (This is the one that fixes
  iPhone 8 Safari) */ 
  @supports (-webkit-touch-callout: none) { 
-  #terminal { 
-    overflow: visible; 
+  #terminal {
     /* prevent last flex child from being clipped */ 
+    overflow: visible; 
   } 
   #live { 
-    min-height: 1.2em; /* ensure input paints even if layout is confused */ 
+    /* ensure input paints even if layout is confused */
+    min-height: 1.2em;  
   }
 }
 
