@@ -98,8 +98,7 @@ main {
 /* iOS Safari fix for flex + 100vh bug */
 @supports (-webkit-touch-callout: none) {
   #terminal {
-    height: auto;
-    min-height: 100vh;
+    overflow: visible;
   }
 }
 
