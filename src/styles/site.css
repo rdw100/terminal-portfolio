@@ -257,13 +257,13 @@ p {
     rgba(255, 255, 255, 0.03) 50%,
     transparent 100%
   );
-  animation: flicker 4s infinite;
+  /* animation: flicker 4s infinite; */
 }
 
-@keyframes flicker {
+/* @keyframes flicker {
   0%, 100% { opacity: 0.1; }
   50% { opacity: 0.2; }
-}
+} */
 
 .theme-vapor code.language-ansi {
   display: block;
