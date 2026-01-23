@@ -1,3 +1,7 @@
+/** 
+ * Initializes the shell terminal interface and handles user input. 
+ * @returns {void}
+*/
 import { getPrompt } from '../core/terminal/prompt.js';
 
 export function initializeShellTerminal() {

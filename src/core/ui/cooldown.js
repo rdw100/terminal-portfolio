@@ -1,5 +1,10 @@
-/* --- Shared user interface helper for cooldown timers using color coding and 
-* animated spinner --- */
+/** 
+ * Shared user interface helper for cooldown timers using color coding and 
+ * animated spinner.
+ * @param {HTMLElement} outputEl - The terminal output element to render the timer in.
+ * @param {number} seconds - The cooldown duration in seconds.
+ * @return {void}
+ */
 import { scrollToBottom } from './scroll.js';
 
 const SPINNER_FRAMES = ["⠋","⠙","⠹","⠸","⠼","⠴","⠦","⠧","⠇","⠏"];

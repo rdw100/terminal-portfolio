@@ -1,3 +1,10 @@
+/**
+ * Renders a page using a Markdown template, applying configuration settings.
+ * @param {Array} args - Command-line arguments passed to the command.  
+ * @param {Object} config - Configuration object for template substitution.
+ * @returns {Promise<void>} A promise that resolves when the page has been rendered.
+ */
+
 import { ensureMarked } from '../core/services/markdownService.js';
 import { applyTemplate } from '../core/services/templateService.js';
 

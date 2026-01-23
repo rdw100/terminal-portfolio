@@ -1,4 +1,7 @@
-/* Display theme information from markdown template */
+/** Display theme information from markdown template
+ * @param {Array} args - Command-line arguments passed to the command.
+ * @returns {Promise<void>} A promise that resolves when the page has been rendered.  
+ */
 
 import { ensureMarked } from '../core/services/markdownService.js';
 
