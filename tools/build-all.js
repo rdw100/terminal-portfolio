@@ -1,3 +1,7 @@
+/**
+ * Builds all components of the terminal portfolio by sequentially
+ * executing individual build scripts.
+ */
 const { execSync } = require('child_process');
 const path = require('path');
 

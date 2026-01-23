@@ -1,4 +1,6 @@
-// tools/build-projects.js
+/**
+ * Builds the projects.html file from config.json by generating an HTML list.
+ */
 const fs = require('fs');
 const path = require('path');
 

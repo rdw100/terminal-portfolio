@@ -1,4 +1,7 @@
-// tools/build-welcome.js
+/**
+ * Builds the welcome.html file from welcome.md by replacing placeholders
+ * and converting Markdown to HTML.
+ */
 const fs = require('fs');
 const path = require('path');
 const marked = require('marked');

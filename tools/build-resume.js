@@ -1,3 +1,7 @@
+/**
+ * Builds the resume.html file from resume.txt by converting plain text
+ * to HTML while preserving formatting and linkifying URLs and email addresses.
+ */
 const fs = require('fs');
 const path = require('path');
 

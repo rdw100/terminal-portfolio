@@ -1,4 +1,6 @@
-// tools/build-command-registry.js
+/**
+ * Builds a JSON snapshot of the command registry for use in the terminal portfolio.
+ */
 const fs = require('fs');
 const path = require('path');
 

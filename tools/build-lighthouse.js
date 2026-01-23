@@ -1,4 +1,6 @@
-// tools/build-lighthouse.js
+/**
+ * Builds the lighthouse.html file from scores.json by generating an HTML table.
+ */
 const fs = require('fs');
 const path = require('path');
 

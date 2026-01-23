@@ -1,4 +1,7 @@
-// tools/build-help.js
+/**
+ * Builds the help.html file from help.md by replacing placeholders
+ * and converting Markdown to HTML.
+ */
 const fs = require('fs');
 const path = require('path');
 const marked = require('marked');

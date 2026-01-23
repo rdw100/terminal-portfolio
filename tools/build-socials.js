@@ -1,4 +1,6 @@
-// tools/build-socials.js
+/**
+ * Builds the socials.html file from config.json by generating an HTML list of social links.
+ */
 const fs = require('fs');
 const path = require('path');
 

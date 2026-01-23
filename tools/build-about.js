@@ -1,4 +1,7 @@
-// tools/build-about.js
+/**
+ * Builds the about.html file from about.md by replacing placeholders
+ * and converting Markdown to HTML.
+ */
 const fs = require('fs');
 const path = require('path');
 const marked = require('marked');
