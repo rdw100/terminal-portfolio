@@ -1,4 +1,7 @@
-// src/core/runtime/getRegistry.js
+/** 
+ * Retrieves the command registry, loading it dynamically if not already loaded. 
+ * @returns {Promise<Object>} A promise resolving to the command registry object.
+ */
 let registry = null;
 
 export async function getRegistry() {

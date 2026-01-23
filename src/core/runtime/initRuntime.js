@@ -1,3 +1,10 @@
+/**
+ * Initializes the terminal runtime environment, setting up input handling,
+ * command execution, history navigation, and scroll management.
+ * @param {Object} ctx - Context object containing terminal state and output methods.
+ * @return {Promise<void>} A promise that resolves when initialization is complete. 
+ */
+
 import { scrollToBottom, registerScrollContainer } from '../ui/scroll.js';
 import { executeCommand } from './executeCommand.js';
 

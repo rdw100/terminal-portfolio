@@ -1,5 +1,10 @@
-// src/core/runtime/executeCommand.js
-
+/**
+ * Executes a command based on user input, handling dynamic imports,
+ * execution timing, and error reporting. 
+ * @param {string} rawInput - The raw command input from the user.
+ * @param {Object} ctx - Context object containing terminal state and output methods.
+ * @returns {Promise<Object>} A promise resolving to an execution result object.
+ */
 import { commandRegistry } from './commandRegistry.js';
 
 export async function executeCommand(rawInput, ctx) {

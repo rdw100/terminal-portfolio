@@ -1,3 +1,8 @@
+/** 
+ * Provides configuration settings for the application,
+ * including loading and caching the config file. 
+ * @returns {Promise<Object>} A promise resolving to the configuration object.
+ */
 let configCache = null;
 
 export async function getConfig() {

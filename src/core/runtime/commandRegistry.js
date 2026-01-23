@@ -1,10 +1,14 @@
-/* function lazy(parts) {
-  return () => {
-    const path = parts.join('');
-    return new Function("p", "return import(p)")(path);
-  };
-} */
-
+/** 
+ * Maps command names to their respective modules and metadata.
+ * Each command entry includes a loader function for dynamic import,
+ * an optional page identifier, a description, and a category. 
+ * @param {Object} commandRegistry - The registry of all available commands.
+ * @property {Function} loader - Function to dynamically import the command module.
+ * @property {string} [page] - Optional page identifier for commands that render pages.
+ * @property {string} description - Description of the command for help listings.
+ * @property {string} category - Category under which the command falls.
+ * @returns {Object} The command registry object. 
+ */
 export const commandRegistry = {
   about: {
     loader: () => import('../../commands/about/index.js'),
@@ -71,5 +75,3 @@ export const commandRegistry = {
     category: "System"
   },
 };
-
-//export const availableCommands = Object.keys(commandRegistry);
